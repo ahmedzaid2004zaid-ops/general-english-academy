@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="General English Academy — Interactive English courses from A1 to C1.">
+  <title>General English Academy</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+      line-height: 1.6;
+    }
+    header {
+      background: #102b50;
+      color: white;
+      padding: 28px 20px;
+      text-align: center;
+    }
+    header h1 { margin: 0; font-size: 30px; }
+    header p { color: #d9e7f7; }
+    main { max-width: 1000px; margin: 30px auto; padding: 0 16px; }
+    .intro, .course {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px #152b4810;
+    }
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+    }
+    .level {
+      background: #eaf2ff;
+      padding: 18px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .level h3 { color: #174a85; }
+    button {
+      background: #1765c0;
+      color: white;
+      border: 0;
+      padding: 11px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    button:hover { background: #104b91; }
+    #lesson { margin-top: 20px; }
+    .skill { margin: 8px 0; }
+    footer { text-align: center; padding: 25px; color: #627087; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>General English Academy</h1>
+    <p>Your journey from beginner to independent English communication</p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Welcome to Your English Learning Journey</h2>
+      <p>Learn English step by step through structured lessons, practical examples, activities, and progress tracking.</p>
+      <p><strong>Every level develops four essential skills:</strong></p>
+      <div class="skill">Listening</div>
+      <div class="skill">Speaking</div>
+      <div class="skill">Reading</div>
+      <div class="skill">Writing</div>
+    </section>
+
+    <section class="course">
+      <h2>Choose Your Level</h2>
+      <div class="levels" id="levels"></div>
+      <div id="lesson" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    General English Academy &copy; 2026
+  </footer>
+
+  <script>
+    const levels = [
+      { id: "A1", name: "Beginner", description: "Learn basic words, introductions, and everyday expressions." },
+      { id: "A2", name: "Elementary", description: "Communicate in familiar everyday situations." },
+      { id: "B1", name: "Intermediate", description: "Discuss experiences, plans, and familiar topics." },
+      { id: "B2", name: "Upper Intermediate", description: "Develop fluent communication and explain opinions." },
+      { id: "C1", name: "Advanced", description: "Use English flexibly for academic and professional purposes." }
+    ];
+
+    const container = document.getElementById("levels");
+
+    levels.forEach(level => {
+      const card = document.createElement("div");
+      card.className = "level";
+
+      const heading = document.createElement("h3");
+      heading.textContent = level.id;
+
+      const name = document.createElement("p");
+      name.textContent = level.name;
+
+      const button = document.createElement("button");
+      button.textContent = "Explore Level";
+      button.addEventListener("click", () => showLevel(level));
+
+      card.append(heading, name, button);
+      container.appendChild(card);
+    });
+
+    function showLevel(level) {
+      const lesson = document.getElementById("lesson");
+      lesson.replaceChildren();
+
+      const heading = document.createElement("h2");
+      heading.textContent = level.id + " — " + level.name;
+
+      const description = document.createElement("p");
+      description.textContent = level.description;
+
+      const note = document.createElement("p");
+      note.textContent =
+        "This is the course framework. Full lessons, exercises, audio, assessments, and saved progress must be added to complete this level.";
+
+      lesson.append(heading, description, note);
+      lesson.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  </script>
+</body>
+</html>
