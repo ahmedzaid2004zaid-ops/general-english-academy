@@ -1,136 +1,149 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="General English Academy — Interactive English courses from A1 to C1.">
-  <title>General English Academy</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #172033;
-      line-height: 1.6;
-    }
-    header {
-      background: #102b50;
-      color: white;
-      padding: 28px 20px;
-      text-align: center;
-    }
-    header h1 { margin: 0; font-size: 30px; }
-    header p { color: #d9e7f7; }
-    main { max-width: 1000px; margin: 30px auto; padding: 0 16px; }
-    .intro, .course {
-      background: white;
-      padding: 22px;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px #152b4810;
-    }
-    .levels {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
-    }
-    .level {
-      background: #eaf2ff;
-      padding: 18px;
-      border-radius: 12px;
-      text-align: center;
-    }
-    .level h3 { color: #174a85; }
-    button {
-      background: #1765c0;
-      color: white;
-      border: 0;
-      padding: 11px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-    button:hover { background: #104b91; }
-    #lesson { margin-top: 20px; }
-    .skill { margin: 8px 0; }
-    footer { text-align: center; padding: 25px; color: #627087; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>General English Academy</title>
+<style>
+:root{--bg:#f2f6fc;--card:#fff;--text:#172b46;--blue:#1859a9;--soft:#e5efff;--border:#d8e2ef}
+body.dark{--bg:#101827;--card:#1d293b;--text:#f1f5fb;--blue:#8bbcff;--soft:#283b54;--border:#3b4b61}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.65 Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#102b50;color:white;padding:24px 16px;text-align:center}
+header h1{margin:0}
+main{max-width:1000px;margin:24px auto;padding:0 14px}
+.panel{background:var(--card);padding:22px;border-radius:15px;margin-bottom:18px;border:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
+.level{background:var(--soft);border:1px solid var(--border);padding:16px;border-radius:12px}
+button{padding:11px 15px;border:0;border-radius:8px;background:var(--blue);color:white;font-size:15px;cursor:pointer;margin:4px 4px 4px 0}
+button:focus{outline:3px solid orange}
+.secondary{background:var(--soft);color:var(--text);border:1px solid var(--border)}
+.lesson{display:block;width:100%;text-align:left;background:var(--card);color:var(--text);border:1px solid var(--border)}
+.word{padding:12px;margin:8px 0;background:var(--soft);border-radius:8px}
+.question{padding:15px;border:1px solid var(--border);border-radius:10px;margin:15px 0}
+.hidden{display:none}
+.good{color:#16834a;font-weight:bold}.bad{color:#c43e35;font-weight:bold}
+textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text)}
+progress{width:100%;height:18px}
+footer{text-align:center;padding:22px;color:#718096}
+</style>
 </head>
 <body>
-  <header>
-    <h1>General English Academy</h1>
-    <p>Your journey from beginner to independent English communication</p>
-  </header>
+<header>
+<h1>General English Academy</h1>
+<p>Learn American English from Beginner to Advanced</p>
+<button class="secondary" onclick="document.body.classList.toggle('dark')">Toggle Light / Dark Mode</button>
+</header>
+<main>
+<section class="panel">
+<h2>Welcome to Your English Journey!</h2>
+<p>Learn English step by step with vocabulary, grammar, dialogues, pronunciation and practice.</p>
+<div class="grid">
+<div>🎧 <b>Listening</b><br>Listen and understand.</div>
+<div>🗣️ <b>Speaking</b><br>Practice real conversations.</div>
+<div>📖 <b>Reading</b><br>Understand everyday texts.</div>
+<div>✍️ <b>Writing</b><br>Build clear sentences.</div>
+</div>
+</section>
 
-  <main>
-    <section class="intro">
-      <h2>Welcome to Your English Learning Journey</h2>
-      <p>Learn English step by step through structured lessons, practical examples, activities, and progress tracking.</p>
-      <p><strong>Every level develops four essential skills:</strong></p>
-      <div class="skill">Listening</div>
-      <div class="skill">Speaking</div>
-      <div class="skill">Reading</div>
-      <div class="skill">Writing</div>
-    </section>
+<section class="panel" id="home">
+<h2>Choose Your Level</h2>
+<p>Select any level to open it.</p>
+<div class="grid" id="levels"></div>
+</section>
 
-    <section class="course">
-      <h2>Choose Your Level</h2>
-      <div class="levels" id="levels"></div>
-      <div id="lesson" aria-live="polite"></div>
-    </section>
-  </main>
+<section class="panel hidden" id="course">
+<button class="secondary" onclick="showHome()">← All Levels</button>
+<div id="courseContent"></div>
+</section>
 
-  <footer>
-    General English Academy &copy; 2026
-  </footer>
+<section class="panel">
+<h2>Your A1 Progress</h2>
+<p id="progressText">0 lessons completed</p>
+<progress id="progress" value="0" max="12"></progress>
+<button class="secondary" onclick="resetProgress()">Reset Progress</button>
+</section>
+</main>
+<footer>General English Academy © 2026</footer>
 
-  <script>
-    const levels = [
-      { id: "A1", name: "Beginner", description: "Learn basic words, introductions, and everyday expressions." },
-      { id: "A2", name: "Elementary", description: "Communicate in familiar everyday situations." },
-      { id: "B1", name: "Intermediate", description: "Discuss experiences, plans, and familiar topics." },
-      { id: "B2", name: "Upper Intermediate", description: "Develop fluent communication and explain opinions." },
-      { id: "C1", name: "Advanced", description: "Use English flexibly for academic and professional purposes." }
-    ];
+<script>
+const levels=[
+["A1","Beginner","Basic English and everyday communication."],
+["A2","Elementary","Talk about familiar situations."],
+["B1","Intermediate","Discuss experiences and opinions."],
+["B2","Upper Intermediate","Communicate confidently on many topics."],
+["C1","Advanced","Use English flexibly for academic and professional goals."]
+];
 
-    const container = document.getElementById("levels");
+const lessons=[
+{title:"Hello! I Am...",focus:"Greetings and the verb be",words:[["Hello","A greeting","Hello! How are you?"],["Name","A person's name","My name is Sara."],["Student","A learner","I am a student."],["Teacher","A person who teaches","He is a teacher."],["From","Shows origin","I am from Egypt."],["Nice to meet you","A polite introduction","Nice to meet you, Anna."]],grammar:"Use am with I, is with he/she/it, and are with you/we/they. Contractions are common: I'm, he's, she's, and they're.",dialogue:"Maya: Hi! I'm Maya. What's your name? Ben: I'm Ben. Nice to meet you. Maya: Nice to meet you, too. Where are you from? Ben: I'm from the United States.",q:"Choose the correct sentence.",opts:["I is Ahmed.","I am Ahmed.","I are Ahmed."],ans:1,why:"Use am with I."},
+{title:"Nice to Meet You",focus:"Introductions and nationalities",words:[["Country","A nation","What country are you from?"],["American","From the United States","He is American."],["Egyptian","From Egypt","She is Egyptian."],["Live","To have your home somewhere","I live in Cairo."],["Meet","To get to know someone","Nice to meet you."],["Too","Also","Nice to meet you, too."]],grammar:"Ask 'Where are you from?' to learn about someone's origin. Answer 'I'm from Egypt.' Nationalities begin with capital letters: Egyptian, American, Canadian.",dialogue:"Alex: Where are you from? Sara: I'm from Egypt. Alex: Are you Egyptian? Sara: Yes, I am. How about you? Alex: I'm American.",q:"I'm ___ Egypt.",opts:["at","from","on"],ans:1,why:"Use from to describe where you come from."},
+{title:"About Me",focus:"Personal information and spelling",words:[["Age","How old someone is","What is your age?"],["Address","Where someone lives","What's your address?"],["Spell","Say the letters","How do you spell your name?"],["Phone number","A telephone number","What's your phone number?"],["Email","An electronic address","What's your email?"],["Surname","Your family name","My surname is Ali."]],grammar:"Ask 'What's your name?', 'How old are you?' and 'Where do you live?' To ask for spelling, say 'How do you spell that?'",dialogue:"Teacher: What's your first name? Omar: Omar. Teacher: How do you spell that? Omar: O-M-A-R. Teacher: How old are you? Omar: I'm twenty-one.",q:"Which question asks about spelling?",opts:["How old are you?","How do you spell your name?","Where do you live?"],ans:1,why:"How do you spell...? asks for the letters."},
+{title:"My Family and My Routine",focus:"Family and present simple",words:[["Parents","Mother and father","My parents are at home."],["Brother","A male sibling","I have one brother."],["Usually","Most of the time","I usually get up at seven."],["Wake up","Stop sleeping","I wake up early."],["Work","Do a job","I work every day."],["Study","Learn","I study English."]],grammar:"Use the present simple for routines. Add -s or -es with he, she and it: I work, but she works. Questions often use do or does.",dialogue:"Lina: What do you do every morning? Adam: I get up at seven. Lina: Do you study English? Adam: Yes, I do.",q:"Choose the correct sentence.",opts:["She work every day.","She works every day.","She working every day."],ans:1,why:"Add -s to the verb with she in the present simple."},
+{title:"What Time Is It?",focus:"Time and schedules",words:[["Early","Before the usual time","I get up early."],["Late","After the usual time","I'm never late."],["O'clock","An exact hour","It's six o'clock."],["Half past","Thirty minutes after","It's half past eight."],["Morning","The early part of the day","I study in the morning."],["At","Used with clock times","Class starts at nine."]],grammar:"Use at with specific clock times: at 7:00, at noon, at midnight. 'It's seven thirty' is a natural way to say 7:30.",dialogue:"Mia: What time is it? Leo: It's seven thirty. Mia: When does class start? Leo: At eight o'clock.",q:"Class starts ___ 9:00.",opts:["in","on","at"],ans:2,why:"Use at with a specific clock time."},
+{title:"A Day With My Family",focus:"Articles and plurals",words:[["Family","Related people","My family is friendly."],["Child","A young person","The child is happy."],["Children","Plural of child","The children are playing."],["Aunt","Your parent's sister","My aunt lives nearby."],["Uncle","Your parent's brother","My uncle is funny."],["Their","Belonging to them","Their house is big."]],grammar:"Use a before consonant sounds and an before vowel sounds: a brother, an aunt. Many plurals add -s, but child becomes children. Use my, your, his, her, our and their before nouns.",dialogue:"Nora: Is this your sister? Sam: Yes, her name is Emma. Nora: Who are they? Sam: They're my cousins.",q:"Choose the correct phrase.",opts:["an brother","a brother","a aunt"],ans:1,why:"Brother begins with a consonant sound, so use a."},
+{title:"Food and Drink",focus:"Food and some/any",words:[["Water","A drink","Can I have some water?"],["Bread","A type of food","I'd like some bread."],["Apple","A fruit","I eat an apple."],["Rice","A type of food","We have rice for dinner."],["Hungry","Needing food","I'm hungry."],["Thirsty","Needing a drink","I'm thirsty."]],grammar:"Use some in many positive sentences and any in many questions and negative sentences. Water and rice are usually uncountable nouns.",dialogue:"Dad: Would you like some fruit? Ella: Yes, please. Do we have any apples? Dad: Yes, we do.",q:"Choose the correct question.",opts:["Do we have any milk?","Do we has any milk?","Do we have any milks?"],ans:0,why:"Use do we have, and milk is normally uncountable."},
+{title:"At the Diner",focus:"Ordering politely",words:[["Menu","A list of food","Can I see the menu?"],["Order","Ask for food","I'm ready to order."],["Check","The restaurant bill in American English","Could I have the check?"],["Please","A polite word","Water, please."],["Delicious","Very good to eat","The soup is delicious."],["Dollar","US currency","It's five dollars."]],grammar:"Use 'I'd like...' or 'Can I have...?' to order politely. In American English, check is commonly used for the restaurant bill.",dialogue:"Server: What can I get for you? Customer: I'd like a sandwich, please. Server: Anything to drink? Customer: Water, please.",q:"Which is a polite order?",opts:["Give me sandwich.","I'd like a sandwich, please.","I want sandwich now."],ans:1,why:"I'd like..., please is polite and natural."},
+{title:"Shopping for the Week",focus:"This, that and prices",words:[["Price","How much something costs","What's the price?"],["Cheap","Not expensive","These apples are cheap."],["Expensive","Costs a lot","That jacket is expensive."],["Basket","A container for shopping","Put the fruit in the basket."],["Cash","Paper money and coins","Can I pay in cash?"],["Receipt","Proof of purchase","Can I have a receipt?"]],grammar:"Use this/that with singular nouns and these/those with plural nouns. Ask 'How much is it?' for one item and 'How much are they?' for several.",dialogue:"Shopper: How much are these apples? Clerk: Three dollars a pound. Shopper: Great. I'll take two pounds.",q:"___ shoes are comfortable. (plural)",opts:["This","These","That"],ans:1,why:"These is used with plural nouns."},
+{title:"Places in My Town",focus:"There is/are and prepositions",words:[["Library","A place for books","The library is near the park."],["Grocery store","A food shop","I shop at the grocery store."],["Across from","On the opposite side","The bank is across from the cafe."],["Next to","Beside","The school is next to the park."],["Between","In the middle of two things","It's between the bank and the store."],["Near","Not far away","I live near downtown."]],grammar:"Use there is with singular nouns and there are with plural nouns. Use next to, across from, behind, in front of and between to describe locations.",dialogue:"Ben: Is there a pharmacy nearby? Ava: Yes. It's next to the grocery store. Ben: Thanks! Ava: You're welcome.",q:"___ two parks near my house.",opts:["There is","There are","It are"],ans:1,why:"Use there are with plural nouns."},
+{title:"Excuse Me, Where Is...?",focus:"Directions and can/can't",words:[["Turn","Change direction","Turn left at the light."],["Straight","Without turning","Go straight for two blocks."],["Corner","Where two streets meet","It's on the corner."],["Traffic light","A road signal","Turn right at the traffic light."],["Block","A section of a city street","Walk one block."],["Across","From one side to the other","It's across the street."]],grammar:"Ask 'Excuse me, where is...?' Give directions with the base verb: Go straight, turn left, turn right. Use can/can't to talk about ability or possibility.",dialogue:"Visitor: Excuse me, where's the bus stop? Local: Go straight and turn right at the light. Visitor: Is it far? Local: No, you can walk there in five minutes.",q:"Choose the correct direction.",opts:["Turns left.","Turn left.","Turning left."],ans:1,why:"Use the base verb for instructions."},
+{title:"My Neighborhood",focus:"Descriptions and present continuous",words:[["Neighborhood","The area where you live","My neighborhood is quiet."],["Busy","Full of activity","The street is busy."],["Quiet","Not noisy","It's a quiet area."],["Park","A public green space","We walk in the park."],["Walking","Moving on foot","I'm walking to the store."],["Friendly","Kind and welcoming","My neighbors are friendly."]],grammar:"Use the present continuous for actions happening now: am/is/are + verb-ing. Example: People are walking. Use the present simple for routines.",dialogue:"Kim: Do you like your neighborhood? Jay: Yes, there's a nice park. Kim: What are the kids doing? Jay: They're playing soccer.",q:"Choose the present continuous sentence.",opts:["They play now.","They are playing now.","They plays now."],ans:1,why:"Present continuous uses am/is/are + verb-ing."}
+];
 
-    levels.forEach(level => {
-      const card = document.createElement("div");
-      card.className = "level";
+const $=id=>document.getElementById(id);
+let completed=[];
+try{completed=JSON.parse(localStorage.getItem("geaDone")||"[]")}catch(e){completed=[]}
 
-      const heading = document.createElement("h3");
-      heading.textContent = level.id;
-
-      const name = document.createElement("p");
-      name.textContent = level.name;
-
-      const button = document.createElement("button");
-      button.textContent = "Explore Level";
-      button.addEventListener("click", () => showLevel(level));
-
-      card.append(heading, name, button);
-      container.appendChild(card);
-    });
-
-    function showLevel(level) {
-      const lesson = document.getElementById("lesson");
-      lesson.replaceChildren();
-
-      const heading = document.createElement("h2");
-      heading.textContent = level.id + " — " + level.name;
-
-      const description = document.createElement("p");
-      description.textContent = level.description;
-
-      const note = document.createElement("p");
-      note.textContent =
-        "This is the course framework. Full lessons, exercises, audio, assessments, and saved progress must be added to complete this level.";
-
-      lesson.append(heading, description, note);
-      lesson.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-  </script>
+function renderLevels(){
+ const root=$("levels");root.innerHTML="";
+ levels.forEach(level=>{
+  const card=document.createElement("div");card.className="level";
+  card.innerHTML="<h3>"+level[0]+" — "+level[1]+"</h3><p>"+level[2]+"</p>";
+  const btn=document.createElement("button");btn.textContent="Open Level";
+  btn.onclick=()=>openLevel(level[0]);card.appendChild(btn);root.appendChild(card);
+ });
+}
+function showHome(){$("course").classList.add("hidden");$("home").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+function openLevel(id){
+ $("home").classList.add("hidden");$("course").classList.remove("hidden");
+ const root=$("courseContent");root.innerHTML="";
+ if(id!=="A1"){
+  root.innerHTML="<h2>"+id+" Course</h2><p>This level's full lessons and assessments have not been installed yet. A1 is available now.</p>";
+  window.scrollTo({top:0,behavior:"smooth"});return;
+ }
+ root.innerHTML="<h2>A1 — Beginner</h2><p>12 practical lessons in American English. Choose a lesson to begin.</p>";
+ const grid=document.createElement("div");grid.className="grid";
+ lessons.forEach((lesson,i)=>{
+  const btn=document.createElement("button");btn.className="lesson";
+  btn.textContent=(completed.includes(i)?"✓ ":"")+(i+1)+". "+lesson.title;
+  btn.onclick=()=>openLesson(i);grid.appendChild(btn);
+ });
+ root.appendChild(grid);window.scrollTo({top:0,behavior:"smooth"});
+}
+function openLesson(i){
+ const l=lessons[i],root=$("courseContent");root.innerHTML="";
+ const back=document.createElement("button");back.className="secondary";back.textContent="← Back to lessons";back.onclick=()=>openLevel("A1");root.appendChild(back);
+ root.innerHTML+="<h2>Lesson "+(i+1)+": "+l.title+"</h2><p><b>Focus:</b> "+l.focus+"</p><h3>1. Vocabulary</h3>";
+ l.words.forEach(w=>root.innerHTML+="<div class='word'><b>"+w[0]+"</b> — "+w[1]+"<br><i>"+w[2]+"</i></div>");
+ root.innerHTML+="<h3>2. Grammar</h3><p>"+l.grammar+"</p><h3>3. Everyday Dialogue</h3><div class='word'>"+l.dialogue.replaceAll("\n","<br>")+"</div><h3>4. Listen and Repeat</h3><p>Listen, then repeat the dialogue aloud.</p>";
+ const audio=document.createElement("button");audio.textContent="🔊 Play American English Audio";audio.onclick=()=>speak(l.dialogue);root.appendChild(audio);
+ root.innerHTML+="<h3>5. Quick Practice</h3><div class='question' id='quiz'><p>"+l.q+"</p></div>";
+ const q=$("quiz");
+ l.opts.forEach((option,n)=>{const b=document.createElement("button");b.className="secondary";b.textContent=option;b.onclick=()=>{if(q.dataset.answered)return;q.dataset.answered="1";const result=document.createElement("p");result.className=n===l.ans?"good":"bad";result.textContent=(n===l.ans?"Correct! ":"Not quite. ")+l.why;q.appendChild(result);if(n===l.ans)markDone(i)};q.appendChild(b)});
+ const practice=document.createElement("div");practice.innerHTML="<h3>6. Speaking Practice</h3><p>Say three sentences using today's vocabulary.</p><textarea rows='3' placeholder='Write your practice sentences here...'></textarea>";root.appendChild(practice);
+ const done=document.createElement("button");done.textContent="Mark Lesson Complete";done.onclick=()=>markDone(i);root.appendChild(done);
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function markDone(i){if(!completed.includes(i)){completed.push(i);localStorage.setItem("geaDone",JSON.stringify(completed));updateProgress()}}
+function updateProgress(){$("progressText").textContent=completed.length+" of 12 lessons completed";$("progress").value=completed.length}
+function resetProgress(){if(confirm("Reset your saved lesson progress?")){completed=[];localStorage.removeItem("geaDone");updateProgress();renderLevels()}}
+function speak(text){
+ if(!("speechSynthesis" in window)){alert("Audio is not supported in this browser.");return}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.9;
+ const voice=speechSynthesis.getVoices().find(v=>v.lang==="en-US");if(voice)u.voice=voice;speechSynthesis.speak(u);
+}
+renderLevels();updateProgress();
+</script>
 </body>
 </html>
