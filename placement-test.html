@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Placement Test | General English Academy</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 Arial,sans-serif;background:#f1f5fb;color:#18263d}
+header{background:#122b4b;color:white;text-align:center;padding:30px 16px}
+header h1{margin:8px 0;color:#f5c45e}
+main{max-width:760px;margin:20px auto;padding:0 12px}
+section{background:white;padding:20px;margin:14px 0;border-radius:14px;box-shadow:0 3px 15px #0001}
+h2{color:#173b68;font-size:21px}
+.question{padding:12px 0;border-bottom:1px solid #ddd}
+.question p{font-weight:bold}
+label.option{display:block;padding:8px;border:1px solid #ddd;border-radius:8px;margin:6px 0}
+button{padding:13px;border:0;border-radius:9px;background:#2457a7;color:white;font-size:16px;font-weight:bold;cursor:pointer}
+.primary{width:100%;margin-top:15px}
+input[type=text],textarea{width:100%;padding:12px;border:1px solid #bbc7d8;border-radius:8px;font:inherit}
+#result{display:none}
+.score{font-size:32px;font-weight:bold;color:#2457a7}
+.small{font-size:14px;color:#66758b}
+</style>
+</head>
+<body>
+<header>
+<div>GENERAL ENGLISH ACADEMY</div>
+<h1>English Placement Test</h1>
+<p>Discover your English level: A1 to C1</p>
+</header>
+<main>
+<section>
+<h2>Instructions</h2>
+<p>Choose one answer for each question. Don't use a dictionary. This test gives an initial estimate; your teacher should also check your speaking and writing.</p>
+<label for="student">Your name (optional)</label>
+<input id="student" type="text" placeholder="Your name">
+</section>
+<form id="test">
+<div id="questions"></div>
+<section>
+<h2>Writing sample</h2>
+<p class="small">Write a few sentences about yourself, your routine, studies, or work.</p>
+<textarea id="writing" rows="5" placeholder="Write in English..."></textarea>
+<button class="primary" type="submit">Submit Test</button>
+</section>
+</form>
+<section id="result">
+<h2>Your Result</h2>
+<div class="score" id="score"></div>
+<h2 id="level"></h2>
+<p id="feedback"></p>
+<p class="small">This is an estimate, not an official CEFR certificate. A teacher should review your speaking and writing.</p>
+<button onclick="window.print()">Print Result</button>
+</section>
+</main>
+<script>
+const questions=[
+["She ___ from Egypt.",["am","is","are","be"],1],
+["They ___ students.",["is","are","am","be"],1],
+["I usually ___ up at seven.",["get","gets","got","getting"],0],
+["There ___ two rooms in my house.",["is","are","be","was"],1],
+["We don't have ___ milk.",["some","any","many","a"],1],
+["Yesterday, I ___ my friend.",["see","saw","seen","seeing"],1],
+["If it rains tomorrow, we ___ home.",["stay","stayed","will stay","would stayed"],2],
+["I've lived here ___ 2022.",["for","since","during","from"],1],
+["This is the place ___ we met.",["who","where","whose","what"],1],
+["By the time we arrived, the film ___.",["starts","has started","had started","start"],2],
+["She suggested ___ a taxi.",["take","to take","taking","took"],2],
+["Despite ___ tired, he continued.",["be","being","was","been"],1],
+["Had I known, I ___ earlier.",["would leave","will leave","would have left","left"],2],
+["The plan was rejected, ___ surprised nobody.",["that","which","what","who"],1],
+["Her explanation was very ___; everyone understood it.",["ambiguous","lucid","reluctant","sporadic"],1],
+["Not until later ___ the mistake.",["we noticed","did we notice","noticed we","we did noticed"],1],
+["The manager insisted that the report ___ today.",["is completed","be completed","was complete","completes"],1],
+["His claim rests on a ___ assumption.",["tenuous","meticulous","eloquent","impartial"],0],
+["Were the policy to change, we ___ our strategy.",["revise","would revise","will revised","had revised"],1],
+["The author uses irony to ___ the difference.",["obscure","underscore","relinquish","deter"],1],
+["Her remarks were deliberately ___, allowing different interpretations.",["unequivocal","equivocal","redundant","conclusive"],1],
+["The decision followed a ___ review of the evidence.",["capricious","rigorous","perfunctory","negligible"],1],
+["Rarely ___ such a detailed account.",["we encounter","do we encounter","we do encounters","encounter we"],1],
+["His response was measured and ___, avoiding exaggeration.",["prudent","volatile","trivial","hostile"],0]
+];
+const root=document.getElementById("questions");
+questions.forEach((q,i)=>{
+const d=document.createElement("section");
+d.className="question";
+d.innerHTML="<p>"+(i+1)+". "+q[0]+"</p>"+q[1].map((o,j)=>'<label class="option"><input required type="radio" name="q'+i+'" value="'+j+'"> '+String.fromCharCode(65+j)+". "+o+"</label>").join("");
+root.appendChild(d);
+});
+document.getElementById("test").addEventListener("submit",function(e){
+e.preventDefault();
+let score=0;
+questions.forEach((q,i)=>{
+const a=document.querySelector('input[name="q'+i+'"]:checked');
+if(a&&Number(a.value)===q[2])score++;
+});
+let level,feedback;
+if(score<=3){level="A1 — Beginner";feedback="Start with basic vocabulary, introductions, and simple sentences."}
+else if(score<=7){level="A2 — Elementary";feedback="Practise daily conversations, past events, and common situations."}
+else if(score<=11){level="B1 — Intermediate";feedback="Build fluency and practise explaining opinions with detail."}
+else if(score<=15){level="B2 — Upper-Intermediate";feedback="Work on complex grammar, vocabulary precision, and discussion."}
+else if(score<=19){level="C1 — Advanced";feedback="Develop nuance, natural expressions, and advanced communication."}
+else{level="C1 — Strong Advanced Result";feedback="Your grammar and vocabulary score is strong. A teacher should confirm your level."}
+document.getElementById("score").textContent=score+" / "+questions.length;
+document.getElementById("level").textContent=level;
+document.getElementById("feedback").textContent=feedback;
+document.getElementById("result").style.display="block";
+document.getElementById("result").scrollIntoView({behavior:"smooth"});
+});
+</script>
+</body>
+</html>
