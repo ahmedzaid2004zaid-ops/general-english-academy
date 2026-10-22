@@ -1,113 +1,403 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English Placement Test | General English Academy</title>
 <style>
+:root{--navy:#101c35;--blue:#315efb;--light:#f3f6fc;--green:#13845b;--red:#c43d4b}
 *{box-sizing:border-box}
-body{margin:0;font:16px/1.6 Arial,sans-serif;background:#f1f5fb;color:#18263d}
-header{background:#122b4b;color:white;text-align:center;padding:30px 16px}
-header h1{margin:8px 0;color:#f5c45e}
-main{max-width:760px;margin:20px auto;padding:0 12px}
-section{background:white;padding:20px;margin:14px 0;border-radius:14px;box-shadow:0 3px 15px #0001}
-h2{color:#173b68;font-size:21px}
-.question{padding:12px 0;border-bottom:1px solid #ddd}
-.question p{font-weight:bold}
-label.option{display:block;padding:8px;border:1px solid #ddd;border-radius:8px;margin:6px 0}
-button{padding:13px;border:0;border-radius:9px;background:#2457a7;color:white;font-size:16px;font-weight:bold;cursor:pointer}
-.primary{width:100%;margin-top:15px}
-input[type=text],textarea{width:100%;padding:12px;border:1px solid #bbc7d8;border-radius:8px;font:inherit}
-#result{display:none}
-.score{font-size:32px;font-weight:bold;color:#2457a7}
-.small{font-size:14px;color:#66758b}
+body{margin:0;background:var(--light);color:#18243a;font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+header{background:var(--navy);color:white;padding:28px 16px;text-align:center}
+header h1{margin:0;font-size:clamp(24px,5vw,36px)}
+header p{margin:8px 0 0;color:#dce5ff}
+main{max-width:850px;margin:24px auto;padding:0 14px}
+.card{background:white;padding:22px;margin-bottom:18px;border-radius:16px;box-shadow:0 5px 22px #17294b0b}
+h2{margin-top:0;color:var(--navy)}
+h3{margin-bottom:8px}
+.small{font-size:13px;color:#667085}
+.notice{background:#fff5dc;border-left:4px solid #e4a11b;padding:13px;border-radius:8px}
+button{background:var(--blue);color:white;border:0;border-radius:9px;padding:12px 17px;font-weight:bold;font-size:15px;cursor:pointer;margin:5px 4px 5px 0}
+button.secondary{background:#e8edff;color:#2446b9}
+button:disabled{opacity:.5;cursor:not-allowed}
+input[type=text],textarea{width:100%;padding:12px;border:1px solid #ccd3df;border-radius:8px;font:inherit}
+textarea{min-height:130px;resize:vertical}
+.question{border-bottom:1px solid #e8ebf2;padding:14px 0}
+.question:last-child{border:0}
+.option{display:block;background:#f7f8fc;padding:10px;margin:7px 0;border-radius:8px;cursor:pointer}
+.option input{margin-right:8px}
+.progress{height:9px;background:#e6eaf3;border-radius:20px;overflow:hidden}
+.progress div{height:100%;width:0;background:var(--blue);transition:width .2s}
+.skill{margin:15px 0}
+.skill-head{display:flex;justify-content:space-between;gap:10px}
+.hidden{display:none!important}
+.result-level{font-size:32px;color:var(--blue);font-weight:800}
+footer{text-align:center;color:#6d778b;padding:20px}
+@media(max-width:500px){.card{padding:16px}button{width:100%;margin:5px 0}}
 </style>
 </head>
 <body>
 <header>
-<div>GENERAL ENGLISH ACADEMY</div>
-<h1>English Placement Test</h1>
-<p>Discover your English level: A1 to C1</p>
+<h1>General English Academy</h1>
+<p>English Placement Assessment · A1–C1</p>
 </header>
+
 <main>
-<section>
-<h2>Instructions</h2>
-<p>Choose one answer for each question. Don't use a dictionary. This test gives an initial estimate; your teacher should also check your speaking and writing.</p>
-<label for="student">Your name (optional)</label>
-<input id="student" type="text" placeholder="Your name">
+<section class="card" id="intro">
+<h2>Discover your English level</h2>
+<p>This assessment checks grammar, vocabulary, reading, listening, writing and speaking.</p>
+<div class="notice">
+<strong>Important:</strong> This is an independent, preliminary placement test inspired by CEFR level descriptors. It is not an official Cambridge English examination, an accredited test or a certificate. Results are estimates and require teacher review.
+</div>
+<h3>Before you begin</h3>
+<ul>
+<li>Allow approximately 30–45 minutes.</li>
+<li>Answer without a translator or outside help.</li>
+<li>For listening, use headphones if possible.</li>
+<li>Writing and speaking require review for a reliable placement decision.</li>
+</ul>
+<label for="studentName"><strong>Your name (optional)</strong></label>
+<input type="text" id="studentName" placeholder="Enter your name">
+<p class="small">Your answers are processed in this page. This version does not send them to a teacher or server.</p>
+<button onclick="startTest()">Start assessment</button>
 </section>
-<form id="test">
-<div id="questions"></div>
-<section>
-<h2>Writing sample</h2>
-<p class="small">Write a few sentences about yourself, your routine, studies, or work.</p>
-<textarea id="writing" rows="5" placeholder="Write in English..."></textarea>
-<button class="primary" type="submit">Submit Test</button>
+
+<section class="card hidden" id="test">
+<div class="skill-head"><strong id="sectionLabel">Grammar & Vocabulary</strong><span id="counter"></span></div>
+<div class="progress"><div id="progressBar"></div></div>
+<div id="sectionContent"></div>
+<div style="margin-top:18px">
+<button class="secondary" id="backBtn" onclick="move(-1)">Previous</button>
+<button id="nextBtn" onclick="move(1)">Next section</button>
+</div>
+<p class="small">Your answers remain available while you complete this assessment.</p>
 </section>
-</form>
-<section id="result">
-<h2>Your Result</h2>
-<div class="score" id="score"></div>
-<h2 id="level"></h2>
-<p id="feedback"></p>
-<p class="small">This is an estimate, not an official CEFR certificate. A teacher should review your speaking and writing.</p>
-<button onclick="window.print()">Print Result</button>
+
+<section class="card hidden" id="results">
+<h2>Assessment results</h2>
+<p id="welcome"></p>
+<div class="result-level" id="levelResult">A1</div>
+<p id="levelDescription"></p>
+<div class="notice" id="resultNotice"></div>
+<h3>Skill breakdown</h3>
+<div id="skillResults"></div>
+<h3>Writing response</h3>
+<div id="writingResult"></div>
+<h3>Speaking response</h3>
+<div id="speakingResult"></div>
+<p class="small">This page does not automatically upload or email your responses. Save or copy your writing and arrange a teacher review of writing and speaking before confirming a final level.</p>
+<button onclick="window.print()">Print / Save as PDF</button>
+<button class="secondary" onclick="copyResults()">Copy result summary</button>
+<button class="secondary" onclick="location.reload()">Retake test</button>
 </section>
 </main>
+<footer>General English Academy · Independent CEFR-informed placement assessment</footer>
+
 <script>
-const questions=[
-["She ___ from Egypt.",["am","is","are","be"],1],
-["They ___ students.",["is","are","am","be"],1],
-["I usually ___ up at seven.",["get","gets","got","getting"],0],
-["There ___ two rooms in my house.",["is","are","be","was"],1],
-["We don't have ___ milk.",["some","any","many","a"],1],
-["Yesterday, I ___ my friend.",["see","saw","seen","seeing"],1],
-["If it rains tomorrow, we ___ home.",["stay","stayed","will stay","would stayed"],2],
-["I've lived here ___ 2022.",["for","since","during","from"],1],
-["This is the place ___ we met.",["who","where","whose","what"],1],
-["By the time we arrived, the film ___.",["starts","has started","had started","start"],2],
-["She suggested ___ a taxi.",["take","to take","taking","took"],2],
-["Despite ___ tired, he continued.",["be","being","was","been"],1],
-["Had I known, I ___ earlier.",["would leave","will leave","would have left","left"],2],
-["The plan was rejected, ___ surprised nobody.",["that","which","what","who"],1],
-["Her explanation was very ___; everyone understood it.",["ambiguous","lucid","reluctant","sporadic"],1],
-["Not until later ___ the mistake.",["we noticed","did we notice","noticed we","we did noticed"],1],
-["The manager insisted that the report ___ today.",["is completed","be completed","was complete","completes"],1],
-["His claim rests on a ___ assumption.",["tenuous","meticulous","eloquent","impartial"],0],
-["Were the policy to change, we ___ our strategy.",["revise","would revise","will revised","had revised"],1],
-["The author uses irony to ___ the difference.",["obscure","underscore","relinquish","deter"],1],
-["Her remarks were deliberately ___, allowing different interpretations.",["unequivocal","equivocal","redundant","conclusive"],1],
-["The decision followed a ___ review of the evidence.",["capricious","rigorous","perfunctory","negligible"],1],
-["Rarely ___ such a detailed account.",["we encounter","do we encounter","we do encounters","encounter we"],1],
-["His response was measured and ___, avoiding exaggeration.",["prudent","volatile","trivial","hostile"],0]
+"use strict";
+
+const sections = [
+{
+title:"Grammar & Vocabulary",
+type:"mcq",
+questions:[
+{q:"She _____ from Egypt.",o:["am","is","are","be"],a:1},
+{q:"I _____ coffee every morning.",o:["drink","drinks","drinking","drank"],a:0},
+{q:"There _____ two books on the table.",o:["is","are","am","be"],a:1},
+{q:"We _____ to the cinema yesterday.",o:["go","goes","went","going"],a:2},
+{q:"You _____ wear a seat belt while driving.",o:["should","would","could to","are"],a:0},
+{q:"If it rains tomorrow, we _____ at home.",o:["stay","stayed","will stay","would stayed"],a:2},
+{q:"I have lived here _____ 2020.",o:["for","since","during","from"],a:1},
+{q:"The meeting was _____ because the manager was ill.",o:["put off","put out","put up","put away"],a:0},
+{q:"By the time we arrived, the film _____.",o:["starts","has started","had started","starting"],a:2},
+{q:"If I _____ more time, I would learn another language.",o:["have","had","will have","would have"],a:1},
+{q:"The proposal was rejected, _____ surprised everyone.",o:["that","what","which","who"],a:2},
+{q:"She is believed _____ the company last year.",o:["to leave","leaving","to have left","left"],a:2}
+]
+},
+{
+title:"Reading",
+type:"mcq",
+passage:"Read the text carefully. Maria works for a small travel company. At first, she answered customer emails and arranged bookings. After two years, she noticed that many customers were confused by the company's website. She suggested rewriting the instructions and adding a short video explaining how to book a trip. Her manager agreed to try the idea. Within three months, the number of support requests had fallen. Maria was then asked to help with other projects. She says that the experience taught her that small changes can make a significant difference, especially when they are based on customers' actual needs.",
+questions:[
+{q:"Where does Maria work?",o:["At a school","At a travel company","At a hospital","At a bank"],a:1},
+{q:"What was one problem customers had?",o:["The prices were too low","The office was closed","The website was confusing","The trips were cancelled"],a:2},
+{q:"What did Maria suggest?",o:["Hiring more staff","Changing the prices","Removing the website","Improving instructions and adding a video"],a:3},
+{q:"What happened after three months?",o:["Support requests decreased","The company closed","Maria left her job","Prices increased"],a:0},
+{q:"What lesson did Maria learn?",o:["Only large changes matter","Customer feedback is unnecessary","Small, relevant changes can have an impact","Videos always solve every problem"],a:2},
+{q:"In this text, 'significant' is closest in meaning to:",o:["Unimportant","Considerable","Temporary","Unusual"],a:1}
+]
+},
+{
+title:"Listening",
+type:"listening",
+passage:"",
+questions:[
+{q:"What time is the appointment?",o:["9:15","9:50","10:15","10:50"],a:2,audio:"Hi, this is a reminder about your appointment. It's scheduled for ten fifteen tomorrow morning. Please arrive ten minutes early."},
+{q:"Why is James calling?",o:["To cancel a trip","To change a meeting time","To order lunch","To ask for directions"],a:1,audio:"Hi, this is James. Could we move our meeting from Tuesday afternoon to Wednesday morning? Something urgent has come up at work."},
+{q:"What should the listener bring?",o:["A passport only","A laptop","A printed copy of the report","Some food"],a:2,audio:"Before the presentation, please bring a printed copy of the report. You don't need to bring your laptop because the slides are already on the conference room computer."},
+{q:"What is the main problem?",o:["The train is delayed","The weather is hot","The hotel is full","The road is closed"],a:0,audio:"Attention passengers: the 6:20 train to Boston is delayed by approximately thirty minutes because of a technical problem. We apologize for the inconvenience."},
+{q:"What does the speaker imply?",o:["The plan is completely impossible","The plan may work with a few changes","The budget is unlimited","No one supports the plan"],a:1,audio:"The idea has potential, but I think we need to reconsider the timeline and make sure the budget covers the additional staff. With those changes, it could be worth pursuing."}
+]
+},
+{
+title:"Writing",
+type:"writing"
+},
+{
+title:"Speaking",
+type:"speaking"
+}
 ];
-const root=document.getElementById("questions");
-questions.forEach((q,i)=>{
-const d=document.createElement("section");
-d.className="question";
-d.innerHTML="<p>"+(i+1)+". "+q[0]+"</p>"+q[1].map((o,j)=>'<label class="option"><input required type="radio" name="q'+i+'" value="'+j+'"> '+String.fromCharCode(65+j)+". "+o+"</label>").join("");
-root.appendChild(d);
+
+let currentSection = 0;
+let answers = {};
+let listeningPlays = {};
+let recorder = null;
+let recordedChunks = [];
+let audioUrl = null;
+let stream = null;
+
+function startTest(){
+document.getElementById("intro").classList.add("hidden");
+document.getElementById("test").classList.remove("hidden");
+renderSection();
+window.scrollTo(0,0);
+}
+
+function renderSection(){
+const s = sections[currentSection];
+document.getElementById("sectionLabel").textContent = s.title;
+document.getElementById("counter").textContent = `Section ${currentSection+1} of ${sections.length}`;
+document.getElementById("progressBar").style.width = `${(currentSection+1)/sections.length*100}%`;
+document.getElementById("backBtn").disabled = currentSection===0;
+document.getElementById("nextBtn").textContent = currentSection===sections.length-1 ? "Finish assessment" : "Next section";
+const root = document.getElementById("sectionContent");
+root.innerHTML = "";
+
+if(s.type==="mcq"){
+if(s.passage){
+const p=document.createElement("div");
+p.className="notice";
+p.textContent=s.passage;
+root.appendChild(p);
+}
+s.questions.forEach((q,i)=>{
+const box=document.createElement("div");
+box.className="question";
+const title=document.createElement("p");
+title.innerHTML=`<strong>${i+1}. ${q.q}</strong>`;
+box.appendChild(title);
+q.o.forEach((option,j)=>{
+const label=document.createElement("label");
+label.className="option";
+const input=document.createElement("input");
+input.type="radio";
+input.name=`s${currentSection}q${i}`;
+input.value=j;
+input.checked=answers[`${currentSection}-${i}`]===j;
+input.addEventListener("change",()=>answers[`${currentSection}-${i}`]=j);
+label.append(input,document.createTextNode(option));
+box.appendChild(label);
 });
-document.getElementById("test").addEventListener("submit",function(e){
-e.preventDefault();
+root.appendChild(box);
+});
+} else if(s.type==="listening"){
+const intro=document.createElement("p");
+intro.textContent="Play each recording and choose the best answer. Each recording can be played up to two times.";
+root.appendChild(intro);
+s.questions.forEach((q,i)=>{
+const box=document.createElement("div");
+box.className="question";
+const title=document.createElement("p");
+title.innerHTML=`<strong>${i+1}. ${q.q}</strong>`;
+box.appendChild(title);
+const play=document.createElement("button");
+play.textContent=`Play audio (${listeningPlays[i]||0}/2)`;
+play.className="secondary";
+play.onclick=()=>{
+if((listeningPlays[i]||0)>=2)return;
+if(!("speechSynthesis" in window)){alert("Text-to-speech is not supported in this browser.");return;}
+speechSynthesis.cancel();
+const utterance=new SpeechSynthesisUtterance(q.audio);
+utterance.lang="en-US";
+utterance.rate=0.88;
+listeningPlays[i]=(listeningPlays[i]||0)+1;
+play.textContent=`Play audio (${listeningPlays[i]}/2)`;
+play.disabled=listeningPlays[i]>=2;
+speechSynthesis.speak(utterance);
+};
+box.appendChild(play);
+q.o.forEach((option,j)=>{
+const label=document.createElement("label");
+label.className="option";
+const input=document.createElement("input");
+input.type="radio";
+input.name=`s${currentSection}q${i}`;
+input.value=j;
+input.checked=answers[`${currentSection}-${i}`]===j;
+input.addEventListener("change",()=>answers[`${currentSection}-${i}`]=j);
+label.append(input,document.createTextNode(option));
+box.appendChild(label);
+});
+root.appendChild(box);
+});
+} else if(s.type==="writing"){
+root.innerHTML=`
+<h3>Writing task</h3>
+<p>Write 100–150 words. Describe a challenge you faced, what you did, and what you learned. Give reasons and examples.</p>
+<textarea id="writingAnswer" placeholder="Write your answer here..."></textarea>
+<p class="small">Writing is not automatically graded for accuracy or CEFR level. A teacher should assess grammar, vocabulary, organization and task achievement.</p>`;
+document.getElementById("writingAnswer").value=answers.writing||"";
+document.getElementById("writingAnswer").addEventListener("input",e=>answers.writing=e.target.value);
+} else if(s.type==="speaking"){
+root.innerHTML=`
+<h3>Speaking task</h3>
+<p>Speak for 1–2 minutes about a skill you would like to improve. Explain why it matters, how you plan to improve it, and what difficulties you expect.</p>
+<p>You can record your answer if your browser supports microphone recording. The recording stays in this page until you leave or reload.</p>
+<button id="recordBtn" onclick="startRecording()">Start recording</button>
+<button id="stopBtn" class="secondary" onclick="stopRecording()" disabled>Stop recording</button>
+<p id="recordStatus" class="small">Microphone permission may be required.</p>
+<audio id="playback" controls class="hidden" style="width:100%"></audio>
+<p><label for="speakingNotes"><strong>Optional notes / transcript</strong></label></p>
+<textarea id="speakingNotes" placeholder="You can type what you said if you prefer..."></textarea>
+<p class="small">This page does not automatically transcribe or grade speech. A teacher should review pronunciation, fluency, grammar and vocabulary.</p>`;
+document.getElementById("speakingNotes").value=answers.speaking||"";
+document.getElementById("speakingNotes").addEventListener("input",e=>answers.speaking=e.target.value);
+}
+}
+
+function move(direction){
+if(direction===1 && currentSection===sections.length-1){
+finishTest();
+return;
+}
+currentSection=Math.max(0,Math.min(sections.length-1,currentSection+direction));
+renderSection();
+window.scrollTo(0,0);
+}
+
+async function startRecording(){
+try{
+if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){
+document.getElementById("recordStatus").textContent="Recording is not supported in this browser. You can type your speaking response instead.";
+return;
+}
+stream=await navigator.mediaDevices.getUserMedia({audio:true});
+recordedChunks=[];
+recorder=new MediaRecorder(stream);
+recorder.ondataavailable=e=>{if(e.data.size>0)recordedChunks.push(e.data)};
+recorder.onstop=()=>{
+const blob=new Blob(recordedChunks,{type:recorder.mimeType||"audio/webm"});
+if(audioUrl)URL.revokeObjectURL(audioUrl);
+audioUrl=URL.createObjectURL(blob);
+const player=document.getElementById("playback");
+player.src=audioUrl;
+player.classList.remove("hidden");
+document.getElementById("recordStatus").textContent="Recording ready. Play it back to check your answer.";
+stream.getTracks().forEach(track=>track.stop());
+};
+recorder.start();
+document.getElementById("recordBtn").disabled=true;
+document.getElementById("stopBtn").disabled=false;
+document.getElementById("recordStatus").textContent="Recording... Speak clearly and stop when you finish.";
+}catch(e){
+document.getElementById("recordStatus").textContent="Microphone access was not available. Check your browser permissions or type your response.";
+}
+}
+
+function stopRecording(){
+if(recorder&&recorder.state!=="inactive")recorder.stop();
+document.getElementById("recordBtn").disabled=false;
+document.getElementById("stopBtn").disabled=true;
+}
+
+function finishTest(){
+if(recorder&&recorder.state!=="inactive")stopRecording();
+speechSynthesis?.cancel?.();
+document.getElementById("test").classList.add("hidden");
+document.getElementById("results").classList.remove("hidden");
+
+let grammar=scoreSection(0);
+let reading=scoreSection(1);
+let listening=scoreSection(2);
+const writing=(answers.writing||"").trim();
+const speaking=(answers.speaking||"").trim();
+
+const skillData=[
+{name:"Grammar & Vocabulary",score:grammar.score,total:grammar.total},
+{name:"Reading",score:reading.score,total:reading.total},
+{name:"Listening",score:listening.score,total:listening.total}
+];
+
+skillData.forEach(s=>s.percent=s.total?Math.round(s.score/s.total*100):0);
+const overall=Math.round(skillData.reduce((sum,s)=>sum+s.percent,0)/skillData.length);
+let level="A1";
+if(overall>=90)level="B2";
+else if(overall>=75)level="B1";
+else if(overall>=60)level="A2";
+
+document.getElementById("welcome").textContent=
+`Assessment completed${document.getElementById("studentName").value.trim() ? " by "+document.getElementById("studentName").value.trim() : ""}.`;
+document.getElementById("levelResult").textContent=level;
+document.getElementById("levelDescription").textContent=
+`Your preliminary objective-test estimate is ${level}. It is not a validated CEFR score or a confirmed final placement.`;
+
+document.getElementById("resultNotice").textContent=
+`Grammar & Vocabulary, Reading and Listening average: ${overall}%. Writing: ${writing? "response submitted":"not completed"}. Speaking: ${speaking||audioUrl ? "response or recording available":"not completed"}. A teacher must review the productive skills and confirm your level. This short test does not reliably distinguish all five levels from A1 to C1.`;
+
+const container=document.getElementById("skillResults");
+container.innerHTML="";
+skillData.forEach(s=>{
+const div=document.createElement("div");
+div.className="skill";
+const head=document.createElement("div");
+head.className="skill-head";
+const name=document.createElement("strong");
+name.textContent=s.name;
+const value=document.createElement("span");
+value.textContent=`${s.score}/${s.total} · ${s.percent}%`;
+head.append(name,value);
+const bar=document.createElement("div");
+bar.className="progress";
+const fill=document.createElement("div");
+fill.style.width=s.percent+"%";
+bar.appendChild(fill);
+div.append(head,bar);
+container.appendChild(div);
+});
+document.getElementById("writingResult").textContent=writing||"No writing response submitted.";
+document.getElementById("speakingResult").textContent=
+speaking ? speaking : audioUrl ? "A speaking recording is available in this page. Play it back before leaving; this version does not automatically include it in the printed report." : "No speaking notes or recording submitted.";
+window.scrollTo(0,0);
+}
+
+function scoreSection(sectionIndex){
+const qs=sections[sectionIndex].questions;
 let score=0;
-questions.forEach((q,i)=>{
-const a=document.querySelector('input[name="q'+i+'"]:checked');
-if(a&&Number(a.value)===q[2])score++;
+qs.forEach((q,i)=>{
+if(answers[`${sectionIndex}-${i}`]===q.a)score++;
 });
-let level,feedback;
-if(score<=3){level="A1 — Beginner";feedback="Start with basic vocabulary, introductions, and simple sentences."}
-else if(score<=7){level="A2 — Elementary";feedback="Practise daily conversations, past events, and common situations."}
-else if(score<=11){level="B1 — Intermediate";feedback="Build fluency and practise explaining opinions with detail."}
-else if(score<=15){level="B2 — Upper-Intermediate";feedback="Work on complex grammar, vocabulary precision, and discussion."}
-else if(score<=19){level="C1 — Advanced";feedback="Develop nuance, natural expressions, and advanced communication."}
-else{level="C1 — Strong Advanced Result";feedback="Your grammar and vocabulary score is strong. A teacher should confirm your level."}
-document.getElementById("score").textContent=score+" / "+questions.length;
-document.getElementById("level").textContent=level;
-document.getElementById("feedback").textContent=feedback;
-document.getElementById("result").style.display="block";
-document.getElementById("result").scrollIntoView({behavior:"smooth"});
-});
+return {score,total:qs.length};
+}
+
+function copyResults(){
+const summary=[
+"General English Academy — Preliminary Placement Assessment",
+"Name: "+(document.getElementById("studentName").value.trim()||"Not provided"),
+"Estimated level: "+document.getElementById("levelResult").textContent,
+"Note: This is an independent preliminary assessment, not an official Cambridge test or certificate.",
+...Array.from(document.querySelectorAll("#skillResults .skill")).map(x=>x.innerText.replace(/\n/g," — ")),
+"Writing: "+(answers.writing||"Not submitted"),
+"Speaking notes: "+(answers.speaking||"Not submitted")
+].join("\n");
+if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(summary).then(()=>alert("Result summary copied."));
+}else{
+window.prompt("Copy your result summary:",summary);
+}
+}
 </script>
 </body>
 </html>
