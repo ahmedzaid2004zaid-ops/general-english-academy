@@ -1,40 +1,498 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>English Placement Test | General English Academy</title>
+<!-- ===== EVOLVE Placement Test – embeddable snippet =====
+     Paste this whole block where you want the test to appear.
+     1) Upload the two audio files to your site and set their URLs in CONFIG below.
+     2) Optional: set SPEAKING_UPLOAD_URL to receive the speaking recording and the result on your server.
+     3) Microphone access needs HTTPS (and allow="microphone" if the page is inside an iframe).
+-->
+<div id="evolve-test"></div>
+
 <style>
-:root{--navy:#101c35;--blue:#315efb;--light:#f3f6fc}*{box-sizing:border-box}body{margin:0;background:var(--light);color:#18243a;font:16px/1.6 Arial,sans-serif}header{background:var(--navy);color:white;text-align:center;padding:24px 12px}main{max-width:800px;margin:22px auto;padding:0 14px}.card{background:white;padding:22px;margin-bottom:18px;border-radius:14px;box-shadow:0 4px 18px #0001}h2,h3{color:var(--navy)}input[type=text],textarea{width:100%;padding:12px;border:1px solid #ccd3df;border-radius:8px;font:inherit}textarea{min-height:130px}button{background:var(--blue);color:white;border:0;border-radius:8px;padding:12px 16px;margin:5px 4px 5px 0;font-size:15px;font-weight:bold}button:disabled{opacity:.5}.option{display:block;background:#f5f7fc;padding:10px;margin:7px 0;border-radius:7px}.hidden{display:none!important}.notice{background:#fff5dc;padding:12px;border-left:4px solid #e4a11b;border-radius:6px}.progress{height:8px;background:#e5eaf4;border-radius:8px;margin:12px 0}.progress div{height:100%;background:var(--blue);width:0}.small{font-size:13px;color:#667085;overflow-wrap:anywhere}#status{padding:12px;background:#eef7f1;border-radius:8px}@media(max-width:500px){.card{padding:15px}button{width:100%}}
-</style></head><body>
-<header><h1>General English Academy</h1><p>Preliminary English Placement Assessment · A1–B2</p></header><main>
-<section class="card" id="intro"><h2>Discover your English level</h2><p>This preliminary assessment checks grammar, vocabulary, reading, listening, writing and speaking.</p><div class="notice"><b>Important:</b> This is not an official Cambridge or EVOLVE exam. The automatic estimate is preliminary; a teacher should review writing and speaking. Listening clips use computer-generated speech, not official audio tracks.</div><p>Allow 20–30 minutes. Do not use a translator or outside help.</p><label for="studentName"><b>Your full name</b></label><input id="studentName" type="text" placeholder="Enter your full name" autocomplete="name"><p class="small">Your answers and optional speaking recording will be submitted to the academy endpoint.</p><button onclick="startTest()">Start assessment</button></section>
-<section class="card hidden" id="test"><b id="sectionTitle"></b><span id="counter" style="float:right"></span><div class="progress"><div id="progressBar"></div></div><div id="content"></div><button id="back" onclick="move(-1)">Previous</button><button id="next" onclick="move(1)">Next section</button></section>
-<section class="card hidden" id="results"><h2>Assessment results</h2><p id="welcome"></p><h2 id="level"></h2><p id="summary"></p><h3>Skill breakdown</h3><div id="scores"></div><h3>Writing response</h3><p id="writingResult"></p><h3>Speaking response</h3><p id="speakingResult"></p><h3>Submission status</h3><div id="status">Preparing submission…</div><p class="small">The browser cannot confirm receipt of the cross-origin request. Check the academy email and Google Drive folder.</p><button onclick="window.print()">Print / Save PDF</button><button onclick="copyResults()">Copy result summary</button><button onclick="location.reload()">Retake test</button></section>
-</main><footer style="text-align:center;padding:20px;color:#667085">General English Academy</footer>
+#evolve-test{--bg:#f2f5f8;--surface:#fff;--ink:#14202e;--muted:#5b6b7d;--line:#d9e0e8;--accent:#0f6e6e;--accent-ink:#fff;--accent-soft:#e1f1f0;--good:#17803d;--good-soft:#e2f4e8;--bad:#b3261e;--bad-soft:#fbe8e6;--radius:10px;
+  background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;text-align:left;position:relative}
+@media (prefers-color-scheme:dark){#evolve-test{--bg:#10161d;--surface:#192330;--ink:#e8eef5;--muted:#9aabbd;--line:#2c3a4b;--accent:#4fc3c0;--accent-ink:#06201f;--accent-soft:#17383a;--good:#5fd08a;--good-soft:#163524;--bad:#ff8a80;--bad-soft:#3b1d1b}}
+#evolve-test *{box-sizing:border-box}
+#evolve-test .et-top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
+#evolve-test .et-brand{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+#evolve-test .et-brand b{font-size:18px}
+#evolve-test .et-brand span{color:var(--muted);font-size:14px}
+#evolve-test .et-steps{display:flex;gap:6px;margin-top:8px}
+#evolve-test .et-steps button{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:7px 2px;border-radius:8px;font:inherit;font-size:13px;cursor:pointer}
+#evolve-test .et-steps button[aria-current="step"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+#evolve-test .et-steps button:disabled{opacity:.45;cursor:default}
+#evolve-test .et-bar{height:4px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}
+#evolve-test .et-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+#evolve-test .et-main{max-width:760px;margin:0 auto;padding:8px 16px 24px}
+#evolve-test h1{font-size:26px;line-height:1.2;margin:20px 0 8px;color:var(--ink)}
+#evolve-test h2{font-size:21px;margin:20px 0 6px;color:var(--ink)}
+#evolve-test p{margin:0 0 12px}
+#evolve-test .muted{color:var(--muted)}
+#evolve-test .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:14px 0}
+#evolve-test .card h3{margin:0 0 6px;font-size:17px;color:var(--ink)}
+#evolve-test label.field{display:block;font-weight:600;margin-bottom:6px}
+#evolve-test input[type=text]{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+#evolve-test button.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer}
+#evolve-test button.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#evolve-test button.btn.rec{background:var(--bad);color:#fff}
+#evolve-test button.btn:disabled{opacity:.5;cursor:not-allowed}
+#evolve-test :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#evolve-test audio{width:100%;margin-top:8px}
+#evolve-test .audio-note{font-size:14px;color:var(--muted);margin-top:6px}
+#evolve-test .passage{font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.65;white-space:pre-line}
+#evolve-test .group-title{font-weight:700;margin:0 0 8px}
+#evolve-test .situation{background:var(--accent-soft);border-radius:8px;padding:8px 12px;margin:0 0 12px;font-size:15px}
+#evolve-test .q{padding:12px 0;border-top:1px solid var(--line)}
+#evolve-test .q:first-of-type{border-top:0}
+#evolve-test .qstem{display:flex;gap:10px;margin-bottom:8px;white-space:pre-line}
+#evolve-test .qn{flex:none;min-width:28px;font-weight:700;color:var(--accent)}
+#evolve-test .opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin:6px 0;cursor:pointer;background:var(--bg)}
+#evolve-test .opt input{margin-top:4px;accent-color:var(--accent)}
+#evolve-test .opt .l{font-weight:700;min-width:16px}
+#evolve-test .opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+#evolve-test .opt.correct{border-color:var(--good);background:var(--good-soft)}
+#evolve-test .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+#evolve-test .opt.locked{cursor:default}
+#evolve-test .tag{font-size:13px;font-weight:700;margin-left:auto;white-space:nowrap}
+#evolve-test .opt.correct .tag{color:var(--good)}
+#evolve-test .opt.wrong .tag{color:var(--bad)}
+#evolve-test .et-foot{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px}
+#evolve-test .et-foot .in{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
+#evolve-test .et-foot .count{color:var(--muted);font-size:14px}
+#evolve-test .score{font-size:48px;font-weight:800;line-height:1}
+#evolve-test .level{display:inline-block;background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:4px 12px;font-weight:700;margin-top:8px}
+#evolve-test table.sec{width:100%;border-collapse:collapse;margin-top:10px}
+#evolve-test table.sec td,#evolve-test table.sec th{padding:8px 4px;border:0;border-top:1px solid var(--line);text-align:left;background:none;color:var(--ink)}
+#evolve-test table.sec td:last-child,#evolve-test table.sec th:last-child{text-align:right}
+#evolve-test .filters{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+#evolve-test .hidden{display:none!important}
+#evolve-test .warn{background:var(--bad-soft);border:1px solid var(--bad);border-radius:8px;padding:10px 12px;margin:10px 0;font-size:15px}
+#evolve-test .prompt{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.55;margin:0 0 8px}
+#evolve-test .prompt-list{margin:0 0 12px;padding-left:22px}
+#evolve-test .timer{font-variant-numeric:tabular-nums;font-size:28px;font-weight:700;margin:6px 0}
+#evolve-test .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bad);margin-right:8px;animation:etblink 1s infinite}
+@keyframes etblink{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){#evolve-test .dot{animation:none}}
+@media print{#evolve-test .et-top,#evolve-test .et-foot,#evolve-test .noprint{display:none!important}}
+</style>
+
 <script>
-"use strict";
-const ENDPOINT="https://script.google.com/macros/s/AKfycbwBAsO5NgEeL7MnlGkW89Y0L1f3RGMkwmLGbFaDWuJC2iShvUrC2vRi8mqof-O8NPQ-aA/exec";
-const sections=[
-{title:"Grammar & Vocabulary",type:"mcq",questions:[
-{q:"She _____ from Egypt.",o:["am","is","are","be"],a:1},{q:"I _____ coffee every morning.",o:["drink","drinks","drinking","drank"],a:0},{q:"There _____ two books on the table.",o:["is","are","am","be"],a:1},{q:"We _____ to the cinema yesterday.",o:["go","goes","went","going"],a:2},{q:"You _____ wear a seat belt while driving.",o:["should","would","could to","are"],a:0},{q:"If it rains tomorrow, we _____ at home.",o:["stay","stayed","will stay","would stayed"],a:2},{q:"I have lived here _____ 2020.",o:["for","since","during","from"],a:1},{q:"The meeting was _____ because the manager was ill.",o:["put off","put out","put up","put away"],a:0},{q:"By the time we arrived, the film _____.",o:["starts","has started","had started","starting"],a:2},{q:"If I _____ more time, I would learn another language.",o:["have","had","will have","would have"],a:1},{q:"The proposal was rejected, _____ surprised everyone.",o:["that","what","which","who"],a:2},{q:"She is believed _____ the company last year.",o:["to leave","leaving","to have left","left"],a:2}]},
-{title:"Reading",type:"mcq",passage:"Maria works for a small travel company. She noticed that customers were confused by the website. She suggested clearer instructions and a short booking video. Three months later, support requests had fallen. Maria learned that small changes based on customers' needs can make a significant difference.",questions:[
-{q:"Where does Maria work?",o:["A school","A travel company","A hospital","A bank"],a:1},{q:"What was the problem?",o:["Prices were low","The office was closed","The website was confusing","Trips were cancelled"],a:2},{q:"What did Maria suggest?",o:["Hiring staff","Changing prices","Removing the website","Clearer instructions and a video"],a:3},{q:"What happened after three months?",o:["Support requests decreased","The company closed","Maria left","Prices increased"],a:0},{q:"What did Maria learn?",o:["Only large changes matter","Feedback is useless","Small relevant changes can help","Videos always solve problems"],a:2},{q:"'Significant' is closest in meaning to:",o:["Unimportant","Considerable","Temporary","Unusual"],a:1}]},
-{title:"Listening",type:"listening",questions:[
-{q:"What time is the appointment?",o:["9:15","9:50","10:15","10:50"],a:2,audio:"Your appointment is scheduled for ten fifteen tomorrow morning. Please arrive ten minutes early."},{q:"Why is James calling?",o:["Cancel a trip","Change a meeting time","Order lunch","Ask for directions"],a:1,audio:"Could we move our meeting from Tuesday afternoon to Wednesday morning? Something urgent has come up at work."},{q:"What should the listener bring?",o:["A passport","A laptop","A printed report","Some food"],a:2,audio:"Please bring a printed copy of the report. The slides are already on the conference room computer."},{q:"What is the main problem?",o:["The train is delayed","The weather is hot","The hotel is full","The road is closed"],a:0,audio:"The 6:20 train to Boston is delayed by approximately thirty minutes because of a technical problem."},{q:"What does the speaker imply?",o:["The plan is impossible","The plan may work with changes","The budget is unlimited","Nobody supports it"],a:1,audio:"We need to reconsider the timeline and make sure the budget covers the additional staff. With those changes, it could be worth pursuing."}]},
-{title:"Writing",type:"writing"},{title:"Speaking",type:"speaking"}];
-let index=0,answers={},plays={},recorder=null,chunks=[],recordedBlob=null,stream=null,submitting=false;
-function $(id){return document.getElementById(id)}
-function startTest(){if(!$("studentName").value.trim()){alert("Please enter your full name.");return}$("intro").classList.add("hidden");$("test").classList.remove("hidden");render();scrollTo(0,0)}
-function render(){const s=sections[index];$("sectionTitle").textContent=s.title;$("counter").textContent=`Section ${index+1} of ${sections.length}`;$("progressBar").style.width=((index+1)/sections.length*100)+"%";$("back").disabled=index===0;$("next").textContent=index===sections.length-1?"Finish assessment":"Next section";const root=$("content");root.innerHTML="";
-if(s.type==="mcq"||s.type==="listening"){if(s.passage){let p=document.createElement("p");p.className="notice";p.textContent=s.passage;root.appendChild(p)}if(s.type==="listening"){let p=document.createElement("p");p.className="notice";p.textContent="Listen to each computer-generated American English clip up to two times. These are not official EVOLVE audio tracks.";root.appendChild(p)}
-s.questions.forEach((q,i)=>{let box=document.createElement("div");box.style.padding="12px 0";box.style.borderBottom="1px solid #eee";let title=document.createElement("p");let strong=document.createElement("b");strong.textContent=(i+1)+". "+q.q;title.appendChild(strong);box.appendChild(title);if(q.audio){let b=document.createElement("button");b.textContent=`Play audio (${plays[i]||0}/2)`;b.disabled=(plays[i]||0)>=2;b.onclick=()=>{if((plays[i]||0)>=2)return;let u=new SpeechSynthesisUtterance(q.audio);u.lang="en-US";u.rate=.88;speechSynthesis.cancel();speechSynthesis.speak(u);plays[i]=(plays[i]||0)+1;b.textContent=`Play audio (${plays[i]}/2)`;b.disabled=plays[i]>=2};box.appendChild(b)}q.o.forEach((opt,j)=>{let label=document.createElement("label");label.className="option";let r=document.createElement("input");r.type="radio";r.name="q"+index+"_"+i;r.checked=answers[index+"-"+i]===j;r.onchange=()=>answers[index+"-"+i]=j;label.append(r,document.createTextNode(" "+opt));box.appendChild(label)});root.appendChild(box)})}
-else if(s.type==="writing"){root.innerHTML='<h3>Writing task</h3><p>Write 100–150 words about a challenge you faced, what you did, and what you learned.</p><textarea id="writing" placeholder="Write your answer…"></textarea><p class="small" id="wordCount"></p>';$("writing").value=answers.writing||"";$("writing").oninput=e=>{answers.writing=e.target.value;$("wordCount").textContent=(e.target.value.trim().match(/\S+/g)||[]).length+" words"};$("writing").dispatchEvent(new Event("input"))}
-else{root.innerHTML='<h3>Speaking task</h3><p>Speak for 1–2 minutes about a skill you want to improve. Explain why it matters, how you will improve it, and what difficulties you expect.</p><button id="recStart">Start recording</button><button id="recStop" disabled>Stop recording</button><p id="recStatus" class="small">Allow microphone access when asked. You can type a transcript if recording is unavailable.</p><audio id="player" controls class="hidden" style="width:100%"></audio><label for="speaking"><b>Optional speaking transcript</b></label><textarea id="speaking" placeholder="Type what you said, if you wish…"></textarea>';$("speaking").value=answers.speaking||"";$("speaking").oninput=e=>answers.speaking=e.target.value;$("recStart").onclick=startRecording;$("recStop").onclick=stopRecording}}
-function move(d){if(d===1&&index===sections.length-1){finishTest();return}index=Math.max(0,Math.min(sections.length-1,index+d));render();scrollTo(0,0)}
-async function startRecording(){try{if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){$("recStatus").textContent="Recording unsupported; type your answer instead.";return}stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{recordedBlob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});$("player").src=URL.createObjectURL(recordedBlob);$("player").classList.remove("hidden");$("recStatus").textContent="Recording ready; it will be included when you finish.";stream.getTracks().forEach(t=>t.stop())};recorder.start();$("recStart").disabled=true;$("recStop").disabled=false;$("recStatus").textContent="Recording… Speak clearly."}catch(e){$("recStatus").textContent="Microphone access failed. Check browser permissions or type your answer."}}
-function stopRecording(){if(recorder&&recorder.state!=="inactive")recorder.stop();if($("recStart"))$("recStart").disabled=false;if($("recStop"))$("recStop").disabled=true}
-function waitRecording(){return new Promise(resolve=>{if(!recorder||recorder.state==="inactive"){resolve();return}recorder.addEventListener("stop",resolve,{once:true});stopRecording()})}
-function toBase64(blob){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(String(r.result).split(",")[1]);r.onerror=()=>reject(new Error("Could not read audio recording."));r.readAsDataURL(blob)})}
-function score(i){let n=0;sections[i].questions.forEach((q,j)=>{if(answers[i+"-"+j]===q.a)n++});return{score:n,total:sections[i].questions.length}}
-async function finishTest(){if(submitting)return;submitting=true;$("next").disabled=true;try{await waitRecording()}catch(e){}if("speechSynthesis"in window)speechSynthesis.cancel();$("test").classList.add("hidden");$("results").classList.remove("hidden");let skill=[{name:"Grammar & Vocabulary",...score(0)},{name:"Reading",...score(1)},{name:"Listening",...score(2)}];skill.forEach(s=>s.percent=Math.round(s.score/s.total*100));let overall=Math.round(skill.reduce((n,s)=>n+s.percent,0)/skill.length);let level=overall>=90?"B2":overall>=75?"B1":overall>=60?"A2":"A1";let name=$("studentName").value.trim();$("welcome").textContent="Assessment completed by "+name+".";$("level").textContent="Estimated level: "+level;$("summary").textContent=`Objective test average: ${overall}%. Preliminary estimate only; teacher review is required.`;$("scores").innerHTML=skill.map(s=>`<p>${s.name}: ${s.score}/${s.total} (${s.percent}%)</p>`).join("");$("writingResult").textContent=answers.writing||"Not submitted";$("speakingResult").textContent=answers.speaking||(recordedBlob?"Recording attached to submission":"Not submitted");let status=$("status");status.textContent="Sending submission request…";
-try{let payload={name,estimatedLevel:level,scores:skill,answers,writing:answers.writing||"",speakingNotes:answers.speaking||"",audioMimeType:recordedBlob?(recordedBlob.type||"audio/webm"):"",audioBase64:recordedBlob?await toBase64(recordedBlob):""};if(payload.audioBase64.length>18000000)throw new Error("Audio is too large. Please record a shorter answer.");await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});status.textContent="Request sent by browser, but receipt is not confirmed here. Check the academy email and Google Drive folder."}catch(e){status.textContent="Could not send automatically: "+e.message+". Use Copy result summary as backup.";status.style.background="#fff0f0"}scrollTo(0,0)}
-function copyResults(){let t="General English Academy Placement Test\nName: "+$("studentName").value+"\n"+$("level").textContent+"\n"+$("scores").innerText+"\nWriting: "+(answers.writing||"Not submitted")+"\nSpeaking: "+(answers.speaking||"Not submitted");if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>alert("Copied.")).catch(()=>prompt("Copy your results:",t));else prompt("Copy your results:",t)}
-</script></body></html>
+(function () {
+/* ================= CONFIG ================= */
+var CONFIG = {
+  AUDIO_DIRECTIONS_URL: "https://YOUR-SITE.com/audio/Evolve_Placement_Test_Track_2__Directions_.mp3",
+  AUDIO_TEST_URL:       "https://YOUR-SITE.com/audio/Evolve_Placement_Test_Track_3__Test_.mp3",
+  SPEAKING_UPLOAD_URL:  "",          // optional: your endpoint that accepts a POST (multipart/form-data)
+  SPEAKING_MAX_SECONDS: 120,
+  SPEAKING_MIN_SECONDS: 20
+};
+/* ========================================== */
+
+var DATA = {
+"title":"EVOLVE Placement Test","total_items":70,"time_limit_minutes":50,
+"scoring":[
+{"min":1,"max":5,"level":"Level 1A"},{"min":6,"max":11,"level":"Level 1B"},
+{"min":12,"max":17,"level":"Level 2A"},{"min":18,"max":23,"level":"Level 2B"},
+{"min":24,"max":30,"level":"Level 3A"},{"min":31,"max":36,"level":"Level 3B"},
+{"min":37,"max":42,"level":"Level 4A"},{"min":43,"max":49,"level":"Level 4B"},
+{"min":50,"max":55,"level":"Level 5A"},{"min":56,"max":61,"level":"Level 5B"},
+{"min":62,"max":68,"level":"Level 6A"},{"min":69,"max":70,"level":"Level 6B"}
+],
+"sections":[
+{"id":"listening","title":"Section I: Listening","time_limit_minutes":15,
+"directions":"You will hear each conversation only once. Read the situation and items first, then listen, then answer.",
+"groups":[
+{"id":"L1","situation":"Emily and Jason are talking about work.","questions":[
+{"n":1,"stem":"Emily ____.","options":["works at a café","never goes to the mall","works every weekend","goes to the mall every day"],"answer":"a"}]},
+{"id":"L2","situation":"Jessica is buying clothes.","questions":[
+{"n":2,"stem":"Jessica ____.","options":["is buying a dress and a skirt","thinks the skirts are expensive","can't find a red skirt","pays $30 for the skirt"],"answer":"c"}]},
+{"id":"L3","situation":"Rachel and Michael are talking in a mall.","questions":[
+{"n":3,"stem":"Rachel and Michael ____.","options":["are having lunch together","are buying gifts for their children","are busy tomorrow afternoon","are going to meet again tomorrow"],"answer":"c"}]},
+{"id":"L4","situation":"Andrew is talking to a waitress at a restaurant.","questions":[
+{"n":4,"stem":"Andrew ____.","options":["didn't enjoy the food","ate just a little pasta","ordered a salad","didn't like the dressing"],"answer":"c"},
+{"n":5,"stem":"The waitress ____.","options":["can make the salad dressing","is going to talk to the chef","doesn't offer a dessert to Andrew","is going to bring Andrew some coffee"],"answer":"d"}]},
+{"id":"L5","situation":"Laura is talking to her father about a health problem.","questions":[
+{"n":6,"stem":"Laura ____.","options":["hit her head in a basketball game","ate some bad food at school yesterday","has a horrible pain in her stomach","has a very bad headache"],"answer":"d"},
+{"n":7,"stem":"Laura's father ____.","options":["has a stomachache too","offers to take her to the doctor","is going to call a doctor","wants to rest a little"],"answer":"b"}]},
+{"id":"L6","situation":"Jack is talking to his friend Olivia on the phone.","questions":[
+{"n":8,"stem":"When Jack called Olivia, she ____.","options":["couldn't hear him because of a bad connection","was in a noisy area, but she moved","was at the bus stop with her friend Katie","was on her way to see a play"],"answer":"b"},
+{"n":9,"stem":"Jack ____.","options":["thought the movie was not very exciting","thought the movie had too much action","thinks Olivia shouldn't see the movie","is going out with Olivia and Katie on Friday"],"answer":"a"}]},
+{"id":"L7","situation":"Amanda is meeting her friend Patrick at a café.","questions":[
+{"n":10,"stem":"Amanda and Patrick ____.","options":["last met in January","went to a concert together","haven't seen each other since April","have been spending a lot of time together lately"],"answer":"b"},
+{"n":11,"stem":"Amanda ____.","options":["has found a new job","is looking for another job","finds her work too challenging","has been having problems at work"],"answer":"a"},
+{"n":12,"stem":"Patrick ____.","options":["has been learning Spanish","isn't enjoying his cooking class very much","has been all over the world lately","wants to cook for Amanda and Jim"],"answer":"d"}]},
+{"id":"L8","situation":"Nicole is talking to her teacher, Mr. Kushner, about her exam grade.","questions":[
+{"n":13,"stem":"Mr. Kushner ____.","options":["thought that Nicole was disappointed with her grade","doesn't think Nicole knows about his rules","usually lets students take exams a second time","thinks that Nicole will get a better grade next time"],"answer":"a"},
+{"n":14,"stem":"Nicole thinks that she got a low grade because ____.","options":["she only had time to answer the reading questions","she didn't get a grade on the reading section","she forgot to answer the reading questions","she did badly on the reading section"],"answer":"b"},
+{"n":15,"stem":"In the end, Mr. Kushner ____.","options":["wasn't able to help Nicole","asked Nicole not to miss an exam again","apologized to Nicole for the problem","realized that Nicole's exam was missing"],"answer":"c"}]},
+{"id":"L9","situation":"Lisa is talking to Eric about her job interview.","questions":[
+{"n":16,"stem":"After Lisa's interview, she felt ____.","options":["more optimistic than she did before","she was well prepared for it","uncertain about it","her answers sounded very confident"],"answer":"c"},
+{"n":17,"stem":"During the interview, Lisa ____.","options":["recognized that she's an impatient person","said she tended to be too positive about things","admitted she didn't enjoy working on big projects","boasted that she always met her deadlines"],"answer":"a"},
+{"n":18,"stem":"According to Eric, ____ can make a person seem intelligent.","options":["taking less time to answer a question","staying calm throughout an interview","speaking naturally and showing no anxiety","pausing before saying something"],"answer":"d"},
+{"n":19,"stem":"Lisa ____.","options":["thinks she could find a much better job","usually believes in miracles","expects to be offered the position","feels frustrated about the situation"],"answer":"d"},
+{"n":20,"stem":"Eric ____.","options":["agrees with Lisa's views on her performance at the interview","thinks people naturally have a good opinion about Lisa","is concerned that Lisa might quit her job","advises her not to be so proud of herself"],"answer":"b"}]}
+]},
+{"id":"reading","title":"Section II: Reading","time_limit_minutes":20,
+"directions":"Read each passage and choose the correct answer for each item.",
+"groups":[
+{"id":"R1","title":"An email, Subject: Greetings from Florida!",
+"passage":"Hi, Sara.\nI'm visiting my sister in Florida. It's very warm and nice here. Every morning, I go to the beach and swim. Sometimes my sister comes home early, and we play tennis in the afternoon. And we always go for a long walk after that. I'm having a great time!\nLove,\nHeather",
+"questions":[{"n":21,"stem":"Heather ____ every day.","options":["swims","plays tennis","comes home early","walks with her sister"],"answer":"a"}]},
+{"id":"R2","title":"Helen is getting married and I'm tired.",
+"passage":"This has been a crazy week! One of my friends is getting married on Saturday, and I'm helping her with the reception. It's not going to be a big party, but I still have to do a lot of things. For example, I chose the songs last week, but the band is playing them for me tonight. I bought the flowers today, but I have to pick them up on Friday. I'm tired. Can someone help me, please?!",
+"questions":[{"n":22,"stem":"The writer ____.","options":["is singing tonight","is buying flowers on Friday","listened to a band a week ago","is going to a party this weekend"],"answer":"d"}]},
+{"id":"R3","title":"The Whitney Museum of American Art",
+"passage":"The Whitney is one of the most famous art museums in New York City. It first opened in 1931 in Greenwich Village, and then it moved to two different places in 1954 and 1966. Since 2015, this museum of American art has been in a new building downtown. The new space is larger and more modern, and it has beautiful views of the Hudson River from its windows and café. Visit it next time you are in the city.",
+"questions":[{"n":23,"stem":"The Whitney Museum ____.","options":["shows art from many countries","moved to a smaller place in 2015","has a place to eat and great views","was in the same building since 1931"],"answer":"c"}]},
+{"id":"R4","title":"Is sitting unhealthy?",
+"passage":"If you have been sitting in an office for a long period of time, stand up and move for your health. Research has shown that too much sitting might cause higher blood pressure, add body fat, and increase the danger of death from heart disease. Studies have also suggested that moving more has a positive effect on a person's health. So, what can an office worker do? Experts say that you should take a break from sitting every 30 minutes, stand more while working, and even walk when meeting with coworkers. Moving might save your life.",
+"questions":[
+{"n":24,"stem":"The article suggests that ____.","options":["there is very little research about the effects of sitting","sitting for a long time might be dangerous for your health","office workers live longer than other types of workers","people do not usually like to walk and exercise"],"answer":"b"},
+{"n":25,"stem":"According to the article, office workers should ____.","options":["stop working every half hour","not work in an office if possible","only stand or walk when you work","move more to avoid serious heart problems"],"answer":"d"}]},
+{"id":"R5","title":"A changing neighborhood – for better or for worse?",
+"passage":"Recently, an international online retailer opened an enormous, brand-new office in our neighborhood. Until then, there hadn't been any major companies or huge buildings like this in the area – just small family-owned businesses. So, obviously, there has been a lot of discussion about it lately.\nSome people say the company is creating jobs and will attract other new businesses, but others complain that most of the new jobs will be low-paying. These people also believe that rising costs will push out independent businesses and make the neighborhood too expensive for its current residents.\nI can't make up my mind whether the company will be a benefit for the neighborhood or not. It's a complicated issue, and I'm not sure there is a right or wrong answer. What do you think?",
+"questions":[
+{"n":26,"stem":"The author of the blog post believes that ____.","options":["there may be both positive and negative consequences","the changes will be helpful for most workers from the region","there will soon be many more big companies in the neighborhood","the changes will be mostly harmful for people who live in the area"],"answer":"a"},
+{"n":27,"stem":"Some people think the company will help the area because it will ____.","options":["create a greater number of jobs with excellent salaries","make the area more interesting to other companies","lower the cost of living in the neighborhood","replace smaller stores with larger ones"],"answer":"b"}]},
+{"id":"R6","title":"An inspiring story",
+"passage":"When Alex McGovern was in high school, he used to earn money working weekends at a local bakery. After working there for several months, helping bake fresh bread and cakes, Alex noticed a familiar pattern: a huge amount of food was thrown away at the end of each day. It was food that the bakery could no longer sell, but it was still good enough to eat. So Alex began to wonder what he could do with all of this extra food.\nWith the bakery owner's permission, he reached out to a local organization that worked with families who need help with food and housing. The charity was extremely pleased and arranged to pick up the extra food each day. Now bread was no longer wasted, but generously shared with people in need.\nAlex's idea was such a success that he began approaching other local restaurants about joining the program. Before long, there were over a dozen businesses taking part, and Alex created a website to grow the program in other cities. Today Alex's \"simple\" idea is helping feed people all over the country!",
+"questions":[
+{"n":28,"stem":"Alex's original goal at the bakery was to ____.","options":["eat free bread and cake","learn to be a baker","make money","help people"],"answer":"c"},
+{"n":29,"stem":"Alex got his idea ____.","options":["when he saw how much food was wasted","while he was baking some fresh bread","from the owner of the bakery","from a local organization"],"answer":"a"},
+{"n":30,"stem":"The bakery owner ____.","options":["thought that Alex's plans wouldn't work","allowed Alex to give away the extra bread","helped Alex create a website for the organization","didn't care about the families assisted by the charity"],"answer":"b"},
+{"n":31,"stem":"The extra food was ____.","options":["sold by Alex","bought by the charity","delivered by the bakery","picked up by the organization"],"answer":"d"}]},
+{"id":"R7","title":"Some thoughts on your online profile",
+"passage":"In many ways, the internet has made it easier than ever to find out about new job opportunities. Yet, as companies increasingly examine candidates' social media profiles for information to use in the selection process, people need to be aware of the risks and rewards of posting online. The views they express—and the ways they choose to express them—can be a crucial factor in whether or not they receive an offer of employment.\nMany young adults, who have grown up with social media and are comfortable sharing their lives online, don't realize how employers are using social media in hiring decisions. These companies don't just consider information about a person's online behavior; they may even gather information about friends and family. Some fear that employers may judge candidates based on factors such as their medical history, age, or even beliefs.\nWhile there is currently debate about what information companies are allowed to legally collect or use for hiring decisions, everyone agrees that people need to be careful about what they post online. Your behavior on social media could cost you your current position or job opportunities in the future.\nSo, should job applicants erase their social media accounts completely? According to Professor John Sacks of the Better Hiring Institute, \"It would be better to make sure you have a strong professional profile that emphasizes your qualifications. Not having any social media might send the message that you have something to hide.\" In other words, take the time to create an attractive profile on a career site and carefully consider everything you post online.",
+"questions":[
+{"n":32,"stem":"This article is aimed primarily at ____.","options":["employers","college students","potential job candidates","social media organizations"],"answer":"c"},
+{"n":33,"stem":"According to the author, some people may not realize ____.","options":["the effect of their online behavior on friends and family","how their online profiles can affect hiring decisions","what information companies cannot legally collect","if their online profile looks professional enough"],"answer":"b"},
+{"n":34,"stem":"One way of increasing your chances of getting a good job is ____.","options":["not keeping a profile online","expressing your opinions in a honest way","having a profile that clearly shows your skills","being secretive about what you share online"],"answer":"c"},
+{"n":35,"stem":"The author ____ online personal information to make hiring decisions.","options":["is against companies using","is in favor of the practice of using","believes it does not matter if employers use","does not say whether it is good or bad to use"],"answer":"d"}]},
+{"id":"R8","title":"Sleep deprivation",
+"passage":"If you can sleep well, be grateful. Sleep deprivation is extremely common, and its side effects are both serious and underappreciated. It is estimated that 50–70 million people in the U.S. suffer from a sleep disorder, and yet too many of them do not seek medical help. Although occasional sleep interruptions are generally no more than a nuisance, continuous lack of sleep can lead to excessive daytime sleepiness, emotional difficulties, poor job performance, and even obesity.\nSleep deprivation also impacts mental well-being. A study done by the U.K. Mental Health Foundation found that people who didn't get enough sleep were about three times more likely to exhibit poor concentration and four times more likely to have relationship problems. According to another study, by the University of Warwick, getting less than six hours of sleep on a continuous basis makes a person 48% more likely to die of heart disease and 15% more likely to develop a stroke. According to study co-author Professor Francesco Cappuccio, lack of sleep \"is like a ticking time bomb for your health.\"\nIf a person is experiencing difficulties falling and staying asleep, there are several effective methods that can help and do not require medication. These include relaxation techniques, like tightening and relaxing muscles, breathing slowly, and meditating; stimulation control, which involves controlling pre-bedtime activities and surroundings; and cognitive behavioral therapy (CBT), designed to help people understand and change their thought patterns. If sleep deprivation and negative symptoms continue, however, consultation with a doctor is recommended. It's essential not to underestimate the importance of adequate sleep to maintaining good mental and physical health.",
+"questions":[
+{"n":36,"stem":"The main idea of the article is that ____.","options":["lack of sleep can have significant health consequences","sleeping is not as essential as people used to think","people underestimate how much sleep they need","relaxation techniques are important for a good night's sleep"],"answer":"a"},
+{"n":37,"stem":"According to the article, many people with sleeping disorders ____.","options":["breathe more slowly","do cognitive behavioral therapy","do not speak to their doctor about it","usually practice healthy sleeping habits"],"answer":"c"},
+{"n":38,"stem":"The article suggests that good sleepers ____.","options":["can focus better","often get about eight hours of good sleep","are able to sleep during the day","do not have heart problems"],"answer":"a"},
+{"n":39,"stem":"Professor Cappuccio found that ____.","options":["sleep-deprived people have more relationship problems","sleep deprivation might make people critically ill","research from the Mental Health Foundation was incorrect","lack of sleep is just a minor nuisance"],"answer":"b"},
+{"n":40,"stem":"The article says that people experiencing sleep difficulties can ____.","options":["lose some weight","take some types of medicine","immediately find medical help","try methods that help them fall and stay asleep"],"answer":"d"}]}
+]},
+{"id":"language_use","title":"Section III: Language Use","time_limit_minutes":15,
+"directions":"Choose the correct answer for each item.",
+"groups":[{"id":"U1","questions":[
+{"n":41,"stem":"My daughter sometimes ____ to school with her friends.","options":["walk","walks","walking","not walk"],"answer":"b"},
+{"n":42,"stem":"____ eat dinner on Sundays?","options":["Where your family","How is your family","When your family do","What time does your family"],"answer":"d"},
+{"n":43,"stem":"____ a lot of people in the park today.","options":["There","There's","There are","There is no"],"answer":"c"},
+{"n":44,"stem":"____, but I'm not very good.","options":["I can play the guitar","I don't play the guitar","I play the guitar very well","I can't play the guitar well"],"answer":"a"},
+{"n":45,"stem":"We had a nice vacation. The weather ____ beautiful.","options":["did","was","does","were"],"answer":"b"},
+{"n":46,"stem":"Tom ____ home right now. He's still at the office.","options":["isn't driving","doesn't drive","didn't drive","drives"],"answer":"a"},
+{"n":47,"stem":"Is it true? ____ a grandparent yesterday?","options":["Are you becoming","Does she become","Did he become","They became"],"answer":"c"},
+{"n":48,"stem":"I go to the gym ____ evenings. I only don't go on the weekend.","options":["some","most","all of the","many of the"],"answer":"b"},
+{"n":49,"stem":"Susan's cousin is ____ player on our soccer team.","options":["bad","best","worse","the worst"],"answer":"d"},
+{"n":50,"stem":"Our neighbor ____ the screen of his phone twice last year.","options":["breaks","is breaking","has broken","broke"],"answer":"d"},
+{"n":51,"stem":"A: I can't forget to make a reservation at the restaurant before noon.\nB: Don't worry. ____ you.","options":["I'm reminding","I've reminded","I'll remind","I remind"],"answer":"c"},
+{"n":52,"stem":"We ____ for a hotel when the storm began.","options":["search","will search","have searched","were searching"],"answer":"d"},
+{"n":53,"stem":"If you concentrate on your work, you ____ usually waste a lot of time.","options":["don't","won't","didn't","couldn't"],"answer":"a"},
+{"n":54,"stem":"I'm exhausted. ____ to fix this machine since I got here this morning.","options":["I try","I'll try","I tried","I've been trying"],"answer":"d"},
+{"n":55,"stem":"Several bridges ____ during the earthquake last year.","options":["badly damaged","were badly damaged","have badly damaged","were badly damaging"],"answer":"b"},
+{"n":56,"stem":"The agency that ____ our ideas for the poster seem a little old-fashioned.","options":["believes","is believing","was believed","has been believing"],"answer":"a"},
+{"n":57,"stem":"Superhero movies are a kind of entertainment ____ really attracted to.","options":["which","I'm not","who they","that aren't"],"answer":"b"},
+{"n":58,"stem":"More support ____ to groups dealing with environmental issues.","options":["is providing","might provide","must be provided","should be providing"],"answer":"c"},
+{"n":59,"stem":"Employees ____ show their ID cards, or they couldn't have access to the research facilities.","options":["were required to","were allowed to","didn't have to","could"],"answer":"a"},
+{"n":60,"stem":"Our math teacher made ____ a hundred math problems in one hour.","options":["us to solve","be solved","us solve","solve"],"answer":"c"},
+{"n":61,"stem":"The process ____ be very time-consuming before they launched the new system.","options":["might","would","ought to","used to"],"answer":"d"},
+{"n":62,"stem":"After some time together, those on John's team learned not to underestimate ____.","options":["each other","himself","another","itself"],"answer":"a"},
+{"n":63,"stem":"The man next door asked me ____ keep an eye on his apartment while he was away.","options":["I can","would I","if I could","whether will I"],"answer":"c"},
+{"n":64,"stem":"Our niece is very hardworking and determined. She has never had any trouble ____ her exams.","options":["to pass","passing","passed","pass"],"answer":"b"},
+{"n":65,"stem":"If they ____ the damage more carefully, they would have found these other problems.","options":["would assess","had assessed","have assessed","would have assessed"],"answer":"b"},
+{"n":66,"stem":"By this time next Monday, ____ a new head of the sales department.","options":["we hire","we're hiring","we'll have hired","we have been hiring"],"answer":"c"},
+{"n":67,"stem":"The consultants proposed a number of alternatives, ____ the firm disregarded.","options":["much of what","many of which","some of whom","none of whose"],"answer":"b"},
+{"n":68,"stem":"What ____ a couple of relaxing days at an unspoiled beach.","options":["they actually plan","did they actually plan","they actually planned was","have they actually planned are"],"answer":"c"},
+{"n":69,"stem":"We felt genuinely shocked. Never again ____ at such an overrated place.","options":["ate we","we will eat","did eat we","would we eat"],"answer":"d"},
+{"n":70,"stem":"Authorities recommend that everyone ____ the highway until repairs are completed.","options":["avoid","avoided","would avoid","is going to avoid"],"answer":"a"}
+]}]}
+]};
+
+var SPEAKING = {
+  title: "Section IV: Speaking",
+  directions: "Record one answer of about one to two minutes. Speak naturally. There is no right or wrong content, we want to hear how you use English.",
+  prompt: "Tell us about yourself and your daily life. Then describe something interesting you did recently, and say what you would like to do next year.",
+  points: ["Who you are, where you live, and what you do every day.", "A recent experience: what happened, where, and who was there.", "A plan or hope for next year, and why it matters to you."]
+};
+
+var root = document.getElementById("evolve-test");
+var sections = DATA.sections;
+var STEP_LABELS = ["Listening", "Reading", "Language", "Speaking", "Results"];
+var RESULTS = 4, SPEAK = 3;
+var state = { step: 0, name: "", started: false, answers: {}, finished: false, filter: "all",
+  speaking: { blob: null, url: null, seconds: 0, mime: "", recording: false, error: "" }, upload: "" };
+var rec = { mr: null, stream: null, chunks: [], t0: 0, tick: null };
+
+function $(sel) { return root.querySelector(sel); }
+function allQuestions(sec) { return sec.groups.reduce(function (a, g) { return a.concat(g.questions); }, []); }
+function secScore(sec) { return allQuestions(sec).filter(function (q) { return state.answers[q.n] === q.answer; }).length; }
+function totalScore() { return sections.reduce(function (s, sec) { return s + secScore(sec); }, 0); }
+function levelFor(score) { var h = DATA.scoring.filter(function (b) { return score >= b.min && score <= b.max; })[0]; return h ? h.level : "Level 1A"; }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+function fmt(sec) { sec = Math.round(sec); return Math.floor(sec / 60) + ":" + ("0" + (sec % 60)).slice(-2); }
+
+/* ---------- shell ---------- */
+root.innerHTML =
+  '<div class="et-top"><div class="et-brand"><b>EVOLVE Placement Test</b><span class="et-who"></span></div>' +
+  '<div class="et-steps"></div><div class="et-bar"><i></i></div></div>' +
+  '<div class="et-main"></div>' +
+  '<div class="et-foot"><div class="in"><span class="count"></span><span><button class="btn ghost et-back">Back</button> <button class="btn et-next">Next</button></span></div></div>';
+
+function renderSteps() {
+  var h = STEP_LABELS.map(function (t, i) {
+    var dis = !state.started || (i === RESULTS && !state.finished) || (state.finished && i < RESULTS);
+    return '<button data-i="' + i + '"' + (i === state.step ? ' aria-current="step"' : "") + (dis ? " disabled" : "") + ">" + t + "</button>";
+  }).join("");
+  var box = $(".et-steps"); box.innerHTML = h;
+  Array.prototype.forEach.call(box.querySelectorAll("button"), function (b) { b.onclick = function () { go(+b.getAttribute("data-i")); }; });
+  $(".et-who").textContent = state.name;
+  $(".et-bar i").style.width = (Object.keys(state.answers).length / DATA.total_items * 100) + "%";
+}
+function go(i) { stopRecording(true); state.step = i; render(); root.scrollIntoView({ block: "start" }); }
+
+/* ---------- questions ---------- */
+function questionHTML(q, review) {
+  var chosen = state.answers[q.n], letters = ["a", "b", "c", "d"];
+  var opts = q.options.map(function (o, i) {
+    var L = letters[i], cls = "opt", tag = "";
+    if (review) {
+      cls += " locked";
+      if (L === q.answer) { cls += " correct"; tag = chosen === L ? "Your answer ✓" : "Correct answer"; }
+      else if (L === chosen) { cls += " wrong"; tag = "Your answer ✗"; }
+    }
+    return '<label class="' + cls + '"><input type="radio" name="q' + q.n + '" value="' + L + '"' + (chosen === L ? " checked" : "") + (review ? " disabled" : "") + '>' +
+      '<span class="l">' + L + "</span><span>" + esc(o) + "</span>" + (tag ? '<span class="tag">' + tag + "</span>" : "") + "</label>";
+  }).join("");
+  var miss = review && !chosen ? '<p class="muted" style="margin:4px 0 0">Not answered.</p>' : "";
+  return '<div class="q"><div class="qstem"><span class="qn">' + q.n + "</span><span>" +
+    esc(q.stem).replace(/____/g, "<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>") + "</span></div>" + opts + miss + "</div>";
+}
+function groupHTML(g, idx, review, listening) {
+  var h = '<div class="card">';
+  if (listening) h += '<p class="group-title">Situation ' + (idx + 1) + '</p><div class="situation">' + esc(g.situation) + "</div>";
+  else if (g.title) h += '<p class="group-title">' + esc(g.title) + "</p>";
+  if (g.passage) h += '<div class="passage" style="margin-bottom:10px">' + esc(g.passage) + "</div>";
+  h += g.questions.map(function (q) { return questionHTML(q, review); }).join("");
+  return h + "</div>";
+}
+
+/* ---------- screens ---------- */
+function renderIntro() {
+  $(".et-main").innerHTML =
+    "<h1>Find your English level</h1>" +
+    '<p class="muted">' + DATA.total_items + " multiple-choice questions in three sections (Listening, Reading, Language Use), followed by a short speaking task. It takes about an hour.</p>" +
+    '<div class="card"><label class="field" for="et-nm">Your name</label>' +
+    '<input type="text" id="et-nm" autocomplete="name" value="' + esc(state.name) + '">' +
+    '<p class="muted" style="margin-top:12px">Before you start:</p>' +
+    '<ul style="margin:0 0 12px;padding-left:20px"><li>Use headphones and find a quiet place.</li><li>You hear each listening conversation only once.</li><li>For the speaking task, allow your microphone when your browser asks.</li></ul>' +
+    '<button class="btn et-go">Start the test</button></div>';
+  $(".et-go").onclick = function () {
+    var v = $("#et-nm").value.trim();
+    if (!v) { $("#et-nm").focus(); return; }
+    state.name = v; state.started = true; go(0);
+  };
+  $("#et-nm").onkeydown = function (e) { if (e.key === "Enter") $(".et-go").click(); };
+}
+
+function bindRadios() {
+  Array.prototype.forEach.call($(".et-main").querySelectorAll("input[type=radio]"), function (r) {
+    r.onchange = function () { state.answers[+r.name.slice(1)] = r.value; renderCount(); renderSteps(); };
+  });
+}
+
+function renderSection(i) {
+  var sec = sections[i];
+  var h = "<h2>" + esc(sec.title) + '</h2><p class="muted">' + esc(sec.directions) + " Suggested time: " + sec.time_limit_minutes + " minutes.</p>";
+  if (sec.id === "listening") {
+    h += '<div class="card"><h3>1. Directions</h3><p class="muted" style="margin:0">Press play and listen to the directions and the example.</p>' +
+      '<audio id="et-aDir" controls preload="metadata" controlsList="nodownload" src="' + esc(CONFIG.AUDIO_DIRECTIONS_URL) + '"></audio>' +
+      '<p class="audio-note">Example: the Science Museum and the hospital are on the same street (answer d).</p></div>' +
+      '<div class="card"><h3>2. Listening test</h3><p class="muted" style="margin:0">Press play when you are ready. The recording runs for about 17 minutes without stopping, so read each situation as it is announced.</p>' +
+      '<audio id="et-aTest" controls preload="metadata" controlsList="nodownload" src="' + esc(CONFIG.AUDIO_TEST_URL) + '"></audio>' +
+      '<p class="audio-note" id="et-aNote">Answer the questions below while you listen.</p></div>';
+  }
+  sec.groups.forEach(function (g, idx) { h += groupHTML(g, idx, false, sec.id === "listening"); });
+  $(".et-main").innerHTML = h;
+  bindRadios();
+  if (sec.id === "listening") {
+    var dir = $("#et-aDir"), test = $("#et-aTest");
+    dir.onended = function () { $("#et-aNote").textContent = "Directions finished. Press play on the listening test."; };
+    test.onended = function () { $("#et-aNote").textContent = "The recording has finished. Check your answers, then continue."; };
+    test.onplay = function () { if (!dir.paused) dir.pause(); };
+    dir.onplay = function () { if (!test.paused) test.pause(); };
+    var onErr = function (e) { $("#et-aNote").innerHTML = '<span style="color:var(--bad)">The audio file could not be loaded. Tell your teacher.</span>'; };
+    dir.onerror = onErr; test.onerror = onErr;
+  }
+}
+
+/* ---------- speaking ---------- */
+function pickMime() {
+  if (!window.MediaRecorder) return "";
+  var c = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
+  for (var i = 0; i < c.length; i++) if (MediaRecorder.isTypeSupported(c[i])) return c[i];
+  return "";
+}
+function renderSpeaking() {
+  var s = state.speaking, supported = !!(navigator.mediaDevices && window.MediaRecorder);
+  var h = "<h2>" + SPEAKING.title + '</h2><p class="muted">' + SPEAKING.directions + "</p>" +
+    '<div class="card"><p class="prompt">' + esc(SPEAKING.prompt) + "</p>" +
+    '<ul class="prompt-list">' + SPEAKING.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" +
+    '<p class="muted" style="margin:0">Aim for at least ' + CONFIG.SPEAKING_MIN_SECONDS + " seconds. Recording stops automatically at " + fmt(CONFIG.SPEAKING_MAX_SECONDS) + ".</p></div>" +
+    '<div class="card" id="et-rec">';
+  if (!supported) {
+    h += '<div class="warn">Your browser cannot record audio. Open this page in a recent version of Chrome, Edge, Firefox, or Safari, or tell your teacher.</div>';
+  } else if (s.recording) {
+    h += '<div><span class="dot"></span><b>Recording</b></div><div class="timer" id="et-time">0:00</div>' +
+      '<button class="btn" id="et-stop">Stop recording</button>';
+  } else if (s.blob) {
+    h += '<h3>Your recording (' + fmt(s.seconds) + ')</h3><audio controls src="' + s.url + '"></audio>' +
+      (s.seconds < CONFIG.SPEAKING_MIN_SECONDS ? '<p class="audio-note" style="color:var(--bad)">This is quite short. Try to speak for at least ' + CONFIG.SPEAKING_MIN_SECONDS + " seconds.</p>" : "") +
+      '<p style="margin-top:12px"><button class="btn ghost" id="et-again">Record again</button></p>';
+  } else {
+    h += '<button class="btn rec" id="et-start">Start recording</button><p class="audio-note">Your browser will ask for permission to use the microphone.</p>';
+  }
+  if (s.error) h += '<div class="warn">' + esc(s.error) + "</div>";
+  h += "</div>";
+  $(".et-main").innerHTML = h;
+  var st = $("#et-start"), sp = $("#et-stop"), ag = $("#et-again");
+  if (st) st.onclick = startRecording;
+  if (sp) sp.onclick = function () { stopRecording(false); };
+  if (ag) ag.onclick = function () { if (s.url) URL.revokeObjectURL(s.url); s.blob = null; s.url = null; s.seconds = 0; s.error = ""; renderSpeaking(); };
+}
+function startRecording() {
+  var s = state.speaking; s.error = "";
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+    var mime = pickMime(), opts = mime ? { mimeType: mime } : undefined;
+    rec.stream = stream; rec.chunks = [];
+    rec.mr = new MediaRecorder(stream, opts);
+    s.mime = rec.mr.mimeType || mime || "audio/webm";
+    rec.mr.ondataavailable = function (e) { if (e.data && e.data.size) rec.chunks.push(e.data); };
+    rec.mr.onstop = function () {
+      stream.getTracks().forEach(function (t) { t.stop(); });
+      clearInterval(rec.tick);
+      var keep = !rec.discard; rec.discard = false;
+      s.recording = false;
+      if (keep && rec.chunks.length) {
+        s.blob = new Blob(rec.chunks, { type: s.mime });
+        s.url = URL.createObjectURL(s.blob);
+        s.seconds = (Date.now() - rec.t0) / 1000;
+      }
+      if (state.step === SPEAK) renderSpeaking();
+      renderCount();
+    };
+    rec.t0 = Date.now(); rec.mr.start(); s.recording = true; renderSpeaking();
+    rec.tick = setInterval(function () {
+      var el = (Date.now() - rec.t0) / 1000, t = $("#et-time");
+      if (t) t.textContent = fmt(el);
+      if (el >= CONFIG.SPEAKING_MAX_SECONDS) stopRecording(false);
+    }, 250);
+  }).catch(function () {
+    s.error = "The microphone is blocked. Allow microphone access in your browser settings, then press Start recording again.";
+    renderSpeaking();
+  });
+}
+function stopRecording(discard) {
+  if (rec.mr && rec.mr.state !== "inactive") { rec.discard = !!discard; rec.mr.stop(); }
+}
+
+/* ---------- results ---------- */
+function renderResults() {
+  var total = totalScore(), lvl = levelFor(total), answered = Object.keys(state.answers).length, s = state.speaking;
+  var h = "<h1>Your result</h1>" +
+    '<div class="card"><p class="muted" style="margin:0">' + esc(state.name) + "</p>" +
+    '<div class="score">' + total + '<span class="muted" style="font-size:22px;font-weight:600"> / ' + DATA.total_items + "</span></div>" +
+    '<div class="level">Recommended placement: ' + esc(lvl) + "</div>" +
+    '<table class="sec"><tr><th>Section</th><th>Score</th></tr>' +
+    sections.map(function (x) { return "<tr><td>" + esc(x.title.replace(/^Section [IV]+: /, "")) + "</td><td>" + secScore(x) + " / " + allQuestions(x).length + "</td></tr>"; }).join("") +
+    "<tr><td>Speaking</td><td>" + (s.blob ? "Recorded, reviewed by your teacher" : "Not recorded") + "</td></tr></table>" +
+    (answered < DATA.total_items ? '<div class="warn">' + (DATA.total_items - answered) + " question(s) were left blank and count as incorrect.</div>" : "") +
+    (state.upload ? '<p class="audio-note">' + esc(state.upload) + "</p>" : "") +
+    '<div class="filters noprint" style="margin-top:14px"><button class="btn ghost et-print">Print result</button> <button class="btn ghost et-retake">Retake the test</button></div></div>';
+  if (s.blob) h += '<div class="card"><h3>Your speaking recording</h3><audio controls src="' + s.url + '"></audio></div>';
+  h += "<h2>Review your answers</h2>" +
+    '<div class="filters noprint"><button class="btn ' + (state.filter === "all" ? "" : "ghost") + '" data-f="all">All questions</button>' +
+    '<button class="btn ' + (state.filter === "wrong" ? "" : "ghost") + '" data-f="wrong">Only mistakes</button></div>';
+  sections.forEach(function (sec) {
+    sec.groups.forEach(function (g, idx) {
+      var qs = g.questions.filter(function (q) { return state.filter === "all" || state.answers[q.n] !== q.answer; });
+      if (!qs.length) return;
+      var copy = {}; for (var k in g) copy[k] = g[k]; copy.questions = qs;
+      h += groupHTML(copy, idx, true, sec.id === "listening");
+    });
+  });
+  $(".et-main").innerHTML = h;
+  $(".et-print").onclick = function () { window.print(); };
+  $(".et-retake").onclick = function () {
+    if (confirm("Delete your answers and recording and start again?")) {
+      if (s.url) URL.revokeObjectURL(s.url);
+      state.answers = {}; state.finished = false; state.filter = "all"; state.upload = "";
+      state.speaking = { blob: null, url: null, seconds: 0, mime: "", recording: false, error: "" };
+      go(0);
+    }
+  };
+  Array.prototype.forEach.call($(".et-main").querySelectorAll("[data-f]"), function (b) {
+    b.onclick = function () { state.filter = b.getAttribute("data-f"); renderResults(); };
+  });
+}
+
+/* ---------- submit ---------- */
+function report() {
+  var total = totalScore(), s = state.speaking, secs = {};
+  sections.forEach(function (x) { secs[x.id] = secScore(x); });
+  var copy = {}; for (var k in state.answers) copy[k] = state.answers[k];
+  return { type: "evolve-placement-result", name: state.name, score: total, outOf: DATA.total_items, level: levelFor(total),
+    sections: secs, answers: copy, speaking: { recorded: !!s.blob, seconds: Math.round(s.seconds), mimeType: s.mime, audio: s.blob || null },
+    date: new Date().toISOString() };
+}
+function finish() {
+  var blank = DATA.total_items - Object.keys(state.answers).length, msg = [];
+  if (blank > 0) msg.push(blank + " question(s) are still blank.");
+  if (!state.speaking.blob) msg.push("You have not recorded the speaking task.");
+  if (msg.length && !confirm(msg.join(" ") + " Submit anyway?")) return;
+  state.finished = true;
+  var r = report();
+  try { root.dispatchEvent(new CustomEvent("evolve:result", { detail: r, bubbles: true })); } catch (e) {}
+  try { if (typeof window.onEvolveResult === "function") window.onEvolveResult(r); } catch (e) {}
+  try { if (window.parent && window.parent !== window) window.parent.postMessage(r, "*"); } catch (e) {}
+  if (CONFIG.SPEAKING_UPLOAD_URL) {
+    var fd = new FormData();
+    fd.append("name", r.name); fd.append("score", r.score); fd.append("level", r.level);
+    fd.append("sections", JSON.stringify(r.sections)); fd.append("answers", JSON.stringify(r.answers));
+    if (state.speaking.blob) fd.append("speaking", state.speaking.blob, "speaking." + (state.speaking.mime.indexOf("mp4") > -1 ? "m4a" : "webm"));
+    state.upload = "Sending your result…";
+    fetch(CONFIG.SPEAKING_UPLOAD_URL, { method: "POST", body: fd })
+      .then(function (res) { state.upload = res.ok ? "Your result and recording were sent." : "Your result could not be sent. Tell your teacher."; if (state.step === RESULTS) renderResults(); })
+      .catch(function () { state.upload = "Your result could not be sent. Tell your teacher."; if (state.step === RESULTS) renderResults(); });
+  }
+  go(RESULTS);
+}
+
+/* ---------- main render ---------- */
+function renderCount() {
+  var c = $(".count");
+  if (!state.started || state.step === RESULTS) { c.textContent = ""; return; }
+  if (state.step === SPEAK) { c.textContent = state.speaking.blob ? "Recording saved" : "Not recorded yet"; return; }
+  var qs = allQuestions(sections[state.step]);
+  c.textContent = qs.filter(function (q) { return state.answers[q.n]; }).length + " of " + qs.length + " answered";
+}
+function render() {
+  renderSteps(); renderCount();
+  var f = $(".et-foot");
+  if (!state.started) { f.classList.add("hidden"); renderIntro(); return; }
+  if (state.step === RESULTS) { f.classList.add("hidden"); renderResults(); return; }
+  f.classList.remove("hidden");
+  if (state.step === SPEAK) renderSpeaking(); else renderSection(state.step);
+  $(".et-back").classList.toggle("hidden", state.step === 0);
+  $(".et-next").textContent = state.step === SPEAK ? "Submit test" : "Next section";
+  $(".et-back").onclick = function () { go(state.step - 1); };
+  $(".et-next").onclick = function () {
+    if (state.speaking.recording) { alert("Stop the recording first."); return; }
+    if (state.step === SPEAK) finish(); else go(state.step + 1);
+  };
+}
+render();
+})();
+</script>
