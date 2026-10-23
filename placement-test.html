@@ -1,83 +1,302 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>General English Academy | EVOLVE Placement Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Placement Test | General English Academy</title>
 <style>
-:root{--navy:#14243a;--blue:#2359a8;--bg:#f3f6fb;--ink:#172333;--line:#d9e1ec;--muted:#5b6878}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Arial,sans-serif}
-header{background:var(--navy);color:#fff;padding:25px 16px}header>div,main{max-width:950px;margin:auto}header h1{margin:5px 0;font-size:clamp(25px,5vw,36px)}header p{margin:0;color:#dce8f8}.brand{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c9d9ef;font-weight:bold}
-main{padding:20px 14px 50px}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 5px 18px #14243a0a}
-h2{font-size:21px;margin:0 0 10px;color:var(--navy)}h3{font-size:17px;margin:0 0 8px}.muted{color:var(--muted);font-size:14px}
-audio{width:100%;display:block;margin:10px 0}.track{padding:12px;border:1px solid var(--line);border-radius:10px;margin:10px 0}
-a.button,button{display:inline-block;border:0;border-radius:9px;padding:11px 15px;background:var(--blue);color:white;text-decoration:none;font:inherit;font-weight:bold;cursor:pointer}
-button.secondary,a.secondary{background:#e8eef7;color:var(--navy)}.pdf{width:100%;height:78vh;min-height:520px;border:1px solid var(--line);border-radius:9px}
-input,textarea{font:inherit}input[type=text]{width:100%;padding:11px;border:1px solid #bac7d8;border-radius:8px}
-textarea{width:100%;min-height:105px;padding:12px;border:1px solid #bac7d8;border-radius:8px}
-.prompt{padding:12px;border-radius:9px;background:#f0f5fc;margin:10px 0}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.status{font-size:14px;color:var(--muted);margin-top:8px}
-@media(max-width:600px){.card{padding:14px}.pdf{min-height:400px;height:65vh}}
-@media print{header{background:white;color:black}audio,.actions,button{display:none}.pdf{height:auto}}
+:root{--blue:#2457c5;--dark:#142440;--bg:#f3f6fb;--border:#dce4ef}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#202b3c;font:16px/1.6 Arial,sans-serif}
+header{background:linear-gradient(120deg,#142440,#2457c5);color:white;padding:28px 16px}
+.container{max-width:850px;margin:auto;padding:18px}
+h1,h2{margin-top:0}
+header p{margin-bottom:0}
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+button{border:0;border-radius:9px;background:var(--blue);color:white;padding:12px 18px;font-size:16px;font-weight:bold;cursor:pointer}
+button.secondary{background:#e8eef9;color:#18356b}
+button:disabled{opacity:.5}
+input[type=text],textarea{width:100%;padding:12px;border:1px solid #bbc8da;border-radius:8px;font:inherit}
+.question{border-top:1px solid #e5eaf2;padding:16px 0}
+.question p{font-weight:bold;margin:0 0 10px}
+.option{display:flex;gap:10px;padding:9px;margin:6px 0;border:1px solid var(--border);border-radius:8px;cursor:pointer}
+.option input{margin-top:5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.hidden{display:none!important}
+.muted{color:#65738a;font-size:.93rem}
+.notice{background:#fff7e8;padding:12px;border-left:4px solid #f0a629;border-radius:6px}
+.progress{height:8px;background:#e5eaf2;border-radius:20px;overflow:hidden;margin:12px 0}
+#bar{height:100%;width:0;background:#3980ff}
+.score{font-size:36px;font-weight:bold;color:var(--blue)}
+.good{color:#15803d}.bad{color:#b91c1c}
+footer{text-align:center;color:#65738a;padding:20px;font-size:13px}
+@media(max-width:550px){.card{padding:15px}.actions button{width:100%}}
+@media print{header{background:white;color:black}.no-print,button{display:none!important}body{background:white}.card{break-inside:avoid}}
 </style>
 </head>
 <body>
-<header><div><div class="brand">General English Academy</div><h1>EVOLVE Placement Test</h1><p>Listening · Reading · Language Use · Speaking Interview</p></div></header>
-<main>
-<section class="card">
-<h2>Before you begin</h2>
-<p>This page contains the original student test booklet with all 70 questions in their original wording and order. The teacher answer key is not included in the student booklet.</p>
-<p><strong>Recommended timing:</strong> Listening 15 minutes, Reading 20 minutes, Language Use 15 minutes. Complete the speaking interview with your teacher at the end.</p>
-<label for="studentName"><strong>Student name (optional)</strong></label>
-<input id="studentName" type="text" placeholder="Enter your full name">
+<header>
+ <div class="container">
+  <h1>English Placement Test</h1>
+  <p>General English Academy · American English · A1–C1</p>
+ </div>
+</header>
+
+<main class="container">
+<section class="card" id="intro">
+ <h2>Welcome!</h2>
+ <p>This test checks your listening, reading, grammar and vocabulary. Answer independently without using a dictionary.</p>
+ <div class="notice"><b>Listening:</b> Audio is generated by your browser. No external MP3 files are required. Use Google Chrome if audio or microphone features are unavailable.</div>
+ <p class="muted">Estimated time: 20–30 minutes. This is a practice assessment, not an official CEFR certificate.</p>
+ <button id="start">Start Test</button>
 </section>
-<section class="card">
-<h2>1. Listening audio files</h2>
-<p class="muted">These are the three supplied MP3 files. Press Play to verify playback. Keep the audio files in the same folder as this HTML page when uploading to GitHub.</p>
-<div class="track"><h3>Track 1 — Copyright / Introduction</h3><audio controls preload="metadata"><source src="Evolve%20Placement%20Test%20Track%201%20(Copyright).mp3" type="audio/mpeg">Your browser does not support audio.</audio></div>
-<div class="track"><h3>Track 2 — Directions</h3><audio controls preload="metadata"><source src="Evolve%20Placement%20Test%20Track%202%20(Directions).mp3" type="audio/mpeg">Your browser does not support audio.</audio></div>
-<div class="track"><h3>Track 3 — Listening Test</h3><audio controls preload="metadata"><source src="Evolve%20Placement%20Test%20Track%203%20(Test).mp3" type="audio/mpeg">Your browser does not support audio.</audio></div>
-<p class="muted">If a track does not play after deployment, check that the MP3 file is uploaded to the same GitHub folder with exactly the filename shown above.</p>
+
+<section id="exam" class="hidden">
+ <div class="card">
+  <b id="progressText">0 of 30 answered</b>
+  <div class="progress"><div id="bar"></div></div>
+ </div>
+
+ <form id="quiz">
+  <div class="card">
+   <h2>Part 1: Listening</h2>
+   <p>Play the message, then choose your answer.</p>
+   <div id="listening"></div>
+  </div>
+
+  <div class="card">
+   <h2>Part 2: Reading</h2>
+   <div class="notice">
+    Hi Mia, this is Jordan. I'm sorry, but I can't meet you at the café at 5:30 today. My work meeting is running late. Could we meet at 6:15 instead? If that's too late, I'm free tomorrow morning. Let me know what works for you.
+   </div>
+   <div id="reading"></div>
+  </div>
+
+  <div class="card">
+   <h2>Part 3: Grammar and Vocabulary</h2>
+   <div id="grammar"></div>
+  </div>
+
+  <div class="card">
+   <h2>Part 4: Speaking Practice</h2>
+   <p>Speak for 45–60 seconds. Introduce yourself, describe your daily routine, and explain one goal you have.</p>
+   <div class="actions">
+    <button type="button" id="record" class="secondary">Record Answer</button>
+    <button type="button" id="stop" class="secondary" disabled>Stop Recording</button>
+   </div>
+   <p id="recordStatus" class="muted">Your recording stays in your browser.</p>
+   <audio id="playback" controls class="hidden" style="width:100%"></audio>
+   <h3>Writing Practice</h3>
+   <p>Write 80–120 words about a challenge you faced and how you dealt with it.</p>
+   <textarea id="writing" rows="5" placeholder="Write your answer here..."></textarea>
+   <p class="muted">Speaking and writing need teacher assessment for an accurate level.</p>
+  </div>
+
+  <div class="card no-print">
+   <h2>Submit Your Test</h2>
+   <p>Your score and answer explanations will appear after submission.</p>
+   <div class="actions">
+    <button type="submit">Submit and See Results</button>
+    <button type="button" class="secondary" id="reset">Reset Test</button>
+   </div>
+  </div>
+ </form>
 </section>
-<section class="card">
-<h2>2. Official EVOLVE test — all 70 questions</h2>
-<p>The original student booklet is shown below. On mobile, use the PDF viewer controls to zoom in or open the booklet separately.</p>
-<div class="actions"><a class="button" href="EVOLVE-Student-Test.pdf" target="_blank" rel="noopener">Open test in new tab</a><a class="button secondary" href="EVOLVE-Student-Test.pdf" download>Download test booklet</a></div>
-<iframe class="pdf" title="EVOLVE student test booklet containing questions 1 to 70" src="EVOLVE-Student-Test.pdf#page=1"></iframe>
-</section>
-<section class="card" id="speaking">
-<h2>3. Speaking interview — at the end</h2>
-<p class="muted">Teacher-led interview. Ask the student to answer naturally and give examples. Suggested duration: 8–12 minutes.</p>
-<div class="prompt"><strong>Warm-up</strong><br>1. Could you introduce yourself and tell me a little about your daily life?</div>
-<div class="prompt"><strong>Experience and opinions</strong><br>2. Tell me about a memorable experience you have had.<br>3. What do you like about the place where you live?<br>4. Do you prefer studying online or in a classroom? Why?<br>5. What is one skill you would like to develop in the next few years, and why?</div>
-<div class="prompt"><strong>Extended response</strong><br>6. Some people believe technology makes life easier, while others think it creates new problems. What is your opinion? Give reasons and examples.</div>
-<label for="speakingNotes"><strong>Teacher's speaking notes</strong></label>
-<textarea id="speakingNotes" placeholder="Fluency, grammar, vocabulary, pronunciation, interaction..."></textarea>
-<div class="actions"><button type="button" id="recordBtn">Start speaking recording</button><button type="button" class="secondary" id="stopBtn" disabled>Stop recording</button></div>
-<p id="recordStatus" class="status">Recording stays in this browser session. After stopping, you can play it and download it.</p>
-<audio id="recordedAudio" controls hidden></audio>
-<div class="actions"><a id="downloadRecording" class="button secondary" hidden download="speaking-interview.webm">Download speaking recording</a><button type="button" class="secondary" onclick="window.print()">Print test / notes</button></div>
-</section>
-<footer class="muted">General English Academy · EVOLVE is a Cambridge University Press course and trademark. Use and distribute the supplied materials only with appropriate permission.</footer>
+
+<section id="results" class="card hidden"></section>
+<footer>General English Academy · Independent practice test</footer>
 </main>
+
 <script>
-const recordBtn=document.getElementById('recordBtn'),stopBtn=document.getElementById('stopBtn'),statusEl=document.getElementById('recordStatus'),audioEl=document.getElementById('recordedAudio'),downloadEl=document.getElementById('downloadRecording');
-let recorder=null,chunks=[];
-recordBtn.addEventListener('click',async()=>{
- if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){statusEl.textContent='Recording is not supported in this browser. You can still complete the speaking interview with your teacher.';return}
- try{
-  const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];
-  recorder=new MediaRecorder(stream);
-  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
-  recorder.onstop=()=>{
-   const blob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'}),url=URL.createObjectURL(blob);
-   audioEl.src=url;audioEl.hidden=false;downloadEl.href=url;downloadEl.hidden=false;
-   stream.getTracks().forEach(t=>t.stop());statusEl.textContent='Recording complete. Play it back or download it to your device.';
-  };
-  recorder.start();recordBtn.disabled=true;stopBtn.disabled=false;statusEl.textContent='Recording… Speak clearly. Press Stop when finished.';
- }catch(e){statusEl.textContent='Microphone access was not granted. Allow microphone permission in your browser and try again.'}
+"use strict";
+
+const listeningData = [
+ {text:"The train to Boston leaves at quarter past nine from platform four.",q:"What time does the train leave?",o:["9:05","9:15","9:45"],a:1},
+ {text:"Our English class is in room twelve today, not room twenty.",q:"Where is the class?",o:["Room 12","Room 20","Room 2"],a:0},
+ {text:"The pharmacy closes at seven tonight and opens at eight tomorrow.",q:"When does the pharmacy close?",o:["8 p.m.","7 p.m.","6 p.m."],a:1},
+ {text:"I can't meet on Friday, but Saturday evening is perfect for me.",q:"When can the speaker meet?",o:["Friday","Saturday evening","Monday"],a:1},
+ {text:"Breakfast is served from six thirty until ten in the dining room next to the lobby.",q:"Where is breakfast served?",o:["Next to the lobby","In the bedroom","Outside the hotel"],a:0}
+];
+
+const readingData = [
+ {q:"Why can't Jordan meet Mia at 5:30?",o:["Jordan's work meeting is running late.","Mia is out of town.","The café is closed."],a:0,e:"Jordan says the work meeting is running late."},
+ {q:"What time does Jordan suggest instead?",o:["5:15","6:15","7:30"],a:1,e:"Jordan suggests 6:15."},
+ {q:"When is Jordan free if 6:15 is too late?",o:["Tomorrow morning","Tonight at midnight","Next Friday"],a:0,e:"Jordan says tomorrow morning is possible."},
+ {q:"What does 'running late' mean?",o:["Finishing later than planned","Running fast","Starting early"],a:0,e:"It means taking longer than planned."},
+ {q:"What does Jordan ask Mia to do?",o:["Cancel everything","Let Jordan know what works","Call the hotel"],a:1,e:"Jordan asks Mia to let them know."}
+];
+
+const grammarData = [
+ {q:"My brother ___ in Chicago.",o:["live","lives","living"],a:1,e:"Present simple: he/she/it + verb-s."},
+ {q:"They ___ football every weekend.",o:["plays","play","playing"],a:1,e:"Use the base verb with they."},
+ {q:"There ___ two chairs in the room.",o:["is","are","be"],a:1,e:"Use 'are' with plural nouns."},
+ {q:"We ___ dinner when the phone rang.",o:["have","were having","are having"],a:1,e:"Past continuous describes an action in progress."},
+ {q:"I've lived here ___ 2021.",o:["for","since","during"],a:1,e:"Use 'since' with a starting point."},
+ {q:"Could you ___ me a favor?",o:["do","make","take"],a:0,e:"The expression is 'do someone a favor'."},
+ {q:"The film was so ___ that I fell asleep.",o:["bored","boring","bore"],a:1,e:"'Boring' describes the thing that causes the feeling."},
+ {q:"If I ___ more time, I'd learn another language.",o:["have","had","will have"],a:1,e:"Second conditional: if + past simple, would + verb."},
+ {q:"By the time we arrived, the show ___.",o:["starts","has started","had started"],a:2,e:"Past perfect describes an earlier past event."},
+ {q:"She's very good ___ explaining ideas.",o:["at","for","on"],a:0,e:"The expression is 'good at'."},
+ {q:"Choose the closest meaning of 'reliable'.",o:["Easy to trust","Very expensive","Hard to understand"],a:0,e:"Reliable means dependable or trustworthy."},
+ {q:"I wish I ___ so much time yesterday.",o:["didn't waste","hadn't wasted","won't waste"],a:1,e:"Wish + past perfect expresses past regret."},
+ {q:"Despite ___ tired, she finished the report.",o:["being","be","was"],a:0,e:"Despite is followed by a noun or gerund."},
+ {q:"The proposal was rejected, ___ surprised nobody.",o:["what","which","who"],a:1,e:"'Which' can refer to the preceding clause."},
+ {q:"He tends to ___ tasks until the last minute.",o:["put off","put out","put up"],a:0,e:"Put off means postpone."},
+ {q:"Had I known, I ___ earlier.",o:["would leave","would have left","will leave"],a:1,e:"Third conditional: would have + past participle."},
+ {q:"Her explanation was clear and ___.",o:["concise","reluctant","ambiguous"],a:0,e:"Concise means clear and brief."},
+ {q:"No sooner ___ down than the lights went out.",o:["we sat","had we sat","we have sat"],a:1,e:"'No sooner' at the beginning requires inversion."},
+ {q:"The policy aims to ___ unnecessary delays.",o:["mitigate","allocate","provoke"],a:0,e:"Mitigate means reduce the impact or severity."},
+ {q:"The argument is persuasive but rests on a ___ assumption.",o:["tenuous","meticulous","inevitable"],a:0,e:"Tenuous means weak or poorly supported."}
+];
+
+const allQuestions=[];
+function addQuestions(data,target,part){
+ const root=document.getElementById(target);
+ data.forEach((item,index)=>{
+  const id=allQuestions.length+1;
+  const q={...item,id,part};
+  allQuestions.push(q);
+  const el=document.createElement("div");
+  el.className="question";
+  let audio="";
+  if(part==="Listening"){
+   audio=`<div class="actions">
+    <button type="button" class="secondary play" data-id="${id}">▶ Play Listening</button>
+    <button type="button" class="secondary transcript" data-id="${id}">Show Transcript</button>
+   </div><p class="muted hidden" id="transcript${id}">${item.text}</p>`;
+  }
+  el.innerHTML=`<p>${id}. ${item.q}</p>${audio}<div>${item.o.map((option,i)=>`<label class="option"><input type="radio" name="q${id}" value="${i}"><span>${String.fromCharCode(65+i)}. ${option}</span></label>`).join("")}</div>`;
+  root.appendChild(el);
+ });
+}
+addQuestions(listeningData,"listening","Listening");
+addQuestions(readingData,"reading","Reading");
+addQuestions(grammarData,"grammar","Grammar and Vocabulary");
+
+document.getElementById("start").onclick=()=>{
+ document.getElementById("intro").classList.add("hidden");
+ document.getElementById("exam").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+};
+
+function updateProgress(){
+ const answered=document.querySelectorAll('#quiz input[type="radio"]:checked').length;
+ document.getElementById("progressText").textContent=`${answered} of ${allQuestions.length} answered`;
+ document.getElementById("bar").style.width=(answered/allQuestions.length*100)+"%";
+}
+document.getElementById("quiz").addEventListener("change",updateProgress);
+
+document.addEventListener("click",event=>{
+ const play=event.target.closest(".play");
+ if(play){
+  const q=allQuestions.find(x=>x.id===Number(play.dataset.id));
+  if(!("speechSynthesis" in window)){alert("Audio is not supported in this browser. Try Chrome.");return;}
+  speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(q.text);
+  utterance.lang="en-US";
+  utterance.rate=.88;
+  speechSynthesis.speak(utterance);
+ }
+ const transcript=event.target.closest(".transcript");
+ if(transcript){
+  const p=document.getElementById("transcript"+transcript.dataset.id);
+  p.classList.toggle("hidden");
+  transcript.textContent=p.classList.contains("hidden")?"Show Transcript":"Hide Transcript";
+ }
 });
-stopBtn.addEventListener('click',()=>{if(recorder&&recorder.state!=='inactive'){recorder.stop();recordBtn.disabled=false;stopBtn.disabled=true}});
+
+let recorder=null;
+let chunks=[];
+let currentStream=null;
+document.getElementById("record").onclick=async()=>{
+ if(!navigator.mediaDevices||!window.MediaRecorder){
+  document.getElementById("recordStatus").textContent="Recording is unsupported in this browser. Use your phone's voice recorder instead.";
+  return;
+ }
+ try{
+  currentStream=await navigator.mediaDevices.getUserMedia({audio:true});
+  chunks=[];
+  recorder=new MediaRecorder(currentStream);
+  recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+  recorder.onstop=()=>{
+   const blob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});
+   const audio=document.getElementById("playback");
+   audio.src=URL.createObjectURL(blob);
+   audio.classList.remove("hidden");
+   currentStream.getTracks().forEach(t=>t.stop());
+   document.getElementById("recordStatus").textContent="Recording ready. Play it back to review.";
+  };
+  recorder.start();
+  document.getElementById("record").disabled=true;
+  document.getElementById("stop").disabled=false;
+  document.getElementById("recordStatus").textContent="Recording... Speak now.";
+ }catch(e){
+  document.getElementById("recordStatus").textContent="Microphone permission was denied. Allow microphone access and try again.";
+ }
+};
+document.getElementById("stop").onclick=()=>{
+ if(recorder&&recorder.state!=="inactive")recorder.stop();
+ document.getElementById("record").disabled=false;
+ document.getElementById("stop").disabled=true;
+};
+
+document.getElementById("quiz").addEventListener("submit",event=>{
+ event.preventDefault();
+ let score=0;
+ const details=allQuestions.map(q=>{
+  const selected=document.querySelector(`input[name="q${q.id}"]:checked`);
+  const answer=selected?Number(selected.value):null;
+  const correct=answer===q.a;
+  if(correct)score++;
+  return {...q,answer,correct};
+ });
+ const total=allQuestions.length;
+ const percent=Math.round(score/total*100);
+ let level;
+ if(score<=5)level="A1 — Beginner";
+ else if(score<=10)level="A2 — Elementary";
+ else if(score<=15)level="B1 — Intermediate";
+ else if(score<=20)level="B2 — Upper-Intermediate";
+ else level="C1 — Advanced range";
+
+ const parts=[...new Set(allQuestions.map(q=>q.part))].map(part=>{
+  const qs=details.filter(q=>q.part===part);
+  const n=qs.filter(q=>q.correct).length;
+  return `<li><b>${part}:</b> ${n}/${qs.length}</li>`;
+ }).join("");
+
+ const review=details.map(q=>`
+  <div class="question">
+   <p>${q.id}. ${q.q}</p>
+   <p class="${q.correct?'good':'bad'}">${q.correct?'Correct':'Incorrect or unanswered'}</p>
+   <p><b>Correct answer:</b> ${q.o[q.a]}</p>
+   ${q.e?`<p class="muted">${q.e}</p>`:""}
+  </div>`).join("");
+
+ const result=document.getElementById("results");
+ result.innerHTML=`
+  <h2>Your Results</h2>
+  <div class="notice">
+   <div class="score">${score}/${total} · ${percent}%</div>
+   <h3>Estimated level: ${level}</h3>
+   <p>This is an indicative estimate, not an official CEFR result. A teacher should also assess your speaking and writing.</p>
+   <p><b>Section scores</b></p><ul>${parts}</ul>
+  </div>
+  <h2 style="margin-top:24px">Answer Review</h2>${review}
+  <div class="actions no-print">
+   <button type="button" id="print">Print / Save as PDF</button>
+   <button type="button" class="secondary" id="retry">Try Again</button>
+  </div>`;
+ document.getElementById("exam").classList.add("hidden");
+ result.classList.remove("hidden");
+ document.getElementById("print").onclick=()=>window.print();
+ document.getElementById("retry").onclick=()=>location.reload();
+ window.scrollTo({top:0,behavior:"smooth"});
+});
+
+document.getElementById("reset").onclick=()=>{
+ if(confirm("Clear your answers and restart?"))location.reload();
+};
 </script>
 </body>
 </html>
