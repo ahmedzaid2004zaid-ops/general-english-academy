@@ -1,200 +1,40 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>English Placement Test | General English Academy</title>
 <style>
-:root{--navy:#101c35;--blue:#315efb;--light:#f3f6fc}
-*{box-sizing:border-box}
-body{margin:0;background:var(--light);color:#18243a;font:16px/1.6 Arial,sans-serif}
-header{background:var(--navy);color:white;text-align:center;padding:25px 15px}
-main{max-width:800px;margin:22px auto;padding:0 14px}
-.card{background:white;padding:22px;margin-bottom:18px;border-radius:14px;box-shadow:0 4px 18px #0001}
-h2,h3{color:var(--navy)}
-input[type=text],textarea{width:100%;padding:12px;border:1px solid #ccd3df;border-radius:8px;font:inherit}
-textarea{min-height:120px}
-button{background:var(--blue);color:white;border:0;border-radius:8px;padding:12px 16px;margin:5px 4px 5px 0;font-size:15px;font-weight:bold}
-button:disabled{opacity:.5}
-.option{display:block;background:#f5f7fc;padding:10px;margin:7px 0;border-radius:7px}
-.hidden{display:none!important}
-.notice{background:#fff5dc;padding:12px;border-left:4px solid #e4a11b;border-radius:6px}
-.progress{height:8px;background:#e5eaf4;border-radius:8px;margin:12px 0}
-.progress div{height:100%;background:var(--blue);width:0}
-.small{font-size:13px;color:#667085;overflow-wrap:anywhere}
-#status{padding:12px;background:#eef7f1;border-radius:8px;overflow-wrap:anywhere}
-@media(max-width:500px){.card{padding:15px}button{width:100%}}
-</style>
-</head>
-<body>
-<header>
-<h1>General English Academy</h1>
-<p>English Placement Assessment · A1–C1</p>
-</header>
-<main>
-<section class="card" id="intro">
-<h2>Discover your English level</h2>
-<p>This preliminary assessment checks grammar, vocabulary, reading, listening, writing and speaking.</p>
-<div class="notice">This is an independent preliminary assessment, not an official Cambridge examination or certificate. A teacher should review writing and speaking before confirming your level.</div>
-<h3>Before you begin</h3>
-<p>Allow 20–30 minutes. Do not use a translator or outside help.</p>
-<label for="studentName"><b>Your full name</b></label>
-<input id="studentName" type="text" placeholder="Enter your full name" autocomplete="name">
-<p class="small">Your answers and speaking recording will be submitted to the academy when you finish.</p>
-<button onclick="startTest()">Start assessment</button>
-</section>
-
-<section class="card hidden" id="test">
-<b id="sectionTitle"></b>
-<span id="counter" style="float:right"></span>
-<div class="progress"><div id="progressBar"></div></div>
-<div id="content"></div>
-<button id="back" onclick="move(-1)">Previous</button>
-<button id="next" onclick="move(1)">Next</button>
-</section>
-
-<section class="card hidden" id="results">
-<h2>Assessment results</h2>
-<p id="welcome"></p>
-<h2 id="level"></h2>
-<p id="summary"></p>
-<h3>Skill breakdown</h3>
-<div id="scores"></div>
-<h3>Writing response</h3>
-<p id="writingResult"></p>
-<h3>Speaking response</h3>
-<p id="speakingResult"></p>
-<h3>Submission status</h3>
-<div id="status">Preparing submission...</div>
-<p class="small">Keep this page open until the submission request has been sent. Check your inbox and Drive to confirm receipt.</p>
-<button onclick="window.print()">Print / Save PDF</button>
-<button onclick="copyResults()">Copy result summary</button>
-<button onclick="location.reload()">Retake test</button>
-</section>
-</main>
-<footer style="text-align:center;padding:20px;color:#667085">General English Academy</footer>
-
+:root{--navy:#101c35;--blue:#315efb;--light:#f3f6fc}*{box-sizing:border-box}body{margin:0;background:var(--light);color:#18243a;font:16px/1.6 Arial,sans-serif}header{background:var(--navy);color:white;text-align:center;padding:24px 12px}main{max-width:800px;margin:22px auto;padding:0 14px}.card{background:white;padding:22px;margin-bottom:18px;border-radius:14px;box-shadow:0 4px 18px #0001}h2,h3{color:var(--navy)}input[type=text],textarea{width:100%;padding:12px;border:1px solid #ccd3df;border-radius:8px;font:inherit}textarea{min-height:130px}button{background:var(--blue);color:white;border:0;border-radius:8px;padding:12px 16px;margin:5px 4px 5px 0;font-size:15px;font-weight:bold}button:disabled{opacity:.5}.option{display:block;background:#f5f7fc;padding:10px;margin:7px 0;border-radius:7px}.hidden{display:none!important}.notice{background:#fff5dc;padding:12px;border-left:4px solid #e4a11b;border-radius:6px}.progress{height:8px;background:#e5eaf4;border-radius:8px;margin:12px 0}.progress div{height:100%;background:var(--blue);width:0}.small{font-size:13px;color:#667085;overflow-wrap:anywhere}#status{padding:12px;background:#eef7f1;border-radius:8px}@media(max-width:500px){.card{padding:15px}button{width:100%}}
+</style></head><body>
+<header><h1>General English Academy</h1><p>Preliminary English Placement Assessment · A1–B2</p></header><main>
+<section class="card" id="intro"><h2>Discover your English level</h2><p>This preliminary assessment checks grammar, vocabulary, reading, listening, writing and speaking.</p><div class="notice"><b>Important:</b> This is not an official Cambridge or EVOLVE exam. The automatic estimate is preliminary; a teacher should review writing and speaking. Listening clips use computer-generated speech, not official audio tracks.</div><p>Allow 20–30 minutes. Do not use a translator or outside help.</p><label for="studentName"><b>Your full name</b></label><input id="studentName" type="text" placeholder="Enter your full name" autocomplete="name"><p class="small">Your answers and optional speaking recording will be submitted to the academy endpoint.</p><button onclick="startTest()">Start assessment</button></section>
+<section class="card hidden" id="test"><b id="sectionTitle"></b><span id="counter" style="float:right"></span><div class="progress"><div id="progressBar"></div></div><div id="content"></div><button id="back" onclick="move(-1)">Previous</button><button id="next" onclick="move(1)">Next section</button></section>
+<section class="card hidden" id="results"><h2>Assessment results</h2><p id="welcome"></p><h2 id="level"></h2><p id="summary"></p><h3>Skill breakdown</h3><div id="scores"></div><h3>Writing response</h3><p id="writingResult"></p><h3>Speaking response</h3><p id="speakingResult"></p><h3>Submission status</h3><div id="status">Preparing submission…</div><p class="small">The browser cannot confirm receipt of the cross-origin request. Check the academy email and Google Drive folder.</p><button onclick="window.print()">Print / Save PDF</button><button onclick="copyResults()">Copy result summary</button><button onclick="location.reload()">Retake test</button></section>
+</main><footer style="text-align:center;padding:20px;color:#667085">General English Academy</footer>
 <script>
 "use strict";
-
 const ENDPOINT="https://script.google.com/macros/s/AKfycbwBAsO5NgEeL7MnlGkW89Y0L1f3RGMkwmLGbFaDWuJC2iShvUrC2vRi8mqof-O8NPQ-aA/exec";
-
 const sections=[
 {title:"Grammar & Vocabulary",type:"mcq",questions:[
-{q:"She _____ from Egypt.",o:["am","is","are","be"],a:1},
-{q:"I _____ coffee every morning.",o:["drink","drinks","drinking","drank"],a:0},
-{q:"There _____ two books on the table.",o:["is","are","am","be"],a:1},
-{q:"We _____ to the cinema yesterday.",o:["go","goes","went","going"],a:2},
-{q:"You _____ wear a seat belt while driving.",o:["should","would","could to","are"],a:0},
-{q:"If it rains tomorrow, we _____ at home.",o:["stay","stayed","will stay","would stayed"],a:2},
-{q:"I have lived here _____ 2020.",o:["for","since","during","from"],a:1},
-{q:"The meeting was _____ because the manager was ill.",o:["put off","put out","put up","put away"],a:0},
-{q:"By the time we arrived, the film _____.",o:["starts","has started","had started","starting"],a:2},
-{q:"If I _____ more time, I would learn another language.",o:["have","had","will have","would have"],a:1},
-{q:"The proposal was rejected, _____ surprised everyone.",o:["that","what","which","who"],a:2},
-{q:"She is believed _____ the company last year.",o:["to leave","leaving","to have left","left"],a:2}
-]},
+{q:"She _____ from Egypt.",o:["am","is","are","be"],a:1},{q:"I _____ coffee every morning.",o:["drink","drinks","drinking","drank"],a:0},{q:"There _____ two books on the table.",o:["is","are","am","be"],a:1},{q:"We _____ to the cinema yesterday.",o:["go","goes","went","going"],a:2},{q:"You _____ wear a seat belt while driving.",o:["should","would","could to","are"],a:0},{q:"If it rains tomorrow, we _____ at home.",o:["stay","stayed","will stay","would stayed"],a:2},{q:"I have lived here _____ 2020.",o:["for","since","during","from"],a:1},{q:"The meeting was _____ because the manager was ill.",o:["put off","put out","put up","put away"],a:0},{q:"By the time we arrived, the film _____.",o:["starts","has started","had started","starting"],a:2},{q:"If I _____ more time, I would learn another language.",o:["have","had","will have","would have"],a:1},{q:"The proposal was rejected, _____ surprised everyone.",o:["that","what","which","who"],a:2},{q:"She is believed _____ the company last year.",o:["to leave","leaving","to have left","left"],a:2}]},
 {title:"Reading",type:"mcq",passage:"Maria works for a small travel company. She noticed that customers were confused by the website. She suggested clearer instructions and a short booking video. Three months later, support requests had fallen. Maria learned that small changes based on customers' needs can make a significant difference.",questions:[
-{q:"Where does Maria work?",o:["A school","A travel company","A hospital","A bank"],a:1},
-{q:"What was the problem?",o:["Prices were low","The office was closed","The website was confusing","Trips were cancelled"],a:2},
-{q:"What did Maria suggest?",o:["Hiring staff","Changing prices","Removing the website","Clearer instructions and a video"],a:3},
-{q:"What happened after three months?",o:["Support requests decreased","The company closed","Maria left","Prices increased"],a:0},
-{q:"What did Maria learn?",o:["Only large changes matter","Feedback is useless","Small relevant changes can help","Videos always solve problems"],a:2},
-{q:"'Significant' is closest in meaning to:",o:["Unimportant","Considerable","Temporary","Unusual"],a:1}
-]},
+{q:"Where does Maria work?",o:["A school","A travel company","A hospital","A bank"],a:1},{q:"What was the problem?",o:["Prices were low","The office was closed","The website was confusing","Trips were cancelled"],a:2},{q:"What did Maria suggest?",o:["Hiring staff","Changing prices","Removing the website","Clearer instructions and a video"],a:3},{q:"What happened after three months?",o:["Support requests decreased","The company closed","Maria left","Prices increased"],a:0},{q:"What did Maria learn?",o:["Only large changes matter","Feedback is useless","Small relevant changes can help","Videos always solve problems"],a:2},{q:"'Significant' is closest in meaning to:",o:["Unimportant","Considerable","Temporary","Unusual"],a:1}]},
 {title:"Listening",type:"listening",questions:[
-{q:"What time is the appointment?",o:["9:15","9:50","10:15","10:50"],a:2,audio:"Your appointment is scheduled for ten fifteen tomorrow morning. Please arrive ten minutes early."},
-{q:"Why is James calling?",o:["Cancel a trip","Change a meeting time","Order lunch","Ask for directions"],a:1,audio:"Could we move our meeting from Tuesday afternoon to Wednesday morning? Something urgent has come up at work."},
-{q:"What should the listener bring?",o:["A passport","A laptop","A printed report","Some food"],a:2,audio:"Please bring a printed copy of the report. The slides are already on the conference room computer."},
-{q:"What is the main problem?",o:["The train is delayed","The weather is hot","The hotel is full","The road is closed"],a:0,audio:"The 6:20 train to Boston is delayed by approximately thirty minutes because of a technical problem."},
-{q:"What does the speaker imply?",o:["The plan is impossible","The plan may work with changes","The budget is unlimited","Nobody supports it"],a:1,audio:"We need to reconsider the timeline and make sure the budget covers the additional staff. With those changes, it could be worth pursuing."}
-]},
-{title:"Writing",type:"writing"},
-{title:"Speaking",type:"speaking"}
-];
-
+{q:"What time is the appointment?",o:["9:15","9:50","10:15","10:50"],a:2,audio:"Your appointment is scheduled for ten fifteen tomorrow morning. Please arrive ten minutes early."},{q:"Why is James calling?",o:["Cancel a trip","Change a meeting time","Order lunch","Ask for directions"],a:1,audio:"Could we move our meeting from Tuesday afternoon to Wednesday morning? Something urgent has come up at work."},{q:"What should the listener bring?",o:["A passport","A laptop","A printed report","Some food"],a:2,audio:"Please bring a printed copy of the report. The slides are already on the conference room computer."},{q:"What is the main problem?",o:["The train is delayed","The weather is hot","The hotel is full","The road is closed"],a:0,audio:"The 6:20 train to Boston is delayed by approximately thirty minutes because of a technical problem."},{q:"What does the speaker imply?",o:["The plan is impossible","The plan may work with changes","The budget is unlimited","Nobody supports it"],a:1,audio:"We need to reconsider the timeline and make sure the budget covers the additional staff. With those changes, it could be worth pursuing."}]},
+{title:"Writing",type:"writing"},{title:"Speaking",type:"speaking"}];
 let index=0,answers={},plays={},recorder=null,chunks=[],recordedBlob=null,stream=null,submitting=false;
-
-function startTest(){
-if(!document.getElementById("studentName").value.trim()){
-alert("Please enter your full name.");return;
-}
-document.getElementById("intro").classList.add("hidden");
-document.getElementById("test").classList.remove("hidden");
-render();scrollTo(0,0);
-}
-function render(){
-const s=sections[index];
-document.getElementById("sectionTitle").textContent=s.title;
-document.getElementById("counter").textContent=`Section ${index+1} of ${sections.length}`;
-document.getElementById("progressBar").style.width=((index+1)/sections.length*100)+"%";
-document.getElementById("back").disabled=index===0;
-document.getElementById("next").textContent=index===sections.length-1?"Finish assessment":"Next section";
-const root=document.getElementById("content");root.innerHTML="";
-if(s.type==="mcq"||s.type==="listening"){
-if(s.passage){const p=document.createElement("p");p.className="notice";p.textContent=s.passage;root.appendChild(p);}
-if(s.type==="listening"){const p=document.createElement("p");p.textContent="Play each recording up to two times.";root.appendChild(p);}
-s.questions.forEach((q,i)=>{
-const box=document.createElement("div");box.style.padding="12px 0";box.style.borderBottom="1px solid #eee";
-const title=document.createElement("p");title.innerHTML="<b>"+(i+1)+". "+q.q+"</b>";box.appendChild(title);
-if(q.audio){const b=document.createElement("button");b.textContent=`Play audio (${plays[i]||0}/2)`;b.onclick=()=>{if((plays[i]||0)>=2)return;const u=new SpeechSynthesisUtterance(q.audio);u.lang="en-US";u.rate=.88;speechSynthesis.cancel();speechSynthesis.speak(u);plays[i]=(plays[i]||0)+1;b.textContent=`Play audio (${plays[i]}/2)`;b.disabled=plays[i]>=2;};box.appendChild(b);}
-q.o.forEach((opt,j)=>{const label=document.createElement("label");label.className="option";const r=document.createElement("input");r.type="radio";r.name="q"+index+"_"+i;r.checked=answers[index+"-"+i]===j;r.onchange=()=>answers[index+"-"+i]=j;label.append(r,document.createTextNode(" "+opt));box.appendChild(label);});
-root.appendChild(box);
-});
-}else if(s.type==="writing"){
-root.innerHTML='<h3>Writing task</h3><p>Write 100–150 words about a challenge you faced, what you did, and what you learned.</p><textarea id="writing" placeholder="Write your answer..."></textarea>';
-document.getElementById("writing").value=answers.writing||"";
-document.getElementById("writing").oninput=e=>answers.writing=e.target.value;
-}else{
-root.innerHTML='<h3>Speaking task</h3><p>Speak for 1–2 minutes about a skill you want to improve. Explain why it matters, how you will improve it, and what difficulties you expect.</p><button id="recStart" onclick="startRecording()">Start recording</button><button id="recStop" onclick="stopRecording()" disabled>Stop recording</button><p id="recStatus" class="small">Allow microphone access when asked.</p><audio id="player" controls class="hidden" style="width:100%"></audio><label for="speaking"><b>Optional speaking transcript</b></label><textarea id="speaking" placeholder="Type what you said, if you wish..."></textarea>';
-document.getElementById("speaking").value=answers.speaking||"";
-document.getElementById("speaking").oninput=e=>answers.speaking=e.target.value;
-}
-}
-function move(d){if(d===1&&index===sections.length-1){finishTest();return;}index=Math.max(0,Math.min(sections.length-1,index+d));render();scrollTo(0,0);}
-async function startRecording(){
-try{
-if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){document.getElementById("recStatus").textContent="Recording is unsupported. Type your answer instead.";return;}
-stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;recorder=new MediaRecorder(stream);
-recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
-recorder.onstop=()=>{recordedBlob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});const player=document.getElementById("player");if(player){player.src=URL.createObjectURL(recordedBlob);player.classList.remove("hidden");}const status=document.getElementById("recStatus");if(status)status.textContent="Recording ready; it will be submitted when you finish.";stream.getTracks().forEach(t=>t.stop());};
-recorder.start();document.getElementById("recStart").disabled=true;document.getElementById("recStop").disabled=false;document.getElementById("recStatus").textContent="Recording... Speak clearly.";
-}catch(e){document.getElementById("recStatus").textContent="Microphone access failed. Check browser permissions or type your answer.";}
-}
-function stopRecording(){if(recorder&&recorder.state!=="inactive")recorder.stop();const a=document.getElementById("recStart"),b=document.getElementById("recStop");if(a)a.disabled=false;if(b)b.disabled=true;}
-function waitRecording(){return new Promise(resolve=>{if(!recorder||recorder.state==="inactive"){resolve();return;}recorder.addEventListener("stop",resolve,{once:true});stopRecording();});}
-function toBase64(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result).split(",")[1]);r.onerror=()=>reject(new Error("Could not read audio recording."));r.readAsDataURL(blob);});}
-function score(i){let n=0;sections[i].questions.forEach((q,j)=>{if(answers[i+"-"+j]===q.a)n++;});return{score:n,total:sections[i].questions.length};}
-async function finishTest(){
-if(submitting)return;submitting=true;document.getElementById("next").disabled=true;
-try{await waitRecording();}catch(e){}
-if("speechSynthesis"in window)speechSynthesis.cancel();
-document.getElementById("test").classList.add("hidden");document.getElementById("results").classList.remove("hidden");
-const skill=[{name:"Grammar & Vocabulary",...score(0)},{name:"Reading",...score(1)},{name:"Listening",...score(2)}];
-skill.forEach(s=>s.percent=Math.round(s.score/s.total*100));
-const overall=Math.round(skill.reduce((n,s)=>n+s.percent,0)/skill.length);
-const level=overall>=90?"B2":overall>=75?"B1":overall>=60?"A2":"A1";
-const name=document.getElementById("studentName").value.trim();
-document.getElementById("welcome").textContent="Assessment completed by "+name+".";
-document.getElementById("level").textContent="Estimated level: "+level;
-document.getElementById("summary").textContent="Objective test average: "+overall+"%. This is a preliminary estimate; teacher review is required.";
-document.getElementById("scores").innerHTML=skill.map(s=>`<p>${s.name}: ${s.score}/${s.total} (${s.percent}%)</p>`).join("");
-document.getElementById("writingResult").textContent=answers.writing||"Not submitted";
-document.getElementById("speakingResult").textContent=answers.speaking||(recordedBlob?"Recording attached to submission":"Not submitted");
-const status=document.getElementById("status");status.textContent="Sending your submission...";
-try{
-const payload={name,estimatedLevel:level,scores:skill,answers,writing:answers.writing||"",speakingNotes:answers.speaking||"",audioMimeType:recordedBlob?(recordedBlob.type||"audio/webm"):"",audioBase64:recordedBlob?await toBase64(recordedBlob):""};
-if(payload.audioBase64.length>18000000)throw new Error("Audio is too large. Please record a shorter answer.");
-await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-status.textContent="Submission request sent. Please check the academy email and Google Drive folder to confirm receipt.";
-}catch(e){status.textContent="Could not send automatically: "+e.message+". Use Copy result summary as backup.";status.style.background="#fff0f0";}
-scrollTo(0,0);
-}
-function copyResults(){
-const t="General English Academy Placement Test\nName: "+document.getElementById("studentName").value+"\n"+document.getElementById("level").textContent+"\n"+document.getElementById("scores").innerText+"\nWriting: "+(answers.writing||"Not submitted")+"\nSpeaking: "+(answers.speaking||"Not submitted");
-if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>alert("Copied.")).catch(()=>prompt("Copy your results:",t));else prompt("Copy your results:",t);
-}
-</script>
-</body>
-</html>
+function $(id){return document.getElementById(id)}
+function startTest(){if(!$("studentName").value.trim()){alert("Please enter your full name.");return}$("intro").classList.add("hidden");$("test").classList.remove("hidden");render();scrollTo(0,0)}
+function render(){const s=sections[index];$("sectionTitle").textContent=s.title;$("counter").textContent=`Section ${index+1} of ${sections.length}`;$("progressBar").style.width=((index+1)/sections.length*100)+"%";$("back").disabled=index===0;$("next").textContent=index===sections.length-1?"Finish assessment":"Next section";const root=$("content");root.innerHTML="";
+if(s.type==="mcq"||s.type==="listening"){if(s.passage){let p=document.createElement("p");p.className="notice";p.textContent=s.passage;root.appendChild(p)}if(s.type==="listening"){let p=document.createElement("p");p.className="notice";p.textContent="Listen to each computer-generated American English clip up to two times. These are not official EVOLVE audio tracks.";root.appendChild(p)}
+s.questions.forEach((q,i)=>{let box=document.createElement("div");box.style.padding="12px 0";box.style.borderBottom="1px solid #eee";let title=document.createElement("p");let strong=document.createElement("b");strong.textContent=(i+1)+". "+q.q;title.appendChild(strong);box.appendChild(title);if(q.audio){let b=document.createElement("button");b.textContent=`Play audio (${plays[i]||0}/2)`;b.disabled=(plays[i]||0)>=2;b.onclick=()=>{if((plays[i]||0)>=2)return;let u=new SpeechSynthesisUtterance(q.audio);u.lang="en-US";u.rate=.88;speechSynthesis.cancel();speechSynthesis.speak(u);plays[i]=(plays[i]||0)+1;b.textContent=`Play audio (${plays[i]}/2)`;b.disabled=plays[i]>=2};box.appendChild(b)}q.o.forEach((opt,j)=>{let label=document.createElement("label");label.className="option";let r=document.createElement("input");r.type="radio";r.name="q"+index+"_"+i;r.checked=answers[index+"-"+i]===j;r.onchange=()=>answers[index+"-"+i]=j;label.append(r,document.createTextNode(" "+opt));box.appendChild(label)});root.appendChild(box)})}
+else if(s.type==="writing"){root.innerHTML='<h3>Writing task</h3><p>Write 100–150 words about a challenge you faced, what you did, and what you learned.</p><textarea id="writing" placeholder="Write your answer…"></textarea><p class="small" id="wordCount"></p>';$("writing").value=answers.writing||"";$("writing").oninput=e=>{answers.writing=e.target.value;$("wordCount").textContent=(e.target.value.trim().match(/\S+/g)||[]).length+" words"};$("writing").dispatchEvent(new Event("input"))}
+else{root.innerHTML='<h3>Speaking task</h3><p>Speak for 1–2 minutes about a skill you want to improve. Explain why it matters, how you will improve it, and what difficulties you expect.</p><button id="recStart">Start recording</button><button id="recStop" disabled>Stop recording</button><p id="recStatus" class="small">Allow microphone access when asked. You can type a transcript if recording is unavailable.</p><audio id="player" controls class="hidden" style="width:100%"></audio><label for="speaking"><b>Optional speaking transcript</b></label><textarea id="speaking" placeholder="Type what you said, if you wish…"></textarea>';$("speaking").value=answers.speaking||"";$("speaking").oninput=e=>answers.speaking=e.target.value;$("recStart").onclick=startRecording;$("recStop").onclick=stopRecording}}
+function move(d){if(d===1&&index===sections.length-1){finishTest();return}index=Math.max(0,Math.min(sections.length-1,index+d));render();scrollTo(0,0)}
+async function startRecording(){try{if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){$("recStatus").textContent="Recording unsupported; type your answer instead.";return}stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{recordedBlob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});$("player").src=URL.createObjectURL(recordedBlob);$("player").classList.remove("hidden");$("recStatus").textContent="Recording ready; it will be included when you finish.";stream.getTracks().forEach(t=>t.stop())};recorder.start();$("recStart").disabled=true;$("recStop").disabled=false;$("recStatus").textContent="Recording… Speak clearly."}catch(e){$("recStatus").textContent="Microphone access failed. Check browser permissions or type your answer."}}
+function stopRecording(){if(recorder&&recorder.state!=="inactive")recorder.stop();if($("recStart"))$("recStart").disabled=false;if($("recStop"))$("recStop").disabled=true}
+function waitRecording(){return new Promise(resolve=>{if(!recorder||recorder.state==="inactive"){resolve();return}recorder.addEventListener("stop",resolve,{once:true});stopRecording()})}
+function toBase64(blob){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(String(r.result).split(",")[1]);r.onerror=()=>reject(new Error("Could not read audio recording."));r.readAsDataURL(blob)})}
+function score(i){let n=0;sections[i].questions.forEach((q,j)=>{if(answers[i+"-"+j]===q.a)n++});return{score:n,total:sections[i].questions.length}}
+async function finishTest(){if(submitting)return;submitting=true;$("next").disabled=true;try{await waitRecording()}catch(e){}if("speechSynthesis"in window)speechSynthesis.cancel();$("test").classList.add("hidden");$("results").classList.remove("hidden");let skill=[{name:"Grammar & Vocabulary",...score(0)},{name:"Reading",...score(1)},{name:"Listening",...score(2)}];skill.forEach(s=>s.percent=Math.round(s.score/s.total*100));let overall=Math.round(skill.reduce((n,s)=>n+s.percent,0)/skill.length);let level=overall>=90?"B2":overall>=75?"B1":overall>=60?"A2":"A1";let name=$("studentName").value.trim();$("welcome").textContent="Assessment completed by "+name+".";$("level").textContent="Estimated level: "+level;$("summary").textContent=`Objective test average: ${overall}%. Preliminary estimate only; teacher review is required.`;$("scores").innerHTML=skill.map(s=>`<p>${s.name}: ${s.score}/${s.total} (${s.percent}%)</p>`).join("");$("writingResult").textContent=answers.writing||"Not submitted";$("speakingResult").textContent=answers.speaking||(recordedBlob?"Recording attached to submission":"Not submitted");let status=$("status");status.textContent="Sending submission request…";
+try{let payload={name,estimatedLevel:level,scores:skill,answers,writing:answers.writing||"",speakingNotes:answers.speaking||"",audioMimeType:recordedBlob?(recordedBlob.type||"audio/webm"):"",audioBase64:recordedBlob?await toBase64(recordedBlob):""};if(payload.audioBase64.length>18000000)throw new Error("Audio is too large. Please record a shorter answer.");await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});status.textContent="Request sent by browser, but receipt is not confirmed here. Check the academy email and Google Drive folder."}catch(e){status.textContent="Could not send automatically: "+e.message+". Use Copy result summary as backup.";status.style.background="#fff0f0"}scrollTo(0,0)}
+function copyResults(){let t="General English Academy Placement Test\nName: "+$("studentName").value+"\n"+$("level").textContent+"\n"+$("scores").innerText+"\nWriting: "+(answers.writing||"Not submitted")+"\nSpeaking: "+(answers.speaking||"Not submitted");if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>alert("Copied.")).catch(()=>prompt("Copy your results:",t));else prompt("Copy your results:",t)}
+</script></body></html>
