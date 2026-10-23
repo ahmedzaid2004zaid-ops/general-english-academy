@@ -1,376 +1,426 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EVOLVE Placement Test | General English Academy</title>
-
+<title>General English Academy | Placement Test</title>
 <style>
 :root {
-  --navy: #142747;
-  --blue: #2463b5;
-  --bg: #f3f6fb;
-  --border: #dce3ed;
-  --text: #202b3b;
+  --navy:#142640; --blue:#245edb; --pale:#eef4ff;
+  --border:#dce3ed; --text:#202b3a; --muted:#64748b;
 }
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
+  margin:0; background:#f4f7fb; color:var(--text);
+  font:16px/1.65 Arial,Helvetica,sans-serif;
 }
 header {
-  background: var(--navy);
-  color: white;
-  padding: 25px 16px;
+  padding:30px 16px; color:white;
+  background:linear-gradient(130deg,#142640,#245edb);
 }
-header div, main {
-  max-width: 1000px;
-  margin: auto;
-}
-header h1 { margin: 4px 0; }
-main { padding: 16px 12px 40px; }
+.container { width:min(960px,calc(100% - 24px)); margin:auto; }
+header h1 { margin:5px 0; font-size:clamp(27px,5vw,42px); }
+header p { margin:5px 0; color:#edf3ff; }
+main { padding:15px 0 40px; }
 .card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px;
-  margin-bottom: 16px;
+  background:white; border:1px solid var(--border);
+  border-radius:16px; padding:clamp(14px,3vw,24px);
+  margin:16px 0; box-shadow:0 4px 16px #14264008;
 }
-h2 { color: var(--navy); margin-top: 0; }
-.small { color: #596779; font-size: 14px; }
+h2 { margin:0 0 8px; color:var(--navy); font-size:23px; }
+h3 { margin:0; color:var(--navy); font-size:19px; }
+.small { color:var(--muted); font-size:14px; }
+.passage {
+  background:#f8fbff; border:1px solid #d8e5f8;
+  border-radius:13px; padding:18px; margin:22px 0 12px;
+}
+.passage p { margin:0 0 13px; }
+.passage p:last-child { margin-bottom:0; }
+.passage-label {
+  display:inline-block; background:#e5eeff; color:#194aab;
+  border-radius:20px; padding:3px 10px; font-size:12px;
+  font-weight:bold; margin-bottom:10px;
+}
+.question {
+  background:white; border:1px solid var(--border);
+  border-radius:12px; padding:15px; margin:12px 0;
+  break-inside:avoid;
+}
+.q-title { display:flex; gap:10px; align-items:flex-start; font-weight:bold; }
+.q-number {
+  min-width:32px; height:32px; display:grid; place-items:center;
+  background:var(--pale); color:#194aab; border-radius:9px;
+}
+.options {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px; margin:13px 0 0 42px;
+}
+.option {
+  display:flex; align-items:flex-start; gap:8px;
+  padding:9px 10px; border:1px solid var(--border);
+  border-radius:9px; cursor:pointer; overflow-wrap:anywhere;
+}
+.option:has(input:checked) { border-color:var(--blue); background:#f1f6ff; }
+.option input { margin-top:5px; accent-color:var(--blue); }
+audio { display:block; width:100%; margin:10px 0; }
 .track {
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  padding: 13px;
-  margin: 12px 0;
+  background:#f8fbff; border:1px solid var(--border);
+  padding:14px; border-radius:12px; margin:12px 0;
 }
-audio { display: block; width: 100%; margin-top: 10px; }
-input[type="file"] { display: block; max-width: 100%; margin-top: 8px; }
-.pdf {
-  width: 100%;
-  height: 75vh;
-  min-height: 420px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+input[type=file] { max-width:100%; }
+button {
+  border:0; border-radius:10px; padding:12px 18px;
+  font-weight:bold; font-size:15px; cursor:pointer;
+  background:var(--blue); color:white;
 }
-button, .button {
-  display: inline-block;
-  padding: 11px 16px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--blue);
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
+button.secondary { background:#e8edf5; color:#1e2d42; }
+.actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.result {
+  display:none; margin-top:16px; padding:16px;
+  border:1px solid #b9d9cd; border-radius:12px; background:#f0faf6;
 }
-button.secondary, .button.secondary {
-  background: #e7edf6;
-  color: var(--navy);
-}
-button:disabled { opacity: .6; cursor: not-allowed; }
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 14px;
-}
-#answerGrid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-}
-.answer {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 9px;
-}
-.answer strong { display: block; margin-bottom: 5px; }
-.answer label { margin-right: 5px; white-space: nowrap; }
-#result { display: none; }
-.notice {
-  background: #fff7e3;
-  border: 1px solid #eed79b;
-  padding: 12px;
-  border-radius: 8px;
-}
-@media(max-width:650px) {
-  .card { padding: 13px; }
-  #answerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .pdf { height: 60vh; min-height: 350px; }
+.result.show { display:block; }
+progress { width:100%; height:12px; }
+footer { text-align:center; color:var(--muted); padding:20px 8px; font-size:13px; }
+@media(max-width:600px) {
+  .options { grid-template-columns:1fr; margin-left:0; }
+  .card { padding:14px; }
+  .question { padding:12px; }
 }
 @media print {
-  header { background: white; color: black; }
-  audio, button, .actions, input[type="file"] { display: none; }
+  body { background:white; }
+  header { background:white; color:black; }
+  header p { color:#333; }
+  button,.track audio,.track input,.result { display:none!important; }
+  .card,.question,.passage { box-shadow:none; break-inside:avoid; }
 }
 </style>
 </head>
-
 <body>
 <header>
-  <div>
+  <div class="container">
     <div>GENERAL ENGLISH ACADEMY</div>
-    <h1>EVOLVE Placement Test</h1>
-    <div>Listening · Reading · Language Use</div>
+    <h1>English Placement Test</h1>
+    <p>Listening · Reading · Language Use</p>
   </div>
 </header>
 
-<main>
+<main class="container">
 <section class="card">
-  <h2>Before You Begin</h2>
-  <p>This test follows the original EVOLVE student booklet. The original PDF below is the source for the exact questions and their order.</p>
-  <p><strong>Time limit:</strong> 50 minutes</p>
-  <p>Listening: 15 minutes · Reading: 20 minutes · Language Use: 15 minutes</p>
+  <h2>Instructions</h2>
+  <p>Read each passage carefully and answer the questions below it. Select one option for each question. You may leave questions unanswered.</p>
+  <p class="small">There are 70 questions. Submitting the test will show how many you answered and how many you left blank. It will not reveal correct answers.</p>
+</section>
 
-  <label for="studentName"><strong>Student name (optional)</strong></label>
-  <input id="studentName" type="text"
-         placeholder="Enter your name"
-         style="width:100%;padding:11px;margin-top:8px;border:1px solid #ccd5e2;border-radius:8px">
+<section class="card" id="listening">
+  <h2>Section I — Listening</h2>
+  <p class="small">Use the official audio tracks. If an audio track does not load, select the matching MP3 from your device. Selecting a local file does not upload it to the website.</p>
 
-  <p class="notice">
-    For the PDF and audio to load on the published website, upload the original PDF and all three MP3 files to the same GitHub folder as this HTML file.
-  </p>
+  <div class="track">
+    <h3>Track 2 — Directions</h3>
+    <audio controls preload="none" src="Evolve%20Placement%20Test%20Track%202%20(Directions).mp3"></audio>
+    <input type="file" accept="audio/*" onchange="loadAudio(this)" aria-label="Choose Track 2 audio">
+  </div>
+  <div class="track">
+    <h3>Track 3 — Listening Test</h3>
+    <audio controls preload="none" src="Evolve%20Placement%20Test%20Track%203%20(Test).mp3"></audio>
+    <input type="file" accept="audio/*" onchange="loadAudio(this)" aria-label="Choose Track 3 audio">
+  </div>
+  <div id="listeningQuestions"></div>
+</section>
+
+<section class="card" id="reading">
+  <h2>Section II — Reading</h2>
+  <p class="small">Every passage appears in a separate box, followed immediately by its questions.</p>
+  <div id="readingQuestions"></div>
+</section>
+
+<section class="card" id="language">
+  <h2>Section III — Language Use</h2>
+  <p class="small">Choose the option that best completes each sentence.</p>
+  <div id="languageQuestions"></div>
 </section>
 
 <section class="card">
-  <h2>1. Listening Audio</h2>
-  <p class="small">
-    The players load the corresponding MP3 files from the same folder.
-    If a track does not load, use its file selector to choose the MP3 from your device.
-  </p>
-
-  <div class="track">
-    <strong>Track 1 — Copyright / Example</strong>
-    <audio id="audio1" controls preload="metadata">
-      <source src="Evolve%20Placement%20Test%20Track%201%20(Copyright).mp3" type="audio/mpeg">
-    </audio>
-    <input id="file1" type="file" accept="audio/*" aria-label="Choose Track 1 audio">
-    <p class="small" id="status1">Select a file only if the track does not load.</p>
-  </div>
-
-  <div class="track">
-    <strong>Track 2 — Directions</strong>
-    <audio id="audio2" controls preload="metadata">
-      <source src="Evolve%20Placement%20Test%20Track%202%20(Directions).mp3" type="audio/mpeg">
-    </audio>
-    <input id="file2" type="file" accept="audio/*" aria-label="Choose Track 2 audio">
-    <p class="small" id="status2">Select a file only if the track does not load.</p>
-  </div>
-
-  <div class="track">
-    <strong>Track 3 — Placement Test</strong>
-    <audio id="audio3" controls preload="metadata">
-      <source src="Evolve%20Placement%20Test%20Track%203%20(Test).mp3" type="audio/mpeg">
-    </audio>
-    <input id="file3" type="file" accept="audio/*" aria-label="Choose Track 3 audio">
-    <p class="small" id="status3">Select a file only if the track does not load.</p>
-  </div>
-</section>
-
-<section class="card">
-  <h2>2. Original EVOLVE Test PDF</h2>
-  <p>
-    Read the questions from the original booklet and select your answers in the answer sheet below.
-    The PDF preserves the original wording and order.
-  </p>
+  <h2>Submit your test</h2>
+  <p>Check your answers before submitting. Blank answers will stay blank.</p>
   <div class="actions">
-    <a class="button" href="EVOLVE-Student-Test.pdf" target="_blank" rel="noopener">
-      Open PDF
-    </a>
-    <a class="button secondary" href="EVOLVE-Student-Test.pdf" download>
-      Download PDF
-    </a>
+    <button type="button" id="submitBtn">Submit test</button>
+    <button type="button" class="secondary" id="resetBtn">Clear all answers</button>
+    <button type="button" class="secondary" onclick="window.print()">Print test</button>
   </div>
-  <iframe class="pdf"
-          title="Original EVOLVE student placement test"
-          src="EVOLVE-Student-Test.pdf#page=1">
-  </iframe>
+  <div class="result" id="result" aria-live="polite">
+    <h3 id="resultTitle"></h3>
+    <p id="resultText"></p>
+    <progress id="progress" value="0" max="70"></progress>
+    <p class="small">This is a completion report only. No correct answers have been revealed.</p>
+  </div>
 </section>
-
-<section class="card">
-  <h2>3. Answer Sheet — Questions 1–70</h2>
-  <p class="small">
-    Select A, B, C, or D for each question you answer.
-    Unanswered questions will remain blank. Submitting will never fill in answers or reveal correct options.
-  </p>
-
-  <form id="answerForm">
-    <div id="answerGrid"></div>
-    <div class="actions">
-      <button id="submitBtn" type="submit">Submit Answers</button>
-      <button class="secondary" id="resetBtn" type="button">Reset Answers</button>
-      <button class="secondary" id="downloadBtn" type="button">Download Answer Sheet</button>
-    </div>
-  </form>
-</section>
-
-<section class="card" id="result" aria-live="polite">
-  <h2>Submission Summary</h2>
-  <p id="resultText"></p>
-  <p class="small">
-    This summary counts answered and unanswered questions only.
-    It does not display an answer key or calculate an official placement level.
-  </p>
-  <button type="button" class="secondary" onclick="window.print()">Print</button>
-</section>
-
-<section class="card">
-  <h2>4. Speaking Interview</h2>
-  <p class="small">Complete this section with your teacher after the written test.</p>
-  <p>1. Could you introduce yourself and tell me about your daily life?</p>
-  <p>2. Tell me about a memorable experience you have had.</p>
-  <p>3. What do you like about the place where you live?</p>
-  <p>4. Do you prefer studying online or in a classroom? Why?</p>
-  <p>5. What skill would you like to develop in the next few years, and why?</p>
-  <p>6. Does technology make life easier or create new problems? Give reasons and examples.</p>
-  <label for="teacherNotes"><strong>Teacher's notes</strong></label>
-  <textarea id="teacherNotes" rows="4"
-    style="width:100%;margin-top:8px;padding:10px;border:1px solid #ccd5e2;border-radius:8px"
-    placeholder="Fluency, grammar, vocabulary, pronunciation and interaction"></textarea>
-</section>
-
-<footer class="small">General English Academy · EVOLVE is a Cambridge University Press course and trademark.</footer>
 </main>
 
+<footer>General English Academy · Placement Test</footer>
+
 <script>
-"use strict";
+/* Each question is intentionally stored without an answer key. */
+const listening = [
+[1,"Emily …",["works at a café","never goes to the mall","works every weekend","goes to the mall every day"]],
+[2,"Jessica …",["is buying a dress and a skirt","thinks the skirts are expensive","can’t find a red skirt","pays $30 for the skirt"]],
+[3,"Rachel and Michael …",["are having lunch together","are buying gifts for their children","are busy tomorrow afternoon","are going to meet again tomorrow"]],
+[4,"Andrew …",["didn’t enjoy the food","ate just a little pasta","ordered a salad","didn’t like the dressing"]],
+[5,"The waitress …",["can make the salad dressing","is going to talk to the chef","doesn’t offer a dessert to Andrew","is going to bring Andrew some coffee"]],
+[6,"Laura …",["hit her head in a basketball game","ate some bad food at school yesterday","has a horrible pain in her stomach","has a very bad headache"]],
+[7,"Laura’s father …",["has a stomachache too","offers to take her to the doctor","is going to call a doctor","wants to rest a little"]],
+[8,"When Jack called Olivia, she …",["couldn’t hear him because of a bad connection","was in a noisy area, but she moved","was at the bus stop with her friend Katie","was on her way to see a play"]],
+[9,"Jack …",["thought the movie was not very exciting","thought the movie had too much action","thinks Olivia shouldn’t see the movie","is going out with Olivia and Katie on Friday"]],
+[10,"Amanda and Patrick …",["last met in January","went to a concert together","haven’t seen each other since April","have been spending a lot of time together lately"]],
+[11,"Amanda …",["has found a new job","is looking for another job","finds her work too challenging","has been having problems at work"]],
+[12,"Patrick …",["has been learning Spanish","isn’t enjoying his cooking class very much","has been all over the world lately","wants to cook for Amanda and Jim"]],
+[13,"Mr. Kushner …",["thought that Nicole was disappointed with her grade","doesn’t think Nicole knows about his rules","usually lets students take exams a second time","thinks that Nicole will get a better grade next time"]],
+[14,"Nicole thinks that she got a low grade because …",["she only had time to answer the reading questions","she didn’t get a grade on the reading section","she forgot to answer the reading questions","she did badly on the reading section"]],
+[15,"In the end, Mr. Kushner …",["wasn’t able to help Nicole","asked Nicole not to miss an exam again","apologized to Nicole for the problem","realized that Nicole’s exam was missing"]],
+[16,"After Lisa’s interview, she felt …",["more optimistic than she did before","she was well prepared for it","uncertain about it","her answers sounded very confident"]],
+[17,"During the interview, Lisa …",["recognized that she’s an impatient person","said she tended to be too positive about things","admitted she didn’t enjoy working on big projects","boasted that she always met her deadlines"]],
+[18,"According to Eric, … can make a person seem intelligent.",["taking less time to answer a question","staying calm throughout an interview","speaking naturally and showing no anxiety","pausing before saying something"]],
+[19,"Lisa …",["thinks she could find a much better job","usually believes in miracles","expects to be offered the position","feels frustrated about the situation"]],
+[20,"Eric …",["agrees with Lisa’s views on her performance at the interview","thinks people naturally have a good opinion about Lisa","is concerned that Lisa might quit her job","advises her not to be so proud of herself"]]
+];
 
-/* Build a blank answer sheet: no answer key is included or revealed. */
-const answerGrid = document.getElementById("answerGrid");
+const passages = [
+{
+title:"Passage 1: Greetings from Florida!",
+text:[
+"Hi, Sara.",
+"I’m visiting my sister in Florida. It’s very warm and nice here. Every morning, I go to the beach and swim. Sometimes my sister comes home early, and we play tennis in the afternoon. And we always go for a long walk after that. I’m having a great time!",
+"Love, Heather"
+],
+questions:[[21,"Heather … every day.",["swims","plays tennis","comes home early","walks with her sister"]]]
+},
+{
+title:"Passage 2: Helen is getting married and I’m tired.",
+text:[
+"This has been a crazy week! One of my friends is getting married on Saturday, and I’m helping her with the reception. It’s not going to be a big party, but I still have to do a lot of things. For example, I chose the songs last week, but the band is playing them for me tonight. I bought the flowers today, but I have to pick them up on Friday. I’m tired. Can someone help me, please?!"
+],
+questions:[[22,"The writer …",["is singing tonight","is buying flowers on Friday","listened to a band a week ago","is going to a party this weekend"]]]
+},
+{
+title:"Passage 3: The Whitney Museum of American Art",
+text:[
+"The Whitney is one of the most famous art museums in New York City. It first opened in 1931 in Greenwich Village, and then it moved to two different places in 1954 and 1966. Since 2015, this museum of American art has been in a new building downtown. The new space is larger and more modern, and it has beautiful views of the Hudson River from its windows and café. Visit it next time you are in the city."
+],
+questions:[[23,"The Whitney Museum …",["shows art from many countries","moved to a smaller place in 2015","has a place to eat and great views","was in the same building since 1931"]]]
+},
+{
+title:"Passage 4: Is sitting unhealthy?",
+text:[
+"If you have been sitting in an office for a long period of time, stand up and move for your health. Research has shown that too much sitting might cause higher blood pressure, add body fat, and increase the danger of death from heart disease. Studies have also suggested that moving more has a positive effect on a person’s health. So, what can an office worker do? Experts say that you should take a break from sitting every 30 minutes, stand more while working, and even walk when meeting with coworkers. Moving might save your life."
+],
+questions:[
+[24,"The article suggests that …",["there is very little research about the effects of sitting","sitting for a long time might be dangerous for your health","office workers live longer than other types of workers","people do not usually like to walk and exercise"]],
+[25,"According to the article, office workers should …",["stop working every half hour","not work in an office if possible","only stand or walk when you work","move more to avoid serious heart problems"]]
+]
+},
+{
+title:"Passage 5: A changing neighborhood — for better or for worse?",
+text:[
+"Recently, an international online retailer opened an enormous, brand-new office in our neighborhood. Until then, there hadn’t been any major companies or huge buildings like this in the area — just small family-owned businesses. So, obviously, there has been a lot of discussion about it lately.",
+"Some people say the company is creating jobs and will attract other new businesses, but others complain that most of the new jobs will be low-paying. These people also believe that rising costs will push out independent businesses and make the neighborhood too expensive for its current residents. I can’t make up my mind whether the company will be a benefit for the neighborhood or not. It’s a complicated issue, and I’m not sure there is a right or wrong answer. What do you think?"
+],
+questions:[
+[26,"The author of the blog post believes that …",["there may be both positive and negative consequences","the changes will be helpful for most workers from the region","there will soon be many more big companies in the neighborhood","the changes will be mostly harmful for people who live in the area"]],
+[27,"Some people think the company will help the area because it will …",["create a greater number of jobs with excellent salaries","make the area more interesting to other companies","lower the cost of living in the neighborhood","replace smaller stores with larger ones"]]
+]
+},
+{
+title:"Passage 6: An inspiring story",
+text:[
+"When Alex McGovern was in high school, he used to earn money working weekends at a local bakery. After working there for several months, helping bake fresh bread and cakes, Alex noticed a familiar pattern: a huge amount of food was thrown away at the end of each day. It was food that the bakery could no longer sell, but it was still good enough to eat. So Alex began to wonder what he could do with all of this extra food.",
+"With the bakery owner’s permission, he reached out to a local organization that worked with families who need help with food and housing. The charity was extremely pleased and arranged to pick up the extra food each day. Now bread was no longer wasted, but generously shared with people in need.",
+"Alex’s idea was such a success that he began approaching other local restaurants about joining the program. Before long, there were over a dozen businesses taking part, and Alex created a website to grow the program in other cities. Today Alex’s “simple” idea is helping feed people all over the country!"
+],
+questions:[
+[28,"Alex’s original goal at the bakery was to …",["eat free bread and cake","learn to be a baker","make money","help people"]],
+[29,"Alex got his idea …",["when he saw how much food was wasted","while he was baking some fresh bread","from the owner of the bakery","from a local organization"]],
+[30,"The bakery owner …",["thought that Alex’s plans wouldn’t work","allowed Alex to give away the extra bread","helped Alex create a website for the organization","didn’t care about the families assisted by the charity"]],
+[31,"The extra food was …",["sold by Alex","bought by the charity","delivered by the bakery","picked up by the organization"]]
+]
+},
+{
+title:"Passage 7: Some thoughts on your online profile",
+text:[
+"In many ways, the internet has made it easier than ever to find out about new job opportunities. Yet, as companies increasingly examine candidates’ social media profiles for information to use in the selection process, people need to be aware of the risks and rewards of posting online. The views they express — and the ways they choose to express them — can be a crucial factor in whether or not they receive an offer of employment.",
+"Many young adults, who have grown up with social media and are comfortable sharing their lives online, don’t realize how employers are using social media in hiring decisions. These companies don’t just consider information about a person’s online behavior; they may even gather information about friends and family. Some fear that employers may judge candidates based on factors such as their medical history, age, or even beliefs.",
+"While there is currently debate about what information companies are allowed to legally collect or use for hiring decisions, everyone agrees that people need to be careful about what they post online. Your behavior on social media could cost you your current position or job opportunities in the future.",
+"So, should job applicants erase their social media accounts completely? According to Professor John Sacks of the Better Hiring Institute, “It would be better to make sure you have a strong professional profile that emphasizes your qualifications. Not having any social media might send the message that you have something to hide.” In other words, take the time to create an attractive profile on a career site and carefully consider everything you post online."
+],
+questions:[
+[32,"This article is aimed primarily at …",["employers","college students","potential job candidates","social media organizations"]],
+[33,"According to the author, some people may not realize …",["the effect of their online behavior on friends and family","how their online profiles can affect hiring decisions","what information companies cannot legally collect","if their online profile looks professional enough"]],
+[34,"One way of increasing your chances of getting a good job is …",["not keeping a profile online","expressing your opinions in an honest way","having a profile that clearly shows your skills","being secretive about what you share online"]],
+[35,"The author … online personal information to make hiring decisions.",["is against companies using","is in favor of the practice of using","believes it does not matter if employers use","does not say whether it is good or bad to use"]]
+]
+},
+{
+title:"Passage 8: Sleep deprivation",
+text:[
+"If you can sleep well, be grateful. Sleep deprivation is extremely common, and its side effects are both serious and underappreciated. It is estimated that 50–70 million people in the U.S. suffer from a sleep disorder, and yet too many of them do not seek medical help. Although occasional sleep interruptions are generally no more than a nuisance, continuous lack of sleep can lead to excessive daytime sleepiness, emotional difficulties, poor job performance, and even obesity.",
+"Sleep deprivation also impacts mental well-being. A study done by the U.K. Mental Health Foundation found that people who didn’t get enough sleep were about three times more likely to exhibit poor concentration and four times more likely to have relationship problems. According to another study, by the University of Warwick, getting less than six hours of sleep on a continuous basis makes a person 48% more likely to die of heart disease and 15% more likely to develop a stroke. According to study co-author Professor Francesco Cappuccio, lack of sleep “is like a ticking time bomb for your health.”",
+"If a person is experiencing difficulties falling and staying asleep, there are several effective methods that can help and do not require medication. These include relaxation techniques, like tightening and relaxing muscles, breathing slowly, and meditating; stimulation control, which involves controlling pre-bedtime activities and surroundings; and cognitive behavioral therapy (CBT), designed to help people understand and change their thought patterns. If sleep deprivation and negative symptoms continue, however, consultation with a doctor is recommended. It’s essential not to underestimate the importance of adequate sleep to maintaining good mental and physical health."
+],
+questions:[
+[36,"The main idea of the article is that …",["lack of sleep can have significant health consequences","sleeping is not as essential as people used to think","people underestimate how much sleep they need","relaxation techniques are important for a good night’s sleep"]],
+[37,"According to the article, many people with sleeping disorders …",["breathe more slowly","do cognitive behavioral therapy","do not speak to their doctor about it","usually practice healthy sleeping habits"]],
+[38,"The article suggests that good sleepers …",["can focus better","often get about eight hours of good sleep","are able to sleep during the day","do not have heart problems"]],
+[39,"Professor Cappuccio found that …",["sleep-deprived people have more relationship problems","sleep deprivation might make people critically ill","research from the Mental Health Foundation was incorrect","lack of sleep is just a minor nuisance"]],
+[40,"The article says that people experiencing sleep difficulties can …",["lose some weight","take some types of medicine","immediately find medical help","try methods that help them fall and stay asleep"]]
+]
+}
+];
 
-for (let n = 1; n <= 70; n++) {
-  const card = document.createElement("div");
-  card.className = "answer";
+const language = [
+[41,"My daughter sometimes _____ to school with her friends.",["walk","walks","walking","not walk"]],
+[42,"_____ eat dinner on Sundays?",["Where your family","How is your family","When your family do","What time does your family"]],
+[43,"_____ a lot of people in the park today.",["There","There’s","There are","There is no"]],
+[44,"_____, but I’m not very good.",["I can play the guitar","I don’t play the guitar","I play the guitar very well","I can’t play the guitar well"]],
+[45,"We had a nice vacation. The weather _____ beautiful.",["did","was","does","were"]],
+[46,"Tom _____ home right now. He’s still at the office.",["isn’t driving","doesn’t drive","didn’t drive","drives"]],
+[47,"Is it true? _____ a grandparent yesterday?",["Are you becoming","Does she become","Did he become","They became"]],
+[48,"I go to the gym _____ evenings. I only don’t go on the weekend.",["some","most","all of the","many of the"]],
+[49,"Susan’s cousin is _____ player on our soccer team.",["bad","best","worse","the worst"]],
+[50,"Our neighbor _____ the screen of his phone twice last year.",["breaks","is breaking","has broken","broke"]],
+[51,"A: I can’t forget to make a reservation at the restaurant before noon. B: Don’t worry. _____ you.",["I’m reminding","I’ve reminded","I’ll remind","I remind"]],
+[52,"We _____ for a hotel when the storm began.",["search","will search","have searched","were searching"]],
+[53,"If you _____ concentrate on your work, you usually waste a lot of time.",["don’t","won’t","didn’t","couldn’t"]],
+[54,"I’m exhausted. _____ to fix this machine since I got here this morning.",["I try","I’ll try","I tried","I’ve been trying"]],
+[55,"Several bridges _____ during the earthquake last year.",["badly damaged","were badly damaged","have badly damaged","were badly damaging"]],
+[56,"The agency _____ that our ideas for the poster seem a little old-fashioned.",["believes","is believing","was believed","has been believing"]],
+[57,"Superhero movies are a kind of entertainment _____ really attracted to.",["which","I’m not","who they","that aren’t"]],
+[58,"More support _____ to groups dealing with environmental issues.",["is providing","might provide","must be provided","should be providing"]],
+[59,"Employees _____ show their ID cards, or they couldn’t have access to the research facilities.",["were required to","were allowed to","didn’t have to","could"]],
+[60,"Our math teacher made _____ a hundred math problems in one hour.",["us to solve","be solved","us solve","solve"]],
+[61,"The process _____ be very time-consuming before they launched the new system.",["might","would","ought to","used to"]],
+[62,"After some time together, those on John’s team learned not to underestimate _____.",["each other","himself","another","itself"]],
+[63,"The man next door asked me _____ keep an eye on his apartment while he was away.",["I can","would I","if I could","whether will I"]],
+[64,"Our niece is very hardworking and determined. She has never had any trouble _____ her exams.",["to pass","passing","passed","pass"]],
+[65,"If they _____ the damage more carefully, they would have found these other problems.",["would assess","had assessed","have assessed","would have assessed"]],
+[66,"By this time next Monday, _____ a new head of the sales department.",["we hire","we’re hiring","we’ll have hired","we have been hiring"]],
+[67,"The consultants proposed a number of alternatives, _____ the firm disregarded.",["much of what","many of which","some of whom","none of whose"]],
+[68,"What _____ a couple of relaxing days at an unspoiled beach.",["they actually plan","did they actually plan","they actually planned was","have they actually planned are"]],
+[69,"We felt genuinely shocked. Never again _____ at such an overrated place.",["ate we","we will eat","did eat we","would we eat"]],
+[70,"Authorities recommend that everyone _____ the highway until repairs are completed.",["avoid","avoided","would avoid","is going to avoid"]]
+];
 
-  const title = document.createElement("strong");
-  title.textContent = "Question " + n;
-  card.appendChild(title);
+function addQuestion(q, destination) {
+  const [number, prompt, options] = q;
+  const article = document.createElement("article");
+  article.className = "question";
+  article.id = "question-" + number;
 
-  for (const letter of ["A", "B", "C", "D"]) {
+  const heading = document.createElement("div");
+  heading.className = "q-title";
+
+  const badge = document.createElement("span");
+  badge.className = "q-number";
+  badge.textContent = number;
+
+  const title = document.createElement("span");
+  title.textContent = prompt;
+
+  heading.append(badge, title);
+  article.append(heading);
+
+  const choices = document.createElement("div");
+  choices.className = "options";
+
+  options.forEach((option, index) => {
     const label = document.createElement("label");
+    label.className = "option";
+
     const radio = document.createElement("input");
-
     radio.type = "radio";
-    radio.name = "q" + n;
-    radio.value = letter;
+    radio.name = "q" + number;
+    radio.value = String.fromCharCode(97 + index);
 
-    label.append(radio, document.createTextNode(" " + letter));
-    card.appendChild(label);
-  }
+    const text = document.createElement("span");
+    text.textContent = String.fromCharCode(97 + index) + ". " + option;
 
-  answerGrid.appendChild(card);
-}
-
-/* Audio: use uploaded same-folder MP3 by default, or a local file as fallback. */
-const objectUrls = [];
-
-for (let i = 1; i <= 3; i++) {
-  const player = document.getElementById("audio" + i);
-  const picker = document.getElementById("file" + i);
-  const status = document.getElementById("status" + i);
-
-  player.addEventListener("error", () => {
-    status.textContent =
-      "The online MP3 could not be loaded. Choose the audio file below.";
+    label.append(radio, text);
+    choices.append(label);
   });
 
-  player.addEventListener("canplay", () => {
-    status.textContent = "Audio is ready to play.";
-  });
-
-  picker.addEventListener("change", event => {
-    const file = event.target.files && event.target.files[0];
-    if (!file) return;
-
-    if (player.dataset.objectUrl) {
-      URL.revokeObjectURL(player.dataset.objectUrl);
-    }
-
-    const url = URL.createObjectURL(file);
-    player.dataset.objectUrl = url;
-    objectUrls.push(url);
-    player.src = url;
-    player.load();
-
-    status.textContent = "Selected file: " + file.name;
-  });
+  article.append(choices);
+  destination.append(article);
 }
 
-function getAnswers() {
-  const answers = {};
+const listeningRoot = document.getElementById("listeningQuestions");
+listening.forEach(q => addQuestion(q, listeningRoot));
 
-  for (let n = 1; n <= 70; n++) {
-    const selected = document.querySelector(
-      'input[name="q' + n + '"]:checked'
-    );
+const readingRoot = document.getElementById("readingQuestions");
+passages.forEach(passage => {
+  const box = document.createElement("section");
+  box.className = "passage";
 
-    answers[n] = selected ? selected.value : "";
-  }
+  const label = document.createElement("div");
+  label.className = "passage-label";
+  label.textContent = "READING PASSAGE";
+  box.append(label);
 
-  return answers;
+  const title = document.createElement("h3");
+  title.textContent = passage.title;
+  box.append(title);
+
+  passage.text.forEach(paragraph => {
+    const p = document.createElement("p");
+    p.textContent = paragraph;
+    box.append(p);
+  });
+
+  readingRoot.append(box);
+  passage.questions.forEach(q => addQuestion(q, readingRoot));
+});
+
+const languageRoot = document.getElementById("languageQuestions");
+language.forEach(q => addQuestion(q, languageRoot));
+
+function loadAudio(input) {
+  if (!input.files || !input.files[0]) return;
+  const audio = input.parentElement.querySelector("audio");
+  if (audio.dataset.localUrl) URL.revokeObjectURL(audio.dataset.localUrl);
+  const url = URL.createObjectURL(input.files[0]);
+  audio.dataset.localUrl = url;
+  audio.src = url;
+  audio.load();
 }
 
-/* Submission only counts responses. It never marks correct answers. */
-document.getElementById("answerForm").addEventListener("submit", event => {
-  event.preventDefault();
+document.getElementById("submitBtn").addEventListener("click", () => {
+  const answered = new Set(
+    [...document.querySelectorAll('input[type="radio"]:checked')]
+      .map(input => input.name)
+  ).size;
 
-  const answers = getAnswers();
-  const answeredCount = Object.values(answers).filter(Boolean).length;
-  const blankCount = 70 - answeredCount;
+  const total = 70;
+  const blank = total - answered;
 
+  document.getElementById("resultTitle").textContent = "Test submitted";
   document.getElementById("resultText").textContent =
-    "Answered: " + answeredCount + "/70. " +
-    "Unanswered: " + blankCount + ". " +
-    "All unanswered questions remain blank.";
+    "Answered: " + answered + " of " + total +
+    ". Unanswered: " + blank +
+    ". Your blank answers have been left empty.";
+  document.getElementById("progress").value = answered;
 
-  document.getElementById("result").style.display = "block";
-  document.getElementById("result").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+  const result = document.getElementById("result");
+  result.classList.add("show");
+  result.scrollIntoView({behavior:"smooth", block:"center"});
 });
 
 document.getElementById("resetBtn").addEventListener("click", () => {
   if (!confirm("Clear all selected answers?")) return;
-
-  document.querySelectorAll('#answerGrid input[type="radio"]').forEach(input => {
+  document.querySelectorAll('input[type="radio"]').forEach(input => {
     input.checked = false;
   });
-
-  document.getElementById("result").style.display = "none";
-});
-
-document.getElementById("downloadBtn").addEventListener("click", () => {
-  const answers = getAnswers();
-  const student = document.getElementById("studentName").value.trim() || "Student";
-
-  let text = "EVOLVE Placement Test — Answer Sheet\n";
-  text += "Student: " + student + "\n\n";
-
-  for (let n = 1; n <= 70; n++) {
-    text += n + ". " + (answers[n] || "Unanswered") + "\n";
-  }
-
-  const blob = new Blob([text], {
-    type: "text/plain;charset=utf-8"
-  });
-
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-
-  link.href = url;
-  link.download = "evolve-placement-answers.txt";
-  link.click();
-
-  URL.revokeObjectURL(url);
-});
-
-window.addEventListener("beforeunload", () => {
-  objectUrls.forEach(url => URL.revokeObjectURL(url));
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("progress").value = 0;
+  window.scrollTo({top:0, behavior:"smooth"});
 });
 </script>
 </body>
