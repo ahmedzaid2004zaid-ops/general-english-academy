@@ -1,302 +1,83 @@
-
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>General English Academy | Placement Test</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>General English Academy | EVOLVE Placement Test</title>
 <style>
-:root{--navy:#14243a;--blue:#2359a8;--pale:#eef4fb;--line:#d9e1ec;--ink:#172333;--muted:#5b6878}
-*{box-sizing:border-box}
-body{margin:0;background:#f4f7fb;color:var(--ink);font:16px/1.55 Arial,sans-serif}
-header{background:var(--navy);color:white;padding:28px 18px}
-header .inner,main{max-width:900px;margin:auto}
-.brand{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#c9d9ef;font-weight:bold}
-h1{font-size:clamp(25px,5vw,38px);line-height:1.15;margin:8px 0}
-header p{margin:8px 0 0;color:#e1eaf5}
-main{padding:20px 14px 48px}
-.panel,.question,.passage{background:white;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
-h2{font-size:21px;margin:0 0 10px}
-h3{margin:0 0 10px;font-size:18px}
-.muted{color:var(--muted);font-size:14px}
-.notice{background:var(--pale);border-left:4px solid var(--blue);padding:12px 14px;border-radius:6px}
-label.field{display:block;font-weight:bold;margin:12px 0 5px}
-input[type=text],input[type=email],textarea{width:100%;padding:12px;border:1px solid #bac7d8;border-radius:8px;font:inherit}
-textarea{min-height:140px;resize:vertical}
-.question p{font-weight:bold;margin:0 0 10px}
-.option{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:7px;cursor:pointer}
-.option:hover{background:#f3f6fa}
-.option input{margin-top:5px;flex-shrink:0}
-.section-tag{color:var(--blue);font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:bold}
-button{border:0;border-radius:9px;background:var(--blue);color:white;font-size:16px;font-weight:bold;padding:13px 18px;cursor:pointer}
-button.secondary{background:#e8edf4;color:var(--navy)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
-.result{display:none}
-.score{font-size:32px;font-weight:bold}
-.smallprint{font-size:12px;color:var(--muted)}
-audio{width:100%;margin:8px 0}
-.evolve-audio{display:grid;grid-template-columns:1fr;gap:12px}
-.evolve-track{border:1px solid var(--line);padding:12px;border-radius:10px}
-.pdf-frame{width:100%;height:70vh;min-height:400px;border:1px solid var(--line);border-radius:9px}
-@media(min-width:650px){.evolve-audio{grid-template-columns:1fr 1fr}}
+:root{--navy:#14243a;--blue:#2359a8;--bg:#f3f6fb;--ink:#172333;--line:#d9e1ec;--muted:#5b6878}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:25px 16px}header>div,main{max-width:950px;margin:auto}header h1{margin:5px 0;font-size:clamp(25px,5vw,36px)}header p{margin:0;color:#dce8f8}.brand{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c9d9ef;font-weight:bold}
+main{padding:20px 14px 50px}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 5px 18px #14243a0a}
+h2{font-size:21px;margin:0 0 10px;color:var(--navy)}h3{font-size:17px;margin:0 0 8px}.muted{color:var(--muted);font-size:14px}
+audio{width:100%;display:block;margin:10px 0}.track{padding:12px;border:1px solid var(--line);border-radius:10px;margin:10px 0}
+a.button,button{display:inline-block;border:0;border-radius:9px;padding:11px 15px;background:var(--blue);color:white;text-decoration:none;font:inherit;font-weight:bold;cursor:pointer}
+button.secondary,a.secondary{background:#e8eef7;color:var(--navy)}.pdf{width:100%;height:78vh;min-height:520px;border:1px solid var(--line);border-radius:9px}
+input,textarea{font:inherit}input[type=text]{width:100%;padding:11px;border:1px solid #bac7d8;border-radius:8px}
+textarea{width:100%;min-height:105px;padding:12px;border:1px solid #bac7d8;border-radius:8px}
+.prompt{padding:12px;border-radius:9px;background:#f0f5fc;margin:10px 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.status{font-size:14px;color:var(--muted);margin-top:8px}
+@media(max-width:600px){.card{padding:14px}.pdf{min-height:400px;height:65vh}}
+@media print{header{background:white;color:black}audio,.actions,button{display:none}.pdf{height:auto}}
 </style>
 </head>
 <body>
-<header>
-<div class="inner">
-<div class="brand">General English Academy</div>
-<h1>Online English Placement Test</h1>
-<p>Levels A1–C1 · American English · Student Version</p>
-</div>
-</header>
-
+<header><div><div class="brand">General English Academy</div><h1>EVOLVE Placement Test</h1><p>Listening · Reading · Language Use · Speaking Interview</p></div></header>
 <main>
-<section class="panel">
-<h2>Welcome!</h2>
-<p>This test helps us understand your current English level. Answer independently and do not use a translator or dictionary.</p>
-<div class="notice">
-<strong>Instructions</strong>
-<ul>
-<li>Suggested time: 35–45 minutes.</li>
-<li>Choose one answer for each question.</li>
-<li>Complete the listening section and writing task.</li>
-<li>Your result is preliminary until your teacher reviews your speaking and writing.</li>
-</ul>
-</div>
-<label class="field" for="studentName">Full name</label>
-<input id="studentName" type="text" placeholder="Enter your name">
-<label class="field" for="studentEmail">Email (optional)</label>
-<input id="studentEmail" type="email" placeholder="Enter your email">
-<label class="field" for="testDate">Date</label>
-<input id="testDate" type="text" readonly>
+<section class="card">
+<h2>Before you begin</h2>
+<p>This page contains the original student test booklet with all 70 questions in their original wording and order. The teacher answer key is not included in the student booklet.</p>
+<p><strong>Recommended timing:</strong> Listening 15 minutes, Reading 20 minutes, Language Use 15 minutes. Complete the speaking interview with your teacher at the end.</p>
+<label for="studentName"><strong>Student name (optional)</strong></label>
+<input id="studentName" type="text" placeholder="Enter your full name">
 </section>
-
-<form id="testForm">
-<section class="panel">
-<div class="section-tag">Part 1 · Grammar</div>
-<h2>Choose the best answer</h2>
-<p class="muted">15 questions · 1 point each</p>
-<div id="grammar"></div>
+<section class="card">
+<h2>1. Listening audio files</h2>
+<p class="muted">These are the three supplied MP3 files. Press Play to verify playback. Keep the audio files in the same folder as this HTML page when uploading to GitHub.</p>
+<div class="track"><h3>Track 1 — Copyright / Introduction</h3><audio controls preload="metadata"><source src="Evolve%20Placement%20Test%20Track%201%20(Copyright).mp3" type="audio/mpeg">Your browser does not support audio.</audio></div>
+<div class="track"><h3>Track 2 — Directions</h3><audio controls preload="metadata"><source src="Evolve%20Placement%20Test%20Track%202%20(Directions).mp3" type="audio/mpeg">Your browser does not support audio.</audio></div>
+<div class="track"><h3>Track 3 — Listening Test</h3><audio controls preload="metadata"><source src="Evolve%20Placement%20Test%20Track%203%20(Test).mp3" type="audio/mpeg">Your browser does not support audio.</audio></div>
+<p class="muted">If a track does not play after deployment, check that the MP3 file is uploaded to the same GitHub folder with exactly the filename shown above.</p>
 </section>
-
-<section class="panel">
-<div class="section-tag">Part 2 · Vocabulary</div>
-<h2>Choose the best answer</h2>
-<p class="muted">10 questions · 1 point each</p>
-<div id="vocab"></div>
+<section class="card">
+<h2>2. Official EVOLVE test — all 70 questions</h2>
+<p>The original student booklet is shown below. On mobile, use the PDF viewer controls to zoom in or open the booklet separately.</p>
+<div class="actions"><a class="button" href="EVOLVE-Student-Test.pdf" target="_blank" rel="noopener">Open test in new tab</a><a class="button secondary" href="EVOLVE-Student-Test.pdf" download>Download test booklet</a></div>
+<iframe class="pdf" title="EVOLVE student test booklet containing questions 1 to 70" src="EVOLVE-Student-Test.pdf#page=1"></iframe>
 </section>
-
-<section class="panel">
-<div class="section-tag">Part 3 · Reading</div>
-<h2>Read and answer</h2>
-<p class="muted">10 questions · 1 point each</p>
-<div class="passage">
-<h3>Text A</h3>
-<p>Daniel works in a small office in Chicago. He usually takes the train to work because parking is expensive. Last Monday, the trains were delayed, so he called his manager and explained that he would arrive late. His manager understood and asked him to send an update when he arrived.</p>
-</div>
-<div id="readingA"></div>
-<div class="passage">
-<h3>Text B</h3>
-<p>Remote work has changed how many organizations evaluate productivity. While some managers rely on visible activity, such as time spent online, others focus on measurable outcomes. The latter approach can give employees greater autonomy, but it also requires clear objectives, effective communication, and mutual trust. Without these conditions, flexibility may create confusion rather than improve performance.</p>
-</div>
-<div id="readingB"></div>
+<section class="card" id="speaking">
+<h2>3. Speaking interview — at the end</h2>
+<p class="muted">Teacher-led interview. Ask the student to answer naturally and give examples. Suggested duration: 8–12 minutes.</p>
+<div class="prompt"><strong>Warm-up</strong><br>1. Could you introduce yourself and tell me a little about your daily life?</div>
+<div class="prompt"><strong>Experience and opinions</strong><br>2. Tell me about a memorable experience you have had.<br>3. What do you like about the place where you live?<br>4. Do you prefer studying online or in a classroom? Why?<br>5. What is one skill you would like to develop in the next few years, and why?</div>
+<div class="prompt"><strong>Extended response</strong><br>6. Some people believe technology makes life easier, while others think it creates new problems. What is your opinion? Give reasons and examples.</div>
+<label for="speakingNotes"><strong>Teacher's speaking notes</strong></label>
+<textarea id="speakingNotes" placeholder="Fluency, grammar, vocabulary, pronunciation, interaction..."></textarea>
+<div class="actions"><button type="button" id="recordBtn">Start speaking recording</button><button type="button" class="secondary" id="stopBtn" disabled>Stop recording</button></div>
+<p id="recordStatus" class="status">Recording stays in this browser session. After stopping, you can play it and download it.</p>
+<audio id="recordedAudio" controls hidden></audio>
+<div class="actions"><a id="downloadRecording" class="button secondary" hidden download="speaking-interview.webm">Download speaking recording</a><button type="button" class="secondary" onclick="window.print()">Print test / notes</button></div>
 </section>
-
-<section class="panel">
-<div class="section-tag">Part 4 · Listening</div>
-<h2>Listen and answer</h2>
-<p>Play the audio once or twice, then choose your answers.</p>
-<p class="muted">Listening A · Everyday plans</p>
-<audio controls preload="none" src="https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en-US&q=Hi%20Megan.%20It%27s%20Chris.%20I%27m%20calling%20about%20our%20plans%20for%20Saturday.%20The%20weather%20forecast%20says%20it%20might%20rain%20in%20the%20morning%2C%20so%20let%27s%20meet%20at%20the%20coffee%20shop%20at%20two%20instead%20of%20going%20to%20the%20park.%20I%27ll%20bring%20the%20tickets%20for%20the%20movie%2C%20and%20you%20can%20choose%20a%20place%20for%20dinner.%20Text%20me%20if%20that%20works%20for%20you."></audio>
-<div id="listenA"></div>
-<p class="muted">Listening B · Workplace policy</p>
-<audio controls preload="none" src="https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en-US&q=The%20company%20initially%20introduced%20flexible%20working%20hours%20to%20improve%20employee%20satisfaction.%20However%2C%20the%20results%20were%20mixed.%20Some%20teams%20reported%20greater%20productivity%2C%20while%20others%20experienced%20delays%20because%20decisions%20were%20harder%20to%20coordinate.%20In%20response%2C%20management%20introduced%20core%20collaboration%20hours%2C%20during%20which%20all%20team%20members%20are%20expected%20to%20be%20available.%20The%20policy%20aims%20to%20preserve%20flexibility%20without%20sacrificing%20communication."></audio>
-<div id="listenB"></div>
-</section>
-
-<section class="panel">
-<div class="section-tag">Part 5 · Writing</div>
-<h2>Write in English</h2>
-<p>Write 100–180 words about this topic: <strong>Do you think online learning is better than learning in a classroom? Explain your opinion and give examples.</strong></p>
-<label class="field" for="writing">Your answer</label>
-<textarea id="writing" placeholder="Write your answer here..." maxlength="3000"></textarea>
-<p class="muted">Your writing must be reviewed by a teacher; it is not included in the automatic score.</p>
-<label class="field"><input type="checkbox" id="honesty"> I confirm that I completed the test independently.</label>
-</section>
-
-<div class="actions">
-<button type="submit">Submit and see result</button>
-<button type="button" class="secondary" onclick="window.print()">Print test</button>
-</div>
-</form>
-
-<section id="result" class="panel result" aria-live="polite"></section>
-
-<section class="panel">
-<h2>Speaking interview</h2>
-<p>Your teacher will arrange a 10–15 minute conversation to assess fluency, grammar, vocabulary, pronunciation, and interaction.</p>
-</section>
-
-<section class="panel" id="evolve-materials">
-<div class="section-tag">Original supplied materials</div>
-<h2>EVOLVE Placement Test — Audio Tracks</h2>
-<p class="muted">Upload the three original MP3 files into the same GitHub folder as this HTML file.</p>
-<div class="evolve-audio">
-<div class="evolve-track">
-<h3>Track 1 — Example</h3>
-<audio controls preload="metadata">
-<source src="Evolve%20Placement%20Test%20Track%201%20(Copyright).mp3" type="audio/mpeg">
-</audio>
-</div>
-<div class="evolve-track">
-<h3>Track 2 — Directions</h3>
-<audio controls preload="metadata">
-<source src="Evolve%20Placement%20Test%20Track%202%20(Directions).mp3" type="audio/mpeg">
-</audio>
-</div>
-<div class="evolve-track">
-<h3>Track 3 — Listening Test</h3>
-<audio controls preload="metadata">
-<source src="Evolve%20Placement%20Test%20Track%203%20(Test).mp3" type="audio/mpeg">
-</audio>
-</div>
-</div>
-
-<h2 style="margin-top:22px">Original EVOLVE Placement Test PDF</h2>
-<p><a href="EVOLVE%20Placement%20Test.pdf" target="_blank" rel="noopener">Open PDF</a> · <a href="EVOLVE%20Placement%20Test.pdf" download>Download PDF</a></p>
-<iframe class="pdf-frame" title="Original EVOLVE Placement Test PDF" src="EVOLVE%20Placement%20Test.pdf"></iframe>
-<p class="smallprint">The supplied PDF is a separate copyrighted source document. Confirm permission before publicly redistributing it.</p>
-</section>
-<footer class="smallprint">General English Academy · Preliminary placement assessment, not an official CEFR certificate.</footer>
+<footer class="muted">General English Academy · EVOLVE is a Cambridge University Press course and trademark. Use and distribute the supplied materials only with appropriate permission.</footer>
 </main>
-
 <script>
-const groups = {
-grammar:[
-["My name ___ Ahmed.",["am","is","are","be"],0],
-["They ___ from Egypt.",["is","am","are","be"],2],
-["She ___ to work every day.",["go","goes","going","gone"],1],
-["There ___ two bedrooms in my apartment.",["is","are","was","be"],1],
-["I ___ my homework when you called.",["do","did","was doing","have done"],2],
-["If it rains tomorrow, we ___ at home.",["stayed","would stay","will stay","had stayed"],2],
-["I've lived here ___ 2022.",["for","since","during","from"],1],
-["The report ___ by the manager yesterday.",["approved","was approved","has approving","is approve"],1],
-["If I ___ more time, I'd take another course.",["have","had","will have","would have"],1],
-["By next June, she ___ her degree.",["completes","completed","will have completed","has completing"],2],
-["He denied ___ the confidential file.",["to open","open","having opened","to have open"],2],
-["Were the company ___ its policy, the process would be simpler.",["change","to change","changed","changing"],1],
-["Hardly ___ the meeting begun when the power went out.",["had","has","did","was"],0],
-["The proposal, ___ merits are considerable, still requires revision.",["which","whose","that","who"],1],
-["Had I known about the delay, I ___ an alternative arrangement.",["made","would make","would have made","had made"],2]
-],
-vocab:[
-["The opposite of “expensive” is ___.",["cheap","tall","crowded"],0],
-["I usually ___ breakfast at 8.",["do","have","make"],1],
-["Can you ___ me a hand?",["give","take","put"],0],
-["She is very ___; you can trust her.",["reliable","awkward","ordinary"],0],
-["We need to ___ a decision soon.",["do","make","take"],1],
-["The meeting was ___ because the manager was ill.",["put off","put on","put away"],0],
-["“Insightful” is closest in meaning to ___.",["showing deep understanding","very noisy","easy to forget"],0],
-["The new policy had a significant ___ on sales.",["affect","effect","effort"],1],
-["The instructions were ___, so everyone understood them.",["ambiguous","straightforward","reluctant"],1],
-["Her argument was persuasive because it was ___.",["convincing","accidental","irrelevant"],0]
-],
-readingA:[
-["Where does Daniel work?",["In a school","In an office","In a hospital"],1],
-["Why does he usually take the train?",["Parking is expensive","He doesn't have a car","He enjoys walking"],0],
-["What did Daniel do when the trains were delayed?",["He stayed home","He called his manager","He took a taxi"],1],
-["“Delayed” means ___.",["later than expected","completely canceled","faster than expected"],0]
-],
-readingB:[
-["What is the main idea of the text?",["Remote work always improves productivity","Productivity can be evaluated in different ways","Employees should spend more time online"],1],
-["What does “the latter approach” refer to?",["Measuring outcomes","Monitoring online activity","Reducing communication"],0],
-["What is one possible benefit of focusing on outcomes?",["Greater autonomy","Fewer objectives","Less responsibility"],0],
-["What can happen without clear objectives and trust?",["Guaranteed success","More flexibility","Confusion"],2],
-["The writer's tone is best described as ___.",["Balanced and analytical","Angry and critical","Humorous"],0],
-["Which statement is supported by the text?",["Time online is always the best measure","Flexible work needs effective communication","Remote workers do not need objectives"],1]
-],
-listenA:[
-["What day are they making plans for?",["Friday","Saturday","Sunday"],1],
-["Why might they change their plans?",["It may rain","The coffee shop is closed","The movie is canceled"],0],
-["Where will they meet?",["At the park","At a restaurant","At the coffee shop"],2],
-["What will Chris bring?",["Dinner","Movie tickets","An umbrella"],1],
-["What does Megan need to choose?",["A movie","A place for dinner","A time to meet"],1]
-],
-listenB:[
-["Why did the company introduce flexible hours?",["To reduce salaries","To improve employee satisfaction","To close the office"],1],
-["Why did some teams experience delays?",["They had too many meetings","Decisions were harder to coordinate","Employees had no tasks"],1],
-["What are core collaboration hours?",["Hours when all team members should be available","Optional vacation hours","Hours without meetings"],0],
-["What balance is management trying to achieve?",["Speed and lower pay","Flexibility and communication","Office work and travel"],1],
-["Is the policy designed to eliminate flexibility?",["Yes","No"],1]
-]
-};
-
-function renderGroup(id,qs,prefix){
-document.getElementById(id).innerHTML=qs.map((q,i)=>
-`<div class="question"><p>${i+1}. ${q[0]}</p>${
-q[1].map((o,j)=>`<label class="option"><input required type="radio" name="${prefix}${i}" value="${j}"><span>${String.fromCharCode(65+j)}. ${o}</span></label>`).join("")
-}</div>`).join("");
-}
-renderGroup("grammar",groups.grammar,"g");
-renderGroup("vocab",groups.vocab,"v");
-renderGroup("readingA",groups.readingA,"ra");
-renderGroup("readingB",groups.readingB,"rb");
-renderGroup("listenA",groups.listenA,"la");
-renderGroup("listenB",groups.listenB,"lb");
-
-document.getElementById("testDate").value =
-new Date().toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"});
-
-document.getElementById("testForm").addEventListener("submit",function(e){
-e.preventDefault();
-if(!document.getElementById("honesty").checked){
-alert("Please confirm that you completed the test independently.");
-return;
-}
-const fd=new FormData(this);
-let total=0,max=0,by={};
-const prefixes={grammar:"g",vocab:"v",readingA:"ra",readingB:"rb",listenA:"la",listenB:"lb"};
-
-for(const [key,qs] of Object.entries(groups)){
-let score=0;
-qs.forEach((q,i)=>{
-const ans=fd.get(prefixes[key]+i);
-if(ans!==null && Number(ans)===q[2]) score++;
+const recordBtn=document.getElementById('recordBtn'),stopBtn=document.getElementById('stopBtn'),statusEl=document.getElementById('recordStatus'),audioEl=document.getElementById('recordedAudio'),downloadEl=document.getElementById('downloadRecording');
+let recorder=null,chunks=[];
+recordBtn.addEventListener('click',async()=>{
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){statusEl.textContent='Recording is not supported in this browser. You can still complete the speaking interview with your teacher.';return}
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];
+  recorder=new MediaRecorder(stream);
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+  recorder.onstop=()=>{
+   const blob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'}),url=URL.createObjectURL(blob);
+   audioEl.src=url;audioEl.hidden=false;downloadEl.href=url;downloadEl.hidden=false;
+   stream.getTracks().forEach(t=>t.stop());statusEl.textContent='Recording complete. Play it back or download it to your device.';
+  };
+  recorder.start();recordBtn.disabled=true;stopBtn.disabled=false;statusEl.textContent='Recording… Speak clearly. Press Stop when finished.';
+ }catch(e){statusEl.textContent='Microphone access was not granted. Allow microphone permission in your browser and try again.'}
 });
-by[key]=score;
-total+=score;
-max+=qs.length;
-}
-
-let level=total<18?"A1 or below":
-total<25?"A2":
-total<33?"B1":
-total<40?"B2":"C1 possible";
-
-const res=document.getElementById("result");
-res.style.display="block";
-res.innerHTML=`
-<h2>Preliminary result</h2>
-<p>Student: <strong>${escapeHTML(document.getElementById("studentName").value||"Not provided")}</strong></p>
-<div class="score">${total} / ${max}</div>
-<p><strong>Preliminary screening band:</strong> ${level}</p>
-<p class="muted">This is an indicative screening result from the automatically scored multiple-choice sections only. It is not a confirmed CEFR level. Writing and speaking must be reviewed by your teacher.</p>
-<h3>Section summary</h3>
-<ul>
-<li>Grammar: ${by.grammar}/15</li>
-<li>Vocabulary: ${by.vocab}/10</li>
-<li>Reading: ${by.readingA+by.readingB}/10</li>
-<li>Listening: ${by.listenA+by.listenB}/10</li>
-</ul>
-<p><strong>Next step:</strong> Arrange your online speaking interview with General English Academy.</p>
-<p class="smallprint">This page does not send or save your answers to the academy.</p>
-<button type="button" onclick="window.print()">Print result</button>`;
-res.scrollIntoView({behavior:"smooth"});
-});
-
-function escapeHTML(s){
-return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
+stopBtn.addEventListener('click',()=>{if(recorder&&recorder.state!=='inactive'){recorder.stop();recordBtn.disabled=false;stopBtn.disabled=true}});
 </script>
 </body>
 </html>
