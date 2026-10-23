@@ -170,6 +170,62 @@ const languageKey = [
 3,0,2,1,1,2,1,2,3,0
 ];
 
+
+const readingPassages = {
+  0: {
+    title: "Passage 1: An email, Subject: Greetings from Florida!",
+    text: `Hi, Sara.
+
+I'm visiting my sister in Florida. It's very warm and nice here. Every morning, I go to the beach and swim. Sometimes my sister comes home early, and we play tennis in the afternoon. And we always go for a long walk after that. I'm having a great time!
+
+Love,
+Heather`
+  },
+  1: {
+    title: "Passage 2: Helen is getting married and I'm tired.",
+    text: `This has been a crazy week! One of my friends is getting married on Saturday, and I'm helping her with the reception. It's not going to be a big party, but I still have to do a lot of things. For example, I chose the songs last week, but the band is playing them for me tonight. I bought the flowers today, but I have to pick them up on Friday. I'm tired. Can someone help me, please?!`
+  },
+  2: {
+    title: "Passage 3: The Whitney Museum of American Art",
+    text: `The Whitney is one of the most famous art museums in New York City. It first opened in 1931 in Greenwich Village, and then it moved to two different places in 1954 and 1966. Since 2015, this museum of American art has been in a new building downtown. The new space is larger and more modern, and it has beautiful views of the Hudson River from its windows and café. Visit it next time you are in the city.`
+  },
+  3: {
+    title: "Passage 4: Is sitting unhealthy?",
+    text: `If you have been sitting in an office for a long period of time, stand up and move for your health. Research has shown that too much sitting might cause higher blood pressure, add body fat, and increase the danger of death from heart disease. Studies have also suggested that moving more has a positive effect on a person's health. So, what can an office worker do? Experts say that you should take a break from sitting every 30 minutes, stand more while working, and even walk when meeting with coworkers. Moving might save your life.`
+  },
+  5: {
+    title: "Passage 5: A changing neighborhood – for better or for worse?",
+    text: `Recently, an international online retailer opened an enormous, brand-new office in our neighborhood. Until then, there hadn't been any major companies or huge buildings like this in the area – just small family-owned businesses. So, obviously, there has been a lot of discussion about it lately.
+
+Some people say the company is creating jobs and will attract other new businesses, but others complain that most of the new jobs will be low-paying. These people also believe that rising costs will push out independent businesses and make the neighborhood too expensive for its current residents. I can't make up my mind whether the company will be a benefit for the neighborhood or not. It's a complicated issue, and I'm not sure there is a right or wrong answer. What do you think?`
+  },
+  7: {
+    title: "Passage 6: An inspiring story",
+    text: `When Alex McGovern was in high school, he used to earn money working weekends at a local bakery. After working there for several months, helping bake fresh bread and cakes, Alex noticed a familiar pattern: a huge amount of food was thrown away at the end of each day. It was food that the bakery could no longer sell, but it was still good enough to eat. So Alex began to wonder what he could do with all of this extra food.
+
+With the bakery owner's permission, he reached out to a local organization that worked with families who need help with food and housing. The charity was extremely pleased and arranged to pick up the extra food each day. Now bread was no longer wasted, but generously shared with people in need.
+
+Alex's idea was such a success that he began approaching other local restaurants about joining the program. Before long, there were over a dozen businesses taking part, and Alex created a website to grow the program in other cities. Today Alex's "simple" idea is helping feed people all over the country!`
+  },
+  11: {
+    title: "Passage 7: Some thoughts on your online profile",
+    text: `In many ways, the internet has made it easier than ever to find out about new job opportunities. Yet, as companies increasingly examine candidates' social media profiles for information to use in the selection process, people need to be aware of the risks and rewards of posting online. The views they express—and the ways they choose to express them—can be a crucial factor in whether or not they receive an offer of employment.
+
+Many young adults, who have grown up with social media and are comfortable sharing their lives online, don't realize how employers are using social media in hiring decisions. These companies don't just consider information about a person's online behavior; they may even gather information about friends and family. Some fear that employers may judge candidates based on factors such as their medical history, age, or even beliefs.
+
+While there is currently debate about what information companies are allowed to legally collect or use for hiring decisions, everyone agrees that people need to be careful about what they post online. Your behavior on social media could cost you your current position or job opportunities in the future.
+
+So, should job applicants erase their social media accounts completely? According to Professor John Sacks of the Better Hiring Institute, "It would be better to make sure you have a strong professional profile that emphasizes your qualifications. Not having any social media might send the message that you have something to hide." In other words, take the time to create an attractive profile on a career site and carefully consider everything you post online.`
+  },
+  15: {
+    title: "Passage 8: Sleep deprivation",
+    text: `If you can sleep well, be grateful. Sleep deprivation is extremely common, and its side effects are both serious and underappreciated. It is estimated that 50–70 million people in the U.S. suffer from a sleep disorder, and yet too many of them do not seek medical help. Although occasional sleep interruptions are generally no more than a nuisance, continuous lack of sleep can lead to excessive daytime sleepiness, emotional difficulties, poor job performance, and even obesity.
+
+Sleep deprivation also impacts mental well-being. A study done by the U.K. Mental Health Foundation found that people who didn't get enough sleep were about three times more likely to exhibit poor concentration and four times more likely to have relationship problems. According to another study, by the University of Warwick, getting less than six hours of sleep on a continuous basis makes a person 48% more likely to die of heart disease and 15% more likely to develop a stroke. According to study co-author Professor Francesco Cappuccio, lack of sleep "is like a ticking time bomb for your health."
+
+If a person is experiencing difficulties falling and staying asleep, there are several effective methods that can help and do not require medication. These include relaxation techniques, like tightening and relaxing muscles, breathing slowly, and meditating; stimulation control, which involves controlling pre-bedtime activities and surroundings; and cognitive behavioral therapy (CBT), designed to help people understand and change their thought patterns. If sleep deprivation and negative symptoms continue, however, consultation with a doctor is recommended. It's essential not to underestimate the importance of adequate sleep to maintaining good mental and physical health.`
+  }
+};
 const root=document.getElementById("questions");
 let globalNumber=1;
 sections.forEach((section,si)=>{
@@ -177,7 +233,30 @@ sections.forEach((section,si)=>{
  heading.className="section-title";
  heading.innerHTML=`<h2>${section.title}</h2><p>${section.info}</p>`;
  root.appendChild(heading);
- section.questions.forEach((q,qi)=>{
+
+section.questions.forEach((q,qi)=>{
+  if (si === 1 && readingPassages[qi]) {
+    const passage = readingPassages[qi];
+    const passageCard = document.createElement("div");
+    passageCard.className = "question";
+    passageCard.style.borderLeft = "5px solid #1b64d8";
+    passageCard.style.background = "#f8fbff";
+
+    const passageTitle = document.createElement("h3");
+    passageTitle.textContent = passage.title;
+    passageTitle.style.fontSize = "18px";
+    passageTitle.style.color = "#142747";
+
+    const passageText = document.createElement("p");
+    passageText.textContent = passage.text;
+    passageText.style.whiteSpace = "pre-line";
+    passageText.style.lineHeight = "1.9";
+
+    passageCard.appendChild(passageTitle);
+    passageCard.appendChild(passageText);
+    root.appendChild(passageCard);
+  }
+  section.questions.forEach((q,qi)=>{
   const number=globalNumber++;
   const card=document.createElement("div");
   card.className="question";
