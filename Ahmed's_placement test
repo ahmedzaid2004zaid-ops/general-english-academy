@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Placement Test</title>
+<style>
+*{box-sizing:border-box}body{font:16px/1.5 system-ui,sans-serif;margin:0;background:#f3f4f6;color:#111}
+.w{max-width:820px;margin:auto;padding:16px}.c{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px #0002}
+h1,h2,h3{margin:.2em 0}button{background:#1d4ed8;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:16px;cursor:pointer;margin:4px 4px 4px 0}
+button:disabled{background:#999}button.s{background:#555}input[type=text],input[type=email]{width:100%;padding:10px;margin:6px 0;font-size:16px;border:1px solid #bbb;border-radius:8px}
+.q{margin:12px 0}.o{display:block;padding:6px 8px;border-radius:6px;cursor:pointer}.o:hover{background:#eef}.t{background:#f8fafc;border-left:4px solid #1d4ed8;padding:8px 12px;white-space:pre-line}
+#bar{position:sticky;top:0;background:#111;color:#fff;padding:8px 16px;display:flex;justify-content:space-between;z-index:9}.hide{display:none}.ex{color:#555;font-style:italic}
+</style></head><body>
+<div id="bar" class="hide"><span id="st"></span><span id="tm"></span></div>
+<div class="w" id="app"></div>
+<script>
+/* ======== CONFIG ======== */
+const CONFIG={
+ title:"EVOLVE Placement Test",
+ audioDirections:"audio/track2.mp3",
+ audioListening:"audio/track3.mp3",
+ endpoint:"https://script.google.com/macros/s/AKfycbyny8Ogn3tt7AIH44Hik3IlZOShyt4GqBQ1hzUgDKmlHEbDe7Uiz_XFqHREA33KUwEyWA/exec",
+ teacherEmail:"you@example.com",
+ listeningSeconds:1110,
+ allowStopListening:true,
+ devMode:false,
+ minutes:{listening:15,reading:20,language:15}
+};
+/* ======== DATA ======== */
+const KEY="acccddbbab"+"adabccaddb"+"adcbdabcab"+"dcbcdacabd"+"bdcabacbdd"+"cdadbabcac"+"dacbbcbcda";
+const LV=[[5,"Level 1A"],[11,"Level 1B"],[17,"Level 2A"],[23,"Level 2B"],[30,"Level 3A"],[36,"Level 3B"],[42,"Level 4A"],[49,"Level 4B"],[55,"Level 5A"],[61,"Level 5B"],[68,"Level 6A"],[70,"Level 6B"]];
+const S=[
+{id:"listening",name:"Section I: Listening",mins:CONFIG.minutes.listening,g:[
+["Situation 1: Emily and Jason are talking about work.","",[["Emily ___.","works at a café","never goes to the mall","works every weekend","goes to the mall every day"]]],
+["Situation 2: Jessica is buying clothes.","",[["Jessica ___.","is buying a dress and a skirt","thinks the skirts are expensive","can’t find a red skirt","pays $30 for the skirt"]]],
+["Situation 3: Rachel and Michael are talking in a mall.","",[["Rachel and Michael ___.","are having lunch together","are buying gifts for their children","are busy tomorrow afternoon","are going to meet again tomorrow"]]],
+["Situation 4: Andrew is talking to a waitress at a restaurant.","",[["Andrew ___.","didn’t enjoy the food","ate just a little pasta","ordered a salad","didn’t like the dressing"],["The waitress ___.","can make the salad dressing","is going to talk to the chef","doesn’t offer a dessert to Andrew","is going to bring Andrew some coffee"]]],
+["Situation 5: Laura is talking to her father about a health problem.","",[["Laura ___.","hit her head in a basketball game","ate some bad food at school yesterday","has a horrible pain in her stomach","has a very bad headache"],["Laura’s father ___.","has a stomachache too","offers to take her to the doctor","is going to call a doctor","wants to rest a little"]]],
+["Situation 6: Jack is talking to his friend Olivia on the phone.","",[["When Jack called Olivia, she ___.","couldn’t hear him because of a bad connection","was in a noisy area, but she moved","was at the bus stop with her friend Katie","was on her way to see a play"],["Jack ___.","thought the movie was not very exciting","thought the movie had too much action","thinks Olivia shouldn’t see the movie","is going out with Olivia and Katie on Friday"]]],
+["Situation 7: Amanda is meeting her friend Patrick at a café.","",[["Amanda and Patrick ___.","last met in January","went to a concert together","haven’t seen each other since April","have been spending a lot of time together lately"],["Amanda ___.","has found a new job","is looking for another job","finds her work too challenging","has been having problems at work"],["Patrick ___.","has been learning Spanish","isn’t enjoying his cooking class very much","has been all over the world lately","wants to cook for Amanda and Jim"]]],
+["Situation 8: Nicole is talking to her teacher, Mr. Kushner, about her exam grade.","",[["Mr. Kushner ___.","thought that Nicole was disappointed with her grade","doesn’t think Nicole knows about his rules","usually lets students take exams a second time","thinks that Nicole will get a better grade next time"],["Nicole thinks that she got a low grade because ___.","she only had time to answer the reading questions","she didn’t get a grade on the reading section","she forgot to answer the reading questions","she did badly on the reading section"],["In the end, Mr. Kushner ___.","wasn’t able to help Nicole","asked Nicole not to miss an exam again","apologized to Nicole for the problem","realized that Nicole’s exam was missing"]]],
+["Situation 9: Lisa is talking to Eric about her job interview.","",[["After Lisa’s interview, she felt ___.","more optimistic than she did before","she was well prepared for it","uncertain about it","her answers sounded very confident"],["During the interview, Lisa ___.","recognized that she’s an impatient person","said she tended to be too positive about things","admitted she didn’t enjoy working on big projects","boasted that she always met her deadlines"],["According to Eric, ___ can make a person seem intelligent.","taking less time to answer a question","staying calm throughout an interview","speaking naturally and showing no anxiety","pausing before saying something"],["Lisa ___.","thinks she could find a much better job","usually believes in miracles","expects to be offered the position","feels frustrated about the situation"],["Eric ___.","agrees with Lisa’s views on her performance at the interview","thinks people naturally have a good opinion about Lisa","is concerned that Lisa might quit her job","advises her not to be so proud of herself"]]]
+]},
+{id:"reading",name:"Section II: Reading",mins:CONFIG.minutes.reading,g:[
+["Passage 1: An email – Greetings from Florida!",`Hi, Sara.
+I’m visiting my sister in Florida. It’s very warm and nice here. Every morning, I go to the beach and swim. Sometimes my sister comes home early, and we play tennis in the afternoon. And we always go for a long walk after that. I’m having a great time!
+Love,
+Heather`,[["Heather ___ every day.","swims","plays tennis","comes home early","walks with her sister"]]],
+["Passage 2: Helen is getting married and I’m tired.",`This has been a crazy week! One of my friends is getting married on Saturday, and I’m helping her with the reception. It’s not going to be a big party, but I still have to do a lot of things. For example, I chose the songs last week, but the band is playing them for me tonight. I bought the flowers today, but I have to pick them up on Friday. I’m tired. Can someone help me, please?!`,[["The writer ___.","is singing tonight","is buying flowers on Friday","listened to a band a week ago","is going to a party this weekend"]]],
+["Passage 3: The Whitney Museum of American Art",`The Whitney is one of the most famous art museums in New York City. It first opened in 1931 in Greenwich Village, and then it moved to two different places in 1954 and 1966. Since 2015, this museum of American art has been in a new building downtown. The new space is larger and more modern, and it has beautiful views of the Hudson River from its windows and café. Visit it next time you are in the city.`,[["The Whitney Museum ___.","shows art from many countries","moved to a smaller place in 2015","has a place to eat and great views","was in the same building since 1931"]]],
+["Passage 4: Is sitting unhealthy?",`If you have been sitting in an office for a long period of time, stand up and move for your health. Research has shown that too much sitting might cause higher blood pressure, add body fat, and increase the danger of death from heart disease. Studies have also suggested that moving more has a positive effect on a person’s health. So, what can an office worker do? Experts say that you should take a break from sitting every 30 minutes, stand more while working, and even walk when meeting with coworkers. Moving might save your life.`,[["The article suggests that ___.","there is very little research about the effects of sitting","sitting for a long time might be dangerous for your health","office workers live longer than other types of workers","people do not usually like to walk and exercise"],["According to the article, office workers should ___.","stop working every half hour","not work in an office if possible","only stand or walk when you work","move more to avoid serious heart problems"]]],
+["Passage 5: A changing neighborhood – for better or for worse?",`Recently, an international online retailer opened an enormous, brand-new office in our neighborhood. Until then, there hadn’t been any major companies or huge buildings like this in the area – just small family-owned businesses. So, obviously, there has been a lot of discussion about it lately.
+Some people say the company is creating jobs and will attract other new businesses, but others complain that most of the new jobs will be low-paying. These people also believe that rising costs will push out independent businesses and make the neighborhood too expensive for its current residents.
+I can’t make up my mind whether the company will be a benefit for the neighborhood or not. It’s a complicated issue, and I’m not sure there is a right or wrong answer. What do you think?`,[["The author of the blog post believes that ___.","there may be both positive and negative consequences","the changes will be helpful for most workers from the region","there will soon be many more big companies in the neighborhood","the changes will be mostly harmful for people who live in the area"],["Some people think the company will help the area because it will ___.","create a greater number of jobs with excellent salaries","make the area more interesting to other companies","lower the cost of living in the neighborhood","replace smaller stores with larger ones"]]],
+["Passage 6: An inspiring story",`When Alex McGovern was in high school, he used to earn money working weekends at a local bakery. After working there for several months, helping bake fresh bread and cakes, Alex noticed a familiar pattern: a huge amount of food was thrown away at the end of each day. It was food that the bakery could no longer sell, but it was still good enough to eat. So Alex began to wonder what he could do with all of this extra food.
+With the bakery owner’s permission, he reached out to a local organization that worked with families who need help with food and housing. The charity was extremely pleased and arranged to pick up the extra food each day. Now bread was no longer wasted, but generously shared with people in need.
+Alex’s idea was such a success that he began approaching other local restaurants about joining the program. Before long, there were over a dozen businesses taking part, and Alex created a website to grow the program in other cities. Today Alex’s “simple” idea is helping feed people all over the country!`,[["Alex’s original goal at the bakery was to ___.","eat free bread and cake","learn to be a baker","make money","help people"],["Alex got his idea ___.","when he saw how much food was wasted","while he was baking some fresh bread","from the owner of the bakery","from a local organization"],["The bakery owner ___.","thought that Alex’s plans wouldn’t work","allowed Alex to give away the extra bread","helped Alex create a website for the organization","didn’t care about the families assisted by the charity"],["The extra food was ___.","sold by Alex","bought by the charity","delivered by the bakery","picked up by the organization"]]],
+["Passage 7: Some thoughts on your online profile",`In many ways, the internet has made it easier than ever to find out about new job opportunities. Yet, as companies increasingly examine candidates’ social media profiles for information to use in the selection process, people need to be aware of the risks and rewards of posting online. The views they express—and the ways they choose to express them—can be a crucial factor in whether or not they receive an offer of employment.
+Many young adults, who have grown up with social media and are comfortable sharing their lives online, don’t realize how employers are using social media in hiring decisions. These companies don’t just consider information about a person’s online behavior; they may even gather information about friends and family. Some fear that employers may judge candidates based on factors such as their medical history, age, or even beliefs.
+While there is currently debate about what information companies are allowed to legally collect or use for hiring decisions, everyone agrees that people need to be careful about what they post online. Your behavior on social media could cost you your current position or job opportunities in the future.
+So, should job applicants erase their social media accounts completely? According to Professor John Sacks of the Better Hiring Institute, “It would be better to make sure you have a strong professional profile that emphasizes your qualifications. Not having any social media might send the message that you have something to hide.” In other words, take the time to create an attractive profile on a career site and carefully consider everything you post online.`,[["This article is aimed primarily at ___.","employers","college students","potential job candidates","social media organizations"],["According to the author, some people may not realize ___.","the effect of their online behavior on friends and family","how their online profiles can affect hiring decisions","what information companies cannot legally collect","if their online profile looks professional enough"],["One way of increasing your chances of getting a good job is ___.","not keeping a profile online","expressing your opinions in a honest way","having a profile that clearly shows your skills","being secretive about what you share online"],["The author ___ online personal information to make hiring decisions.","is against companies using","is in favor of the practice of using","believes it does not matter if employers use","does not say whether it is good or bad to use"]]],
+["Passage 8: Sleep deprivation",`If you can sleep well, be grateful. Sleep deprivation is extremely common, and its side effects are both serious and underappreciated. It is estimated that 50–70 million people in the U.S. suffer from a sleep disorder, and yet too many of them do not seek medical help. Although occasional sleep interruptions are generally no more than a nuisance, continuous lack of sleep can lead to excessive daytime sleepiness, emotional difficulties, poor job performance, and even obesity.
+Sleep deprivation also impacts mental well-being. A study done by the U.K. Mental Health Foundation found that people who didn’t get enough sleep were about three times more likely to exhibit poor concentration and four times more likely to have relationship problems. According to another study, by the University of Warwick, getting less than six hours of sleep on a continuous basis makes a person 48% more likely to die of heart disease and 15% more likely to develop a stroke. According to study co-author Professor Francesco Cappuccio, lack of sleep “is like a ticking time bomb for your health.”
+If a person is experiencing difficulties falling and staying asleep, there are several effective methods that can help and do not require medication. These include relaxation techniques, like tightening and relaxing muscles, breathing slowly, and meditating; stimulation control, which involves controlling pre-bedtime activities and surroundings; and cognitive behavioral therapy (CBT), designed to help people understand and change their thought patterns. If sleep deprivation and negative symptoms continue, however, consultation with a doctor is recommended. It’s essential not to underestimate the importance of adequate sleep to maintaining good mental and physical health.`,[["The main idea of the article is that ___.","lack of sleep can have significant health consequences","sleeping is not as essential as people used to think","people underestimate how much sleep they need","relaxation techniques are important for a good night’s sleep"],["According to the article, many people with sleeping disorders ___.","breathe more slowly","do cognitive behavioral therapy","do not speak to their doctor about it","usually practice healthy sleeping habits"],["The article suggests that good sleepers ___.","can focus better","often get about eight hours of good sleep","are able to sleep during the day","do not have heart problems"],["Professor Cappuccio found that ___.","sleep-deprived people have more relationship problems","sleep deprivation might make people critically ill","research from the Mental Health Foundation was incorrect","lack of sleep is just a minor nuisance"],["The article says that people experiencing sleep difficulties can ___.","lose some weight","take some types of medicine","immediately find medical help","try methods that help them fall and stay asleep"]]]
+]},
+{id:"language",name:"Section III: Language Use",mins:CONFIG.minutes.language,g:[["Choose the correct answer.","",[
+["My daughter sometimes ___ to school with her friends.","walk","walks","walking","not walk"],
+["___ eat dinner on Sundays?","Where your family","How is your family","When your family do","What time does your family"],
+["___ a lot of people in the park today.","There","There’s","There are","There is no"],
+["___, but I’m not very good.","I can play the guitar","I don’t play the guitar","I play the guitar very well","I can’t play the guitar well"],
+["We had a nice vacation. The weather ___ beautiful.","did","was","does","were"],
+["Tom ___ home right now. He’s still at the office.","isn’t driving","doesn’t drive","didn’t drive","drives"],
+["Is it true? ___ a grandparent yesterday?","Are you becoming","Does she become","Did he become","They became"],
+["I go to the gym ___ evenings. I only don’t go on the weekend.","some","most","all of the","many of the"],
+["Susan’s cousin is ___ player on our soccer team.","bad","best","worse","the worst"],
+["Our neighbor ___ the screen of his phone twice last year.","breaks","is breaking","has broken","broke"],
+["A: I can’t forget to make a reservation at the restaurant before noon. B: Don’t worry. ___ you.","I’m reminding","I’ve reminded","I’ll remind","I remind"],
+["We ___ for a hotel when the storm began.","search","will search","have searched","were searching"],
+["If you concentrate on your work, you ___ usually waste a lot of time.","don’t","won’t","didn’t","couldn’t"],
+["I’m exhausted. ___ to fix this machine since I got here this morning.","I try","I’ll try","I tried","I’ve been trying"],
+["Several bridges ___ during the earthquake last year.","badly damaged","were badly damaged","have badly damaged","were badly damaging"],
+["The agency that ___ our ideas for the poster seem a little old-fashioned.","believes","is believing","was believed","has been believing"],
+["Superhero movies are a kind of entertainment ___ really attracted to.","which","I’m not","who they","that aren’t"],
+["More support ___ to groups dealing with environmental issues.","is providing","might provide","must be provided","should be providing"],
+["Employees ___ show their ID cards, or they couldn’t have access to the research facilities.","were required to","were allowed to","didn’t have to","could"],
+["Our math teacher made ___ a hundred math problems in one hour.","us to solve","be solved","us solve","solve"],
+["The process ___ be very time-consuming before they launched the new system.","might","would","ought to","used to"],
+["After some time together, those on John’s team learned not to underestimate ___.","each other","himself","another","itself"],
+["The man next door asked me ___ keep an eye on his apartment while he was away.","I can","would I","if I could","whether will I"],
+["Our niece is very hardworking and determined. She has never had any trouble ___ her exams.","to pass","passing","passed","pass"],
+["If they ___ the damage more carefully, they would have found these other problems.","would assess","had assessed","have assessed","would have assessed"],
+["By this time next Monday, ___ a new head of the sales department.","we hire","we’re hiring","we’ll have hired","we have been hiring"],
+["The consultants proposed a number of alternatives, ___ the firm disregarded.","much of what","many of which","some of whom","none of whose"],
+["What ___ a couple of relaxing days at an unspoiled beach.","they actually plan","did they actually plan","they actually planned was","have they actually planned are"],
+["We felt genuinely shocked. Never again ___ at such an overrated place.","ate we","we will eat","did eat we","would we eat"],
+["Authorities recommend that everyone ___ the highway until repairs are completed.","avoid","avoided","would avoid","is going to avoid"]]]]}
+];
+const SPK=["Introduce yourself. Where are you from, and what do you do?","Describe your daily routine. What do you do on a typical weekday?","Talk about a memorable trip or vacation you have had.","Do you prefer studying alone or with other people? Why?","What are your goals for learning English, and how will English help you in the future?"];
+/* ======== ENGINE ======== */
+const $=id=>document.getElementById(id),app=$("app");
+const AU=[],AUD={};function stopAudio(){AU.forEach(a=>{try{a.pause();a.removeAttribute('src');a.load()}catch(e){}});AU.length=0}
+let user={},ans={},rec={},si=-1,tmr=null,left=0,played={};
+function lv(n){for(const [m,l] of LV)if(n<=m)return l;return LV[11][1]}
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+function envWarn(){return""}
+function start(){
+ app.innerHTML=envWarn()+`<div class="c"><h1>${CONFIG.title}</h1><p>70 questions (Listening, Reading, Language Use) + a short Speaking section. Total time about 50 minutes. Use headphones and a quiet room. The Listening audio plays only once.</p>
+ <input type="text" id="nm" placeholder="Full name"><input type="email" id="em" placeholder="Email">
+ <p id="er" style="color:#b00"></p><button id="go">Start</button>${CONFIG.devMode?'<hr>Preview: <button class="s" id="j0">Listening</button><button class="s" id="j1">Reading</button><button class="s" id="j2">Language</button><button class="s" id="j3">Speaking</button>':''}</div>`;
+ if(CONFIG.devMode)[0,1,2,3].forEach(i=>$("j"+i).onclick=()=>{user={name:"Test",email:"t@t.com",date:new Date().toISOString()};si=i-1;next()});
+ $("go").onclick=()=>{const n=$("nm").value.trim(),e=$("em").value.trim();
+  if(!n||!/^\S+@\S+\.\S+$/.test(e)){$("er").textContent="Please enter your name and a valid email.";return}
+  user={name:n,email:e,date:new Date().toISOString()};next()}
+}
+function next(){stopAudio();si++;if(si<S.length)section();else if(si===S.length)speaking();else finish()}
+function section(){
+ const s=S[si];let n=S.slice(0,si).reduce((a,x)=>a+x.g.reduce((b,g)=>b+g[2].length,0),0);
+ let h=`<div class="c"><h2>${s.name}</h2><p>${s.mins} minutes. Choose the best answer for each item.</p>`;
+ if(s.id==="listening")h+=`<p><b>Step 1:</b> Directions and example (optional).</p><button id="p2">▶ Play directions</button><button id="s2" class="s">⏸ Pause</button>
+ <div class="t ex">Example: A man is asking a woman for directions. The Science Museum ___.<br>a) isn’t near the hospital  b) is on the left side of the street  c) is two blocks from the hospital  d) and the hospital are on the same street</div>
+ <p><b>Step 2:</b> Read the questions, then press play. The audio plays once and cannot be paused.</p><button id="p3">▶ Start Listening audio</button>${CONFIG.allowStopListening?'<button id="s3" class="s">⏸ Pause</button>':''} <span id="as"></span><p class="ex">If the audio does not load automatically, choose the files here:<br>Directions: <input type="file" id="f2" accept="audio/*"><br>Listening: <input type="file" id="f3" accept="audio/*"></p>`;
+ h+=`</div>`;
+ s.g.forEach(g=>{h+=`<div class="c"><h3>${g[0]}</h3>${g[1]?`<div class="t">${esc(g[1])}</div>`:""}`;
+  g[2].forEach(q=>{n++;h+=`<div class="q"><b>${n}.</b> ${esc(q[0])}`;
+   "abcd".split("").forEach((l,i)=>h+=`<label class="o"><input type="radio" name="q${n}" value="${l}" ${ans[n]===l?"checked":""}> <b>${l}</b> ${esc(q[i+1])}</label>`);h+=`</div>`});h+=`</div>`});
+ h+=`<div class="c"><p id="nm2" style="color:#b00;margin:0 0 8px"></p><button id="nx">${si<2?"Finish section & continue":"Finish section & go to Speaking"}</button></div>`;
+ app.innerHTML=h;scrollTo(0,0);
+ app.querySelectorAll("input[type=radio]").forEach(r=>r.onchange=()=>ans[+r.name.slice(1)]=r.value);
+ $("nx").onclick=()=>{const total=s.g.reduce((b,g)=>b+g[2].length,0),first=n-total+1;let un=0;
+  for(let i=first;i<=n;i++)if(!ans[i])un++;
+  if(un>5){$("nx").textContent="Finish section & continue";$("nm2").textContent="You still have "+un+" unanswered questions. You can leave at most 5 unanswered – please answer "+(un-5)+" more.";$("nm2").scrollIntoView({block:"center"});return}stopTimer();next()};
+ if(s.id==="listening"){
+  const play=(id,src,btn)=>{if(played[id])return;played[id]=1;const a=new Audio(src);AU.push(a);AUD[id]=a;btn.disabled=true;btn.textContent="Playing…";a.onplaying=()=>{if(id==="p3"&&!tmr)timer(CONFIG.listeningSeconds,S[0].name,()=>next())};
+   a.onended=()=>{const tb=$(id==="p2"?"s2":"s3");if(tb)tb.disabled=true;btn.textContent="Finished";$("as").textContent=id==="p3"?"Audio finished. Complete your answers.":""};
+   a.onerror=()=>{if(!a.getAttribute("src"))return;btn.textContent="▶ Retry";btn.disabled=false;played[id]=0;const c=a.error?a.error.code:0;$("as").textContent=(c===4?"Audio file not found or format not supported (check the audio/ folder path or choose the file below).":c===3?"Audio decoding failed.":"Audio could not be loaded.")+" Error code "+c};a.play().catch(()=>{btn.textContent="Cannot play – tap again";btn.disabled=false;played[id]=0})};
+  const tog=(id,b)=>{const a=AUD[id];if(!a)return;if(a.paused){a.play().catch(()=>{});b.textContent="⏸ Pause"}else{a.pause();b.textContent="▶ Resume"}};
+  $("s2").onclick=()=>tog("p2",$("s2"));if($("s3"))$("s3").onclick=()=>tog("p3",$("s3"));
+  const src=(f,d)=>$(f).files[0]?URL.createObjectURL($(f).files[0]):d;
+  $("p2").onclick=()=>play("p2",src("f2",CONFIG.audioDirections),$("p2"));$("p3").onclick=()=>play("p3",src("f3",CONFIG.audioListening),$("p3"));
+ }
+ if(s.id!=="listening")timer(s.mins*60,s.name,()=>next());else{$("bar").classList.remove("hide");$("st").textContent=s.name;$("tm").textContent="Timer starts with the audio"}
+}
+function timer(sec,label,cb){stopTimer();left=sec;$("bar").classList.remove("hide");$("st").textContent=label;
+ const t=()=>{const m=Math.floor(left/60),s=left%60;$("tm").textContent="⏱ "+m+":"+String(s).padStart(2,"0")};t();
+ tmr=setInterval(()=>{left--;t();if(left<=0){stopTimer();cb()}},1000)}
+function stopTimer(){clearInterval(tmr);tmr=null}
+function WavRec(st,ch){const c=new(window.AudioContext||window.webkitAudioContext)(),src=c.createMediaStreamSource(st),pr=c.createScriptProcessor(4096,1,1),d=[],me=this;me.state="inactive";me.mimeType="audio/wav";
+ pr.onaudioprocess=e=>{if(me.state==="recording")d.push(new Float32Array(e.inputBuffer.getChannelData(0)))};
+ me.start=()=>{src.connect(pr);pr.connect(c.destination);me.state="recording";if(c.resume)c.resume()};me.pause=()=>{me.state="paused"};me.resume=()=>{me.state="recording"};
+ me.stop=()=>{me.state="inactive";try{pr.disconnect();src.disconnect()}catch(e){}const n=d.reduce((a,x)=>a+x.length,0),b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,s)=>[...s].forEach((q,k)=>v.setUint8(o+k,q.charCodeAt(0)));
+  w(0,"RIFF");v.setUint32(4,36+n*2,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,c.sampleRate,true);v.setUint32(28,c.sampleRate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,n*2,true);
+  let o=44;d.forEach(x=>x.forEach(s=>{v.setInt16(o,Math.max(-1,Math.min(1,s))*32767,true);o+=2}));ch.push(new Blob([b],{type:"audio/wav"}));c.close();if(me.onstop)me.onstop()}}
+function failMsg(t,m){t.textContent=" ⚠ "+m;if(window.self!==window.top&&/^(https?|file):/.test(location.protocol)){const a=document.createElement("a");a.href=location.href;a.target="_blank";a.rel="noopener";a.textContent=" ▶ Open the test in a new tab / افتح في تبويب جديد";t.appendChild(a)}}
+function speaking(){
+ stopTimer();$("bar").classList.remove("hide");$("st").textContent="Section IV: Speaking";$("tm").textContent="";
+ let h=`<div class="c"><h2>Section IV: Speaking</h2><p>Record an answer of 30–60 seconds for each question (you can pause, resume, or stop at any time; maximum 2 minutes). If the Record button does not work on your device, use “Upload a recording” instead (record with any voice recorder app first).</p></div>`;
+ SPK.forEach((q,i)=>h+=`<div class="c"><b>${i+1}. ${q}</b><br><button id="r${i}">● Record</button><button id="ps${i}" class="s" disabled>⏸ Pause</button><button id="x${i}" class="s" disabled>■ Stop</button><span id="t${i}"></span><br><label class="ex">Or upload a recording: <input type="file" id="u${i}" accept="audio/*"></label><br><audio id="a${i}" controls class="hide"></audio></div>`);
+ h+=`<div class="c"><button id="dg" class="s">🔍 Diagnose microphone</button><pre id="dgo" style="white-space:pre-wrap;font-size:13px"></pre></div><div class="c"><button id="sub">Submit test</button></div>`;
+ h=envWarn()+h;
+ app.innerHTML=h;scrollTo(0,0);
+ $("dg").onclick=async()=>{const o=$("dgo");let t=["Address: "+location.href.slice(0,70),"Protocol: "+location.protocol,"Secure context: "+window.isSecureContext,"Inside iframe: "+(window.self!==window.top),"MediaRecorder: "+!!window.MediaRecorder,"mediaDevices: "+!!navigator.mediaDevices,"Browser: "+navigator.userAgent.slice(0,110)];
+  try{const q=await navigator.permissions.query({name:"microphone"});t.push("Permission state: "+q.state)}catch(e){t.push("Permission state: unknown")}
+  o.textContent=t.join("\n")+"\nTesting microphone…";
+  try{const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(x=>x.stop());o.textContent=t.join("\n")+"\nRESULT: OK – microphone works"}catch(e){o.textContent=t.join("\n")+"\nRESULT: "+e.name+" – "+e.message}};
+ const saved=(i,b)=>{rec[i]=b;const a=$("a"+i);a.src=URL.createObjectURL(b);a.classList.remove("hide");$("t"+i).textContent=" ✔ Saved"};
+ const mime=["audio/webm;codecs=opus","audio/webm","audio/mp4","audio/ogg"].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m));
+ SPK.forEach((q,i)=>{let mr,ch=[],to,st;
+  $("u"+i).onchange=e=>{if(e.target.files[0])saved(i,e.target.files[0])};
+  $("r"+i).onclick=async()=>{const t=$("t"+i);
+   const why=!window.isSecureContext?"The page is not secure (needs HTTPS or localhost) / الصفحة لازم تتفتح من رابط HTTPS":!navigator.mediaDevices?"Microphone API unavailable (page in an iframe without microphone permission, or old browser) / الميكروفون غير متاح هنا":(!window.MediaRecorder&&!(window.AudioContext||window.webkitAudioContext))?"This browser cannot record (update it, or use Chrome) / المتصفح لا يدعم التسجيل":"";
+   if(why){failMsg(t,why+". Please use Upload below / استخدم رفع تسجيل.");return}
+   try{st=await navigator.mediaDevices.getUserMedia({audio:true});ch=[];mr=window.MediaRecorder?new MediaRecorder(st,mime?{mimeType:mime}:undefined):new WavRec(st,ch);
+    mr.ondataavailable=e=>e.data.size&&ch.push(e.data);
+    mr.onstop=()=>{st.getTracks().forEach(x=>x.stop());clearTimeout(to);$("r"+i).disabled=false;$("x"+i).disabled=true;$("ps"+i).disabled=true;$("ps"+i).textContent="⏸ Pause";
+     if(ch.length)saved(i,new Blob(ch,{type:mr.mimeType||mime||"audio/webm"}));else t.textContent=" Nothing was recorded. Try again."};
+    mr.start(250);$("r"+i).disabled=true;$("x"+i).disabled=false;$("ps"+i).disabled=false;t.textContent=" Recording…";to=setTimeout(()=>mr.state!=="inactive"&&mr.stop(),120000)
+   }catch(e){const m={NotAllowedError:"Microphone is blocked. Click the 🔒 icon next to the page address, set Microphone to Allow, then reload. If the page is inside another site, the iframe needs allow=\"microphone\" / الميكروفون محجوب: اضغط أيقونة القفل بجانب الرابط واختر Allow ثم حدّث الصفحة",NotFoundError:"No microphone found / لا يوجد ميكروفون",NotReadableError:"Microphone is being used by another app / الميكروفون مستخدم في تطبيق آخر",SecurityError:"Blocked by the site’s permission policy – usually because the test is shown inside another page (iframe) that does not allow the microphone. Open the test in its own browser tab, or ask the site owner to add the attribute allow=microphone to the iframe / الميكروفون محظور لأن الاختبار معروض داخل صفحة أخرى (iframe) بدون إذن الميكروفون. افتح الاختبار في تبويب مستقل"}[e.name]||"Could not start recording";
+    failMsg(t,m+" ["+e.name+"]. You can use Upload below / يمكنك استخدام رفع تسجيل.")}};
+  $("x"+i).onclick=()=>mr&&mr.state!=="inactive"&&mr.stop();
+  $("ps"+i).onclick=()=>{if(!mr)return;if(mr.state==="recording"){mr.pause();$("ps"+i).textContent="▶ Resume";$("t"+i).textContent=" Paused"}else if(mr.state==="paused"){mr.resume();$("ps"+i).textContent="⏸ Pause";$("t"+i).textContent=" Recording…"}}});
+ $("sub").onclick=()=>{if(Object.keys(rec).length<SPK.length&&!sure("sp")){$("sub").textContent="Some answers are missing. Tap again to submit anyway";return}si=S.length;next()}
+}
+let result;const _s={};function sure(k){if(_s[k])return true;_s[k]=1;return false}
+function finish(){
+ stopTimer();stopAudio();$("bar").classList.add("hide");
+ const sec=S.map(()=>0);let tot=0,n=0;
+ S.forEach((s,k)=>s.g.forEach(g=>g[2].forEach(()=>{n++;if(ans[n]===KEY[n-1]){sec[k]++;tot++}})));
+ result={name:user.name,email:user.email,date:user.date,score:tot,total:70,level:lv(tot),listening:sec[0]+"/20",reading:sec[1]+"/20",language:sec[2]+"/30",speakingRecordings:Object.keys(rec).length,answers:ans};
+ app.innerHTML=`<div class="c"><h2>Thank you, ${esc(user.name)}!</h2><p>Score: <b>${tot}/70</b><br>Recommended placement: <b>EVOLVE ${result.level}</b><br>Listening ${result.listening} · Reading ${result.reading} · Language Use ${result.language}<br>Speaking: ${result.speakingRecordings}/${SPK.length} recordings (reviewed by your teacher).</p><p id="ss">${CONFIG.endpoint?"Sending your results…":""}</p>
+ <button id="dl" class="s">Download results</button> <a id="ml" href="#"><button class="s">Send by email app</button></a></div>`;
+ $("dl").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{type:"application/json"}));a.download="placement_"+user.name.replace(/\W+/g,"_")+".json";a.click()};
+ $("ml").href="mailto:"+CONFIG.teacherEmail+"?subject="+encodeURIComponent("Placement test: "+user.name)+"&body="+encodeURIComponent(`Name: ${user.name}\nEmail: ${user.email}\nScore: ${tot}/70\nLevel: ${result.level}\nListening ${result.listening}, Reading ${result.reading}, Language ${result.language}`);
+ if(CONFIG.endpoint)send();
+}
+const b64=b=>new Promise((ok,no)=>{const f=new FileReader();f.onload=()=>ok(String(f.result).split(",")[1]);f.onerror=no;f.readAsDataURL(b)});
+const ext=b=>{const t=b.type||"";return t.includes("mp4")||t.includes("mpeg")?"m4a":t.includes("ogg")?"ogg":t.includes("wav")?"wav":(b.name||"").split(".").pop()||"webm"};
+async function sendScript(){
+ const wrong=[];for(let i=1;i<=70;i++)if(ans[i]!==KEY[i-1])wrong.push(i+" ("+(ans[i]||"blank")+" → "+KEY[i-1]+")");
+ const recordings=[];for(const i of Object.keys(rec)){const b=rec[i];recordings.push({name:"speaking_"+(+i+1)+"_"+result.name.replace(/\W+/g,"_")+"."+ext(b),type:b.type||"audio/webm",data:await b64(b)})}
+ const body=JSON.stringify({...result,wrong,recordings,speakingPrompts:SPK});
+ await fetch(CONFIG.endpoint,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body});
+ $("ss").textContent="✔ Results submitted to your teacher.";
+}
+async function send(){
+ if(/script\.google\.com/.test(CONFIG.endpoint)){try{await sendScript()}catch(e){$("ss").textContent="Could not send automatically. Please use Download or Email."}return}
+ const f=new FormData();f.append("name",result.name);f.append("email",result.email);f.append("_replyto",result.email);f.append("subject","Placement test: "+result.name);
+ f.append("score",result.score+"/70");f.append("level",result.level);f.append("listening",result.listening);f.append("reading",result.reading);f.append("language",result.language);f.append("answers",JSON.stringify(result.answers));
+ Object.keys(rec).forEach(i=>f.append("speaking_"+(+i+1),rec[i],`speaking_${+i+1}.`+((rec[i].type||"").includes("mp4")||(rec[i].type||"").includes("mpeg")?"m4a":(rec[i].type||"").includes("ogg")?"ogg":(rec[i].name||"").split(".").pop()||"webm")));
+ try{const r=await fetch(CONFIG.endpoint,{method:"POST",body:f,headers:{Accept:"application/json"}});
+  $("ss").textContent=r.ok?"✔ Results sent to your teacher.":"Could not send automatically. Please use Download or Email.";
+ }catch(e){$("ss").textContent="Could not send automatically. Please use Download or Email."}
+}
+start();
+</script></body></html>
