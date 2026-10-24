@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Placement Test</title>
+<style>
+*{box-sizing:border-box}body{font:16px/1.5 system-ui,sans-serif;margin:0;background:#f3f4f6;color:#111}
+.w{max-width:820px;margin:auto;padding:16px}.c{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px #0002}
+h1,h2,h3{margin:.2em 0}button{background:#1d4ed8;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:16px;cursor:pointer;margin:4px 4px 4px 0}
+button:disabled{background:#999}button.s{background:#555}input[type=text],input[type=email]{width:100%;padding:10px;margin:6px 0;font-size:16px;border:1px solid #bbb;border-radius:8px}
+.q{margin:12px 0}.o{display:block;padding:6px 8px;border-radius:6px;cursor:pointer}.o:hover{background:#eef}.t{background:#f8fafc;border-left:4px solid #1d4ed8;padding:8px 12px;white-space:pre-line}
+#bar{position:sticky;top:0;background:#111;color:#fff;padding:8px 16px;display:flex;justify-content:space-between;z-index:9}.hide{display:none}.ex{color:#555;font-style:italic}
+</style></head><body>
+<div id="bar" class="hide"><span id="st"></span><span id="tm"></span></div>
+<div class="w" id="app"></div>
+<script>
+/* ======== CONFIG ======== */
+const CONFIG={
+ title:"EVOLVE Placement Test",
+ audioDirections:"audio/track2.mp3",
+ audioListening:"audio/track3.mp3",
+ endpoint:"https://script.google.com/macros/s/AKfycbyny8Ogn3tt7AIH44Hik3IlZOShyt4GqBQ1hzUgDKmlHEbDe7Uiz_XFqHREA33KUwEyWA/exec",
+ teacherEmail:"you@example.com",
+ listeningSeconds:1110,
+ allowStopListening:true,
+ devMode:false,
+ minutes:{listening:15,reading:20,language:15}
+};
+/* ======== DATA ======== */
+const KEY="acccddbbab"+"adabccaddb"+"adcbdabcab"+"dcbcdacabd"+"bdcabacbdd"+"cdadbabcac"+"dacbbcbcda";
+const LV=[[5,"Level 1A"],[11,"Level 1B"],[17,"Level 2A"],[23,"Level 2B"],[30,"Level 3A"],[36,"Level 3B"],[42,"Level 4A"],[49,"Level 4B"],[55,"Level 5A"],[61,"Level 5B"],[68,"Level 6A"],[70,"Level 6B"]];
+const S=[
+{id:"listening",name:"Section I: Listening",mins:CONFIG.minutes.listening,g:[
+["Situation 1: Emily and Jason are talking about work.","",[["Emily ___.","works at a café","never goes to the mall","works every weekend","goes to the mall every day"]]],
+["Situation 2: Jessica is buying clothes.","",[["Jessica ___.","is buying a dress and a skirt","thinks the skirts are expensive","can’t find a red skirt","pays $30 for the skirt"]]],
+["Situation 3: Rachel and Michael are talking in a mall.","",[["Rachel and Michael ___.","are having lunch together","are buying gifts for their children","are busy tomorrow afternoon","are going to meet again tomorrow"]]],
+["Situation 4: Andrew is talking to a waitress at a restaurant.","",[["Andrew ___.","didn’t enjoy the food","ate just a little pasta","ordered a salad","didn’t like the dressing"],["The waitress ___.","can make the salad dressing","is going to talk to the chef","doesn’t offer a dessert to Andrew","is going to bring Andrew some coffee"]]],
+["Situation 5: Laura is talking to her father about a health problem.","",[["Laura ___.","hit her head in a basketball game","ate some bad food at school yesterday","has a horrible pain in her stomach","has a very bad headache"],["Laura’s father ___.","has a stomachache too","offers to take her to the doctor","is going to call a doctor","wants to rest a little"]]],
+["Situation 6: Jack is talking to his friend Olivia on the phone.","",[["When Jack called Olivia, she ___.","couldn’t hear him because of a bad connection","was in a noisy area, but she moved","was at the bus stop with her friend Katie","was on her way to see a play"],["Jack ___.","thought the movie was not very exciting","thought the movie had too much action","thinks Olivia shouldn’t see the movie","is going out with Olivia and Katie on Friday"]]],
+["Situation 7: Amanda is meeting her friend Patrick at a café.","",[["Amanda and Patrick ___.","last met in January","went to a concert together","haven’t seen each other since April","have been spending a lot of time together lately"],["Amanda ___.","has found a new job","is looking for another job","finds her work too challenging","has been having problems at work"],["Patrick ___.","has been learning Spanish","isn’t enjoying his cooking class very much","has been all over the world lately","wants to cook for Amanda and Jim"]]],
+["Situation 8: Nicole is talking to her teacher, Mr. Kushner, about her exam grade.","",[["Mr. Kushner ___.","thought that Nicole was disappointed with her grade","doesn’t think Nicole knows about his rules","usually lets students take exams a second time","thinks that Nicole will get a better grade next time"],["Nicole thinks that she got a low grade because ___.","she only had time to answer the reading questions","she didn’t get a grade on the reading section","she forgot to answer the reading questions","she did badly on the reading section"],["In the end, Mr. Kushner ___.","wasn’t able to help Nicole","asked Nicole not to miss an exam again","apologized to Nicole for the problem","realized that Nicole’s exam was missing"]]],
+["Situation 9: Lisa is talking to Eric about her job interview.","",[["After Lisa’s interview, she felt ___.","more optimistic than she did before","she was well prepared for it","uncertain about it","her answers sounded very confident"],["During the interview, Lisa ___.","recognized that she’s an impatient person","said she tended to be too positive about things","admitted she didn’t enjoy working on big projects","boasted that she always met her deadlines"],["According to Eric, ___ can make a person seem intelligent.","taking less time to answer a question","staying calm throughout an interview","speaking naturally and showing no anxiety","pausing before saying something"],["Lisa ___.","thinks she could find a much better job","usually believes in miracles","expects to be offered the position","feels frustrated about the situation"],["Eric ___.","agrees with Lisa’s views on her performance at the interview","thinks people naturally have a good opinion about Lisa","is concerned that Lisa might quit her job","advises her not to be so proud of herself"]]]
+]},
+{id:"reading",name:"Section II: Reading",mins:CONFIG.minutes.reading,g:[
+["Passage 1: An email – Greetings from Florida!",`Hi, Sara.
+I’m visiting my sister in Florida. It’s very warm and nice here. Every morning, I go to the beach and swim. Sometimes my sister comes home early, and we play tennis in the afternoon. And we always go for a long walk after that. I’m having a great time!
+Love,
+Heath
